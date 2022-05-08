@@ -8,6 +8,15 @@
 \newcommand{\myname}{Lev Stambler}
 %
 
+%% Custom Commands
+\newcommand{\rationalPeriod}{{T^j}'}
+\newcommand{\statePeriod}{T^j}
+\newcommand{\seedAngle}[1]{{\theta_{#1}}^j}
+\newcommand{\seedAngleNotime}{{\theta}^j}
+\newcommand{\state}[2]{{s_{#1}}^{#2}}
+\newcommand{\stateNotime}[1]{s^{#1}}
+\newcommand{\totalPeriod}{T}
+
 
 %
 % Final tip: you can reference HW5 in your TeX using \Cref{hw:5}; 
@@ -125,19 +134,19 @@ $$
 where $\mathrm{incl}_d^j \in \set{0, 1}$ for $d \in [D]$ indicates whether to include a given
 $x \in R$ determined by seed $j$ for position update in the $d$th dimension.
 
-We will also let $\mathcal{S} = N^5$ where for $(n, d, b, i, \theta) \in \mathcal{S}$,
+We will also let $\mathcal{S} = N^5$ where for $(n, d, b, \theta) \in \mathcal{S}$,
 $n$ is the numerator of a rational in fraction form, $d$ is the denominator, 
 $b$ is the base (i.e\. base 10, base 12, etc.), $i$ is the current time step,
 and $\frac{2\theta}{b \pi}$ is an ``angle" associated with the state.
 Moreover, we will only consider
 $$
-  SU^j(n, b, d, i, \theta) = (n, b, d, i + 1, \theta + \mathrm{digit}(n, b, d, i) \mod b).
+  SU^j(n, b, d, \theta) = (n, b, d, \theta + \mathrm{digit}(n, b, d, i) \mod b).
 $$
 
 where $\mathrm{digit}(n, b, d, i)$ gives us the $i$th digit of the decimal expansion of $\frac{n}{d}$
 in base $b$.
 
-Finally, for simplicity's sake, assume that $\theta = 0$ for all $(n, b, d, i, \theta) \in \pmb{s}_0$,
+Finally, for simplicity's sake, assume that $\theta = 0$ for all $(n, b, d, \theta) \in \pmb{s}_0$,
 $n < d$, and $\frac{n}{d}$'s decimal expansion is periodic after some $N \geq 0$ decimal places
 and does not terminate in base $b$.
 
@@ -158,15 +167,15 @@ some fraction of $2 \pi$ determined by the $i$th digit of the decimal expansion 
 \subsection{Finding period $T$}
 \subsubsection{Finding the period of $\frac{n}{d}$}
 We will first aim to find period $T$ of the state $\pmb{s}$.
-For some $(n, b, d, i, \theta) \in \pmb{s}_0$, by \cite{MathOverflowFracPeriod},
+For some $(n, b, d, \theta) \in \pmb{s}_0$, by \cite{MathOverflowFracPeriod},
 we have that the period of the decimal expansion of $\frac{n}{d}$
-can be determined by finding the smallest ${T^j}'$ such that
+can be determined by finding the smallest $\rationalPeriod$ such that
 \begin{equation}
 \label{eq:nd-period}
-b ^ {{T^j}'} \equiv 1 \mod d.
+b ^ {\rationalPeriod} \equiv 1 \mod d.
 \end{equation}
 See, appendix \ref{AppendixPeriod} for more detail.
-More generally though, any nontrivial ${T^j}'$ satisfying equation \ref{eq:nd-period}
+More generally though, any nontrivial $\rationalPeriod$ satisfying equation \ref{eq:nd-period}
 will be a period of $\frac{n}{d}$.
 
 \begin{remark}[Polytime]
@@ -193,35 +202,38 @@ such that
   \mathrm{digSumPeriodic}(n, d, b) = \sum_{i = i_0}^{i_0 + T} \mathrm{digit}(n, d, b, i)
 \end{equation}
 
-
-
 \begin{remark}[Finding the digit sum of a rational]
-  
+  aaaa
 \end{remark}
 
-\subsubsection{Finding the period of $\theta^j$} % TODO: redifine things in terms of theta...
-For $(n^j, b^j, d^j, i^j, \theta_i^j) = s_i^j$,
-recall that $\theta_{i+1}^k = \theta_{i}^k + \mathrm{digit}(n, b, d, i) \mod b$.
-So, after period ${T^j}'$,
+\subsubsection{Finding the period of $\seedAngleNotime$} % TODO: redifine things in terms of theta...
+For $(n^j, b^j, d^j, \theta_i^j) = s_i^j$,
+recall that $\seedAngle{i + 1} = \seedAngle{i} + \mathrm{digit}(n, b, d, i) \mod b$.
+So, after period $\rationalPeriod$,
 \begin{align*}
-  \theta_{i + {T^j}'} &= \left(\theta_{i} + \sum_{\ell = i}^{{T^j}' + i} \mathrm{digit}(n, b, d, \ell)\right) \mod b\\
+  \theta_{i + \rationalPeriod} &= \left(\theta_{i} + \sum_{\ell = i}^{\rationalPeriod + i} \mathrm{digit}(n, b, d, \ell)\right) \mod b\\
   &= \left(\theta_{i} + \mathrm{digSumPeriodic}(n, b, d)\right) \mod b\\
   &= \theta_{i} \mod b + \mathrm{digSumPeriodic}(n, b, d) \mod b.
 \end{align*}
-So, after $p$ periods of length ${T^j}'$ where $p \cdot \mathrm{digSumPeriodic}(n, b, d) \equiv 0 \mod b$,
+So, after $p$ periods of length $\rationalPeriod$ where $p \cdot \mathrm{digSumPeriodic}(n, b, d) \equiv 0 \mod b$,
 $$
-\theta_{i + p{T^j}'} = \theta_i.
+\theta_{i + p\rationalPeriod} = \theta_i.
 $$
 For simplicity, lets define
 $$
-  T^j = p{T^j}'
+  T^j = p\rationalPeriod
 $$
 where $T^j$ is the period of the state for seed $j$.
-% TODO: remove $i$ from the state and somehow have it be implicit.... 
-
+TODO: remove $i$ from the state and somehow have it be implicit.... 
 
 \subsubsection{Finding the period of $\pmb{s}$}
-Simply lcm of all other periods
+We can first see that for $\stateNotime{j} \in \pmb{s}$, $\stateNotime{j}$
+has period of $\statePeriod$. So, $\pmb{s}$ must have a period, $\totalPeriod$, of
+$$
+\lcm{j \in [k]}\; T^j.
+$$
+I.e.\ $\pmb{s}_i = \pmb{s}_{i + T}$ for all $i \in \N$.
+
 
 
 
@@ -232,7 +244,7 @@ Simply lcm of all other periods
 % https://en.wikipedia.org/wiki/Digital_root#:~:text=The%20digital%20root%20(also%20repeated,single%2Ddigit%20number%20is%20reached.
 
 
-\subsection{$\Delta P_{i, i + T} = 0$?}
+% \subsection{$\Delta P_{i, i + T} = 0$?}
 % A bunch of sums and multiplies
 % \cite{watrous2018theory}
 
