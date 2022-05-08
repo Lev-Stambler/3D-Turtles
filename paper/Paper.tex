@@ -10,12 +10,20 @@
 
 %% Custom Commands
 \newcommand{\rationalPeriod}{{T^j}'}
+\newcommand{\rationalPeriodTotal}{{T}'}
 \newcommand{\statePeriod}{T^j}
-\newcommand{\seedAngle}[1]{{\theta_{#1}}^j}
+\newcommand{\seedAngle}[1]{{\theta^j_{#1}}}
 \newcommand{\seedAngleNotime}{{\theta}^j}
 \newcommand{\state}[2]{{s_{#1}}^{#2}}
 \newcommand{\stateNotime}[1]{s^{#1}}
 \newcommand{\totalPeriod}{T}
+\newcommand{\totalState}{\pmb{s}_i}
+\newcommand{\totalStateNotime}{\pmb{s}}
+\newcommand{\comb}{Comb}
+\newcommand{\combWithState}[1]{Comb\left(s^1_{#1}, s^2_{#1}, ..., s^k_{#1}\right)}
+\newcommand{\inclIndic}[2]{{\mathrm{incl}_{#1}^{#2}}}
+\newcommand{\combSingleTerm}[1]{\prod_{j=1}^k \cos(\theta_j) ^ {\inclIndic{#1}{j}}}
+\newcommand{\digSumPeriodic}{\mathrm{digSumPeriodic}^j}
 
 
 %
@@ -84,7 +92,7 @@ $s_i^a$.
 
 Now that we have our machinery built up, lets define $Comb: \mathcal{S}^k \rightarrow \R^d$ such that
 $$
-  \Delta p_{i + 1} = Comb\left(s^1_{i + 1}, s^2_{i + 1}, ..., s^k_{i + 1}\right).
+  \Delta p_{i + 1} = \combWithState{i + 1}.
 $$
 In other words, $Comb$ takes in the state of each seed and
 returns an update to the position of the turtle.
@@ -129,7 +137,7 @@ break down our problem into two parts:
 We further restrict the problem by only considering the case where
 $$
   Comb((., ., ., ., \theta^1), (., ., ., ., \theta^2), ..., (., ., ., ., \theta^k)) =
-    \left(\prod_{i=1}^k \cos(\theta_j) ^ {\mathrm{incl}_1^j}, ..., \prod_{i=1}^k \cos(\theta_j) ^ {\mathrm{incl}_D^j}\right)
+    \left(\combSingleTerm{1}, ..., \combSingleTerm{D}\right)
 $$
 where $\mathrm{incl}_d^j \in \set{0, 1}$ for $d \in [D]$ indicates whether to include a given
 $x \in R$ determined by seed $j$ for position update in the $d$th dimension.
@@ -178,6 +186,10 @@ See, appendix \ref{AppendixPeriod} for more detail.
 More generally though, any nontrivial $\rationalPeriod$ satisfying equation \ref{eq:nd-period}
 will be a period of $\frac{n}{d}$.
 
+Next, let $$
+\rationalPeriodTotal = \lcm{j \in [k]}\; \rationalPeriod.
+$$
+
 \begin{remark}[Polytime]
   TODO: remark about polytime
 \end{remark}
@@ -198,34 +210,38 @@ to give the digital sum such that
 Moreover, define function $\mathrm{digSumPeriodic}: \N^4 \rightarrow \Z_b$
 such that
 % TODO: define T within the func from another func
+% TODO: bettr defn
 \begin{equation}
-  \mathrm{digSumPeriodic}(n, d, b) = \sum_{i = i_0}^{i_0 + T} \mathrm{digit}(n, d, b, i)
+  \digSumPeriodic = \sum_{i = i_0}^{i_0 + \rationalPeriod} \mathrm{digit}(n, d, b, i)
 \end{equation}
 
 \begin{remark}[Finding the digit sum of a rational]
   aaaa
 \end{remark}
 
-\subsubsection{Finding the period of $\seedAngleNotime$} % TODO: redifine things in terms of theta...
+\subsubsection{Finding a period of $\seedAngleNotime$} % TODO: redifine things in terms of theta...
 For $(n^j, b^j, d^j, \theta_i^j) = s_i^j$,
 recall that $\seedAngle{i + 1} = \seedAngle{i} + \mathrm{digit}(n, b, d, i) \mod b$.
-So, after period $\rationalPeriod$,
+So, after period $\rationalPeriodTotal$,
 \begin{align*}
-  \theta_{i + \rationalPeriod} &= \left(\theta_{i} + \sum_{\ell = i}^{\rationalPeriod + i} \mathrm{digit}(n, b, d, \ell)\right) \mod b\\
-  &= \left(\theta_{i} + \mathrm{digSumPeriodic}(n, b, d)\right) \mod b\\
-  &= \theta_{i} \mod b + \mathrm{digSumPeriodic}(n, b, d) \mod b.
+  \theta_{i + \rationalPeriodTotal} &= \left(\theta_{i} + \sum_{\ell = i}^{\rationalPeriodTotal + i} \mathrm{digit}(n, b, d, \ell)\right) \mod b\\
+  &= \left(\theta_{i} + \frac{\rationalPeriodTotal}{\rationalPeriod} \digSumPeriodic\right) \mod b\\
+  &= \theta_{i} \mod b + \frac{\rationalPeriodTotal}{\rationalPeriod} \digSumPeriodic \mod b.
 \end{align*}
-So, after $p$ periods of length $\rationalPeriod$ where $p \cdot \mathrm{digSumPeriodic}(n, b, d) \equiv 0 \mod b$,
+So, after $p$ periods of length $\rationalPeriodTotal$ where $p \cdot \frac{\rationalPeriodTotal}{\rationalPeriod}  \cdot \digSumPeriodic \equiv 0 \mod b$,
 $$
-\theta_{i + p\rationalPeriod} = \theta_i.
+\theta_{i + p\rationalPeriodTotal} = \theta_i.
 $$
 For simplicity, lets define
 $$
-  T^j = p\rationalPeriod
+  T^j = p\rationalPeriodTotal
 $$
-where $T^j$ is the period of the state for seed $j$.
-TODO: remove $i$ from the state and somehow have it be implicit.... 
+where $T^j$ is a period of the state for seed $j$.
+% TODO: remove $i$ from the state and somehow have it be implicit.... 
 
+% Oh man... we are going to have to define an intermediate total period...
+% One for all T'...
+% and then have a sum for T
 \subsubsection{Finding the period of $\pmb{s}$}
 We can first see that for $\stateNotime{j} \in \pmb{s}$, $\stateNotime{j}$
 has period of $\statePeriod$. So, $\pmb{s}$ must have a period, $\totalPeriod$, of
@@ -244,7 +260,59 @@ I.e.\ $\pmb{s}_i = \pmb{s}_{i + T}$ for all $i \in \N$.
 % https://en.wikipedia.org/wiki/Digital_root#:~:text=The%20digital%20root%20(also%20repeated,single%2Ddigit%20number%20is%20reached.
 
 
-% \subsection{$\Delta P_{i, i + T} = 0$?}
+\subsection{Does it close? $\Delta P_{i, i + T} = 0$?}
+So now that we know the period of $\totalStateNotime$, we can ask if
+$\Delta P_{i, i + T} = 0$. % TODO: reference
+
+Note that 
+$$
+\Delta P_{i, i + T} = \Delta P_{q, q + T}
+$$
+for all $i, q \in \N$ by definition of periodicity.
+So, we will drop the $i$ and replace it with a $0$.
+Then,
+\begin{align*}
+  \Delta P_{0, T} &= \sum_{i = 1}^T \Delta p_i \\
+  &= \sum_{i = 1}^T \combWithState{i} \\
+  &= \sum_{i = 1}^T \left(\combSingleTerm{1}, ..., \combSingleTerm{D}\right) \\
+  &= \left(\sum_{i = 1}^T \combSingleTerm{1}, ..., \sum_{i = 1}^T \combSingleTerm{D}\right).
+\end{align*}
+We can thus see that $\Delta P_{0, T} = \pmb{0} = (0, ..., 0)$ iff 
+\begin{equation}
+\label{eq:singleDelta0}
+\sum_{i = 1}^T \combSingleTerm{d} = 0
+\end{equation}
+for all $d \in D$.
+
+\subsubsection{Closing along a single dimension}
+Finally, to see if a shape will close,
+we just need to find if equation \eqref{eq:singleDelta0} holds true for all dimensions.
+First, let $A_d = \set{j \mid j \in [k] \and \inclIndic{d}{j} = 1}$
+We can then see that
+\begin{align*}
+&\sum_{i = 1}^T \combSingleTerm{d}\\
+&=\sum_{i = 1}^T \prod_{j = 1}^k \left(\half \left(e^{\seedAngle{i} I} +  e^{-\seedAngle{i} I}\right)\right)^\inclIndic{d}{j}\\
+&=2^{-|A|} \sum_{i = 1}^T \prod_{j \in A_d} \left(e^{\seedAngle{i} I} +  e^{-\seedAngle{i} I}\right)\\
+\end{align*}
+
+\newcommand{\periodFrac}{\frac{\totalPeriod}{\rationalPeriod}}
+\newcommand{\periodFracRational}{\frac{\rationalPeriodTotal}{\rationalPeriod}}
+
+We can then see that for $(n, b, d, \theta_i) \in \pmb{s}_i$
+\begin{align*}
+  \seedAngle{x \rationalPeriodTotal + y} &= \sum_{i = 0}^{x \rationalPeriodTotal + y} \mathrm{digit}(n, b, d, i) \\
+  &= \sum_{p = 0}^{x\periodFrac - 1} \sum_{q=0}^{\rationalPeriod - 1} \mathrm{digit}(n, b, d, p\rationalPeriodTotal + b)
+    + \sum_{p = 0}  \\
+    % ARGS::....
+  &= x\cdot \periodFracRational \cdot \digSumPeriodic + .
+\end{align*}
+
+Then, 
+\begin{align*}
+ &2^{-|A|} \sum_{i = 1}^T \prod_{j \in A_d} \left(e^{\seedAngle{i} I} +  e^{-\seedAngle{i} I}\right)\\
+ =& 2^{-|A|} \sum_{p= 0}^{\frac{\totalPeriod}{\rationalPeriodTotal} - 1} \sum_{q = 0}^{\rationalPeriodTotal - 1}\prod_{j \in A_d} \left(e^{\seedAngle{p \rationalPeriodTotal + q} I} +  e^{-\seedAngle{p \rationalPeriodTotal + q} I}\right)\\
+\end{align*}
+
 % A bunch of sums and multiplies
 % \cite{watrous2018theory}
 
@@ -267,3 +335,5 @@ aaaaa
 
 
 \end{document}
+
+% TODO: put b\theta / 2pi in State UPDATE
