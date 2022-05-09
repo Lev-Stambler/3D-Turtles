@@ -419,7 +419,7 @@ $
   \right)
 $,
 is invariant for all $p$ in equitation \eqref{eq:inner-outer-split}. So then,
-let the inner sum equal $C \in \Z$.  Moreover, note that 
+let the inner sum equal $C_\beta \in \Z$.  Moreover, note that 
 \begin{align*}
   &\exp\left(
       pI \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
@@ -480,9 +480,25 @@ for all $d \in D$.
 So then, $\Delta P_{0, T} = 0$ whenever 
 no degree $1$ multinomials with coefficients of $-1$ or $1$ and $|A_d|$ variables has a root of $(\digSumPeriodicNoJ^1, \digSumPeriodicNoJ^2, ..., \digSumPeriodicNoJ^{|A_d|})$.
 In other words, if variables, $x_1 = \digSumPeriodicNoJ^1, x_2 = \digSumPeriodicNoJ^2, ...$, there does not exist a multinomial
-of form $\pm x_1 \pm x_2 \pm ... \pm x_{|A_d|} = 0$.
+of form 
+$$
+  \pm x_1 \pm x_2 \pm ... \pm x_{|A_d|} = 0.
+$$
 
-
+% TODO: replace this eqWTSInnerProf with like P_{}(d) or smthng...
+In the case that $\exists \beta \in \set{0, 1}^{|A_d|}$ such that $\sum_{j \in A_d} -1 ^ {\beta_{(j)}} = 0$, it is still possible
+for
+$$
+\eqWTSInnerProd = 0
+$$
+if $C_\beta = 0$. So, 
+\begin{equation*}
+  \sum_{q = 0}^{\rationalPeriodTotal - 1}
+  \exp\left(
+      \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
+        \sum_{\ell = 0}^{q}\mathrm{digit}(n, b, d, \ell)
+  \right) = 0
+\end{equation*}
 
 % TODO: second part can be thought of as a constant for now... ie C2=
 % Then, we can think of the inner first sum as a constant of sorts, (C1)

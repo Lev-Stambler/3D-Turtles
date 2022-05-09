@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021) (preloaded format=pdflatex 2022.1.19)  9 MAY 2022 08:45
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021) (preloaded format=pdflatex 2022.1.19)  9 MAY 2022 08:55
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -720,29 +720,29 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 [3] [4] [5] [6]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 513.
+(hyperref)                removing `math shift' on input line 529.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\begingroup' on input line 513.
+(hyperref)                removing `\begingroup' on input line 529.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\endgroup' on input line 513.
+(hyperref)                removing `\endgroup' on input line 529.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\@@over' on input line 513.
+(hyperref)                removing `\@@over' on input line 529.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 513.
+(hyperref)                removing `math shift' on input line 529.
 
 (./Paper.bbl (./Paper.brf)
 \tf@brf=\write4
 \openout4 = `Paper.brf'.
 
-
+ [7]
 Underfull \hbox (badness 10000) in paragraph at lines 8--8
 []\OT1/cmr/m/n/10.95 Glen O (https://math.stackexchange.com/users/67842/glen o).  Length of pe-
  []
@@ -752,25 +752,25 @@ Underfull \hbox (badness 10000) in paragraph at lines 8--8
 \OT1/cmr/m/n/10.95 riod of dec-i-mal ex-pan-sion of a frac-tion.  Math-e-mat-ics Stack Ex-change.
  []
 
-) [7] (./Paper.aux)
+) [8] (./Paper.aux)
 Package rerunfilecheck Info: File `Paper.out' has not changed.
 (rerunfilecheck)             Checksum: B496E5A70AC581C4A08CD5B1444B0A33;3035.
 Package rerunfilecheck Info: File `Paper.brf' has not changed.
 (rerunfilecheck)             Checksum: B6CC6EC7581F1ABD77A86E1EDF9B2C12;68.
  ) 
 Here is how much of TeX's memory you used:
- 18161 strings out of 478286
- 307138 string characters out of 5846741
+ 18162 strings out of 478286
+ 307144 string characters out of 5846741
  598448 words of memory out of 5000000
  36005 multiletter control sequences out of 15000+600000
  480936 words of font info for 81 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  102i,12n,105p,341b,469s stack positions out of 5000i,500n,10000p,200000b,80000s
  </home/lev/.texlive2021/texmf-var/fonts/pk/ljfour/public/bbm/bbm10.657pk></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
-Output written on Paper.pdf (8 pages, 197550 bytes).
+Output written on Paper.pdf (9 pages, 198321 bytes).
 PDF statistics:
- 238 PDF objects out of 1000 (max. 8388607)
- 201 compressed objects within 3 object streams
- 49 named destinations out of 1000 (max. 500000)
+ 242 PDF objects out of 1000 (max. 8388607)
+ 204 compressed objects within 3 object streams
+ 50 named destinations out of 1000 (max. 500000)
  169 words of extra memory for PDF output out of 10000 (max. 10000000)
 
