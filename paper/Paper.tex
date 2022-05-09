@@ -25,6 +25,8 @@
 \newcommand{\inclIndic}[2]{{\mathrm{incl}_{#1}^{#2}}}
 \newcommand{\combSingleTerm}[1]{\prod_{j=1}^k \cos(\theta_j) ^ {\inclIndic{#1}{j}}}
 \newcommand{\digSumPeriodic}{\mathrm{digSumPeriodic}^j}
+\newcommand{\digSumPeriodicNoJ}{\mathrm{digSumPeriodic}}
+\newcommand{\totalOverRationalFrac}{\frac{\totalPeriod}{\rationalPeriodTotal}}
 
 
 %
@@ -192,7 +194,7 @@ Next, let $$
 $$
 
 \begin{remark}[Polytime]
-  TODO: remark about polytime
+  TODO: remark about discrete log and similarity... (we think this is hard, but in QPP)...
 \end{remark}
 
 \subsubsection{Digital sum}
@@ -350,14 +352,17 @@ Then,
       \right).
 \end{align*}
 
-Then, lets fix some $\beta \in \set{0, 1}^{|A_d|}$, we will now show that 
-\begin{equation}
-\label{eq:wts01}  
+\newcommand{\eqWTSInnerProd}{
   \sum_{p= 0}^{\frac{\totalPeriod}{\rationalPeriodTotal} - 1} \sum_{q = 0}^{\rationalPeriodTotal - 1}
     \exp\left(
         \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
         \seedAngle{p \rationalPeriodTotal + q}I
-      \right)
+      \right)}
+
+Then, lets fix some $\beta \in \set{0, 1}^{|A_d|}$, we will now show that 
+\begin{equation}
+\label{eq:wts01}  
+  \eqWTSInnerProd
 \end{equation}
 always equals $0$ or $1$ for any choice of $\beta$.
 
@@ -389,7 +394,8 @@ So then, by equation \eqref{eq:expBreakdown}, we get that
 \end{align}
 
 We then use \eqref{eq:decomposeExp} to show that \eqref{eq:wts01} equals
-\begin{equation*}
+\begin{equation}
+\label{eq:inner-outer-split}
   \sum_{p= 0}^{\frac{\totalPeriod}{\rationalPeriodTotal} - 1} \left[
     \exp\left(
       pI \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
@@ -399,9 +405,85 @@ We then use \eqref{eq:decomposeExp} to show that \eqref{eq:wts01} equals
   \sum_{q = 0}^{\rationalPeriodTotal - 1}
     \exp\left(
         \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
-          \sum_{\ell = 0}^{q}\mathrm{digit}(n, b, d, \ell).
+          \sum_{\ell = 0}^{q}\mathrm{digit}(n, b, d, \ell)
     \right)\right)\right].
+\end{equation}
+
+\subsubsection*{Case 1}
+Observe that the inner sum,
+$
+  \sum_{q = 0}^{\rationalPeriodTotal - 1}
+  \exp\left(
+      \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
+        \sum_{\ell = 0}^{q}\mathrm{digit}(n, b, d, \ell)
+  \right)
+$,
+is invariant for all $p$ in equitation \eqref{eq:inner-outer-split}. So then,
+let the inner sum equal $C \in \Z$.  Moreover, note that 
+\begin{align*}
+  &\exp\left(
+      pI \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
+      \digSumPeriodic
+    \right)\\
+  =& \prod_{j \in A_d} \exp\left(-1^{\beta_{(j)}} pI \cdot \digSumPeriodic \right)
+\end{align*}
+and that 
+\begin{equation*}
+  \exp\left(-1^{\beta_{(j)}} pI \cdot \digSumPeriodic \right) = \exp\left(0\right) = 1
 \end{equation*}
+when $p = \frac{\totalPeriod}{\rationalPeriodTotal}$. Then, we can see that
+$$
+\prod_{j \in A_d} \exp\left(-1^{\beta_{(j)}} pI \cdot \digSumPeriodic \right) = 1
+$$
+when $p = \frac{\totalPeriod}{\rationalPeriodTotal}$.
+
+And so, because $\digSumPeriodic$ is a constant, we can conclude that
+\begin{equation*}
+ \exp\left(
+      I \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
+      \digSumPeriodic
+    \right) 
+\end{equation*}
+is a $\totalOverRationalFrac^th$ root of unity iff $\sum_{j \in A_d} -1 ^ {\beta_{(j)}} \neq 0$.
+
+So, for $\sum_{j \in A_d} -1 ^ {\beta_{(j)}} \neq 0$, we have that
+\begin{align*}
+  \eqWTSInnerProd &= C \sum_{p= 0}^{\frac{\totalPeriod}{\rationalPeriodTotal} - 1}
+    \exp\left(
+      pI \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
+      \digSumPeriodic
+    \right) \\
+    &= C \sum_{p = 0}^{\totalOverRationalFrac - 1}\exp\left(W_{\totalOverRationalFrac}^p\right) \\
+    &= 0.
+\end{align*}
+where $W_{\totalOverRationalFrac}^p$ is the $\totalOverRationalFrac^{th}$ root of unity.
+
+If $\sum_{j \in A_d} -1 ^ {\beta_{(j)}} = 0$, then 
+\begin{align*}
+  \eqWTSInnerProd &= C \sum_{p= 0}^{\frac{\totalPeriod}{\rationalPeriodTotal} - 1} \exp(0) \\
+  &= 1.
+\end{align*}
+
+So, we have now shown that \eqref{eq:wts01} is always $0$ or $1$. In particular, we also have our first 
+closure result. If, $\forall \beta \in \set{0, 1}^{|A_d|}$, $\sum_{j \in A_d} -1 ^ {\beta_{(j)}} \neq 0$,
+\begin{align*}
+  \sum_{i = 1}^T \combSingleTerm{d} &=  2^{-|A|} 
+  \sum_{\beta \in \set{0,1}^{|A_d|}} 
+      \sum_{p= 0}^{\frac{\totalPeriod}{\rationalPeriodTotal} - 1} \sum_{q = 0}^{\rationalPeriodTotal - 1}
+     \exp\left(
+         \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
+         \seedAngle{p \rationalPeriodTotal + q}I
+       \right) \\
+        &= 0
+\end{align*}
+for all $d \in D$.
+So then, $\Delta P_{0, T} = 0$ whenever 
+no degree $1$ multinomials with coefficients of $-1$ or $1$ and $|A_d|$ variables has a root of $(\digSumPeriodicNoJ^1, \digSumPeriodicNoJ^2, ..., \digSumPeriodicNoJ^{|A_d|})$.
+In other words, if variables, $x_1 = \digSumPeriodicNoJ^1, x_2 = \digSumPeriodicNoJ^2, ...$, there does not exist a multinomial
+of form $\pm x_1 \pm x_2 \pm ... \pm x_{|A_d|} = 0$.
+
+
+
 % TODO: second part can be thought of as a constant for now... ie C2=
 % Then, we can think of the inner first sum as a constant of sorts, (C1)
 % And we know that pI(T/T') = 1 and that pI0 = 1. So, if C1 \neq 0, we get some roots of unity
