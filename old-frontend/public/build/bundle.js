@@ -3339,10 +3339,10 @@ var app = (function () {
             {
                 iterator: getRationalAngleIterator({
                     n: 7,
-                    d: 11,
-                    b: 4,
+                    d: 179,
+                    b: 19,
                 }),
-                base: 4,
+                base: 19,
                 usage: [
                     {
                         dimension: "X",
@@ -3362,7 +3362,7 @@ var app = (function () {
             {
                 iterator: getRationalAngleIterator({
                     n: 21,
-                    d: 11,
+                    d: 171,
                     b: 9,
                 }),
                 base: 9,
