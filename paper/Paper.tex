@@ -31,7 +31,7 @@
 \newcommand{\totalOverRationalFrac}{\frac{\totalPeriod}{\rationalPeriodTotal}}
 \newcommand{\changeTotalOneDim}{\Delta P_{0, T}^d}
 \newcommand{\digit}{\mathrm{digit}}
-\newcommand{\commonBase}{\pmb{b}}
+\newcommand{\commonBase}{{\pmb{b}}}
 \newcommand{\numbToCommon}{\frac{\commonBase}{b^j}}
 \newcommand{\commonToAngle}{\frac{2\pi}{\commonBase}}
 \newcommand{\sinOrCos}{\phi^j}
@@ -220,7 +220,6 @@ can be determined by finding the smallest $\rationalPeriod$ such that
 \label{eq:nd-period}
 b ^ {\rationalPeriod} \equiv 1 \mod d.
 \end{equation}
-See, appendix \ref{AppendixPeriod} for more detail.
 More generally though, any nontrivial $\rationalPeriod$ satisfying equation \ref{eq:nd-period}
 will be a period of $\frac{n}{d}$.
 
@@ -229,6 +228,7 @@ Next, let $$
 $$
 
 \begin{remark}[Complexity]
+\label{remark:periodcomplex}
   Interestingly, period finding of rational numbers is intimately tied to the discrete
   log problem and factoring. For more information, check out \cite{MathOverflowFracPeriod}.
   This gives some intuition that this closure problem may not be in BPP (Bounded Error Polynomial Time),
@@ -326,31 +326,106 @@ We can thus see that $\Delta P_{0, T} = \pmb{0} = (0, ..., 0)$ iff
 \sum_{i = 1}^T \combSingleTerm{d} = 0
 \end{equation}
 for all $d \in D$.
+We can thus check for closure by computing \eqref{eq:singleDelta0} for each dimension.
 
-\begin{remark}[Complexity]
-  The algorithm we provide in equation \eqref{eq:singleDelta0} runs in time exponential 
-  in the size of the input assuming the Word RAM model. 
-  The period for the rational generated from rational parameter $j$, $1 \leq \rationalPeriod \leq d^j$. Then,
-  the period over all rationals generated from parameters is at most 
-  $$
-    \lcm{j \in [k]} \rationalPeriod \leq \prod_{j \in [k]} \rationalPeriod \leq \left(\max_{j \in [k]} \; d^j \right)^k.
-  $$
-  Then, 
+\subsection{Algorithm complexity}
+The algorithm we provide in equation \eqref{eq:singleDelta0} runs in time exponential 
+in the size of the input assuming the Word RAM model. 
+The period for the rational generated from rational parameter $j$, $1 \leq \rationalPeriod \leq d^j$. Then,
+the period over all rationals generated from parameters is at most 
+$$
+  \lcm{j \in [k]} \rationalPeriod \leq \prod_{j \in [k]} \rationalPeriod \leq \left(\max_{j \in [k]} \; d^j \right)^k.
+$$
+Then, 
 $0 \leq \totalPeriod \leq \rationalPeriodTotal \cdot \lcm{j \in [k]} b^j \leq \rationalPeriodTotal \left(\max_{j \in [k]} b^j\right)^k$.
-  And because evaluating the product in \eqref{eq:singleDelta0} takes $O(k)$ time,
-  we have that the time for \eqref{eq:singleDelta0} is at most
-  $$
-    O\left(\left[\max_{j \in [k]} \; (b^j d^j)\right]^k \right).
-  $$
-  Because \eqref{eq:singleDelta0} must be computed for each dimension, the algorithm
-  runs in 
-  $$
-    O\left(D \left[\max_{j \in [k]} \; (b^j d^j)\right]^k \right)
-  $$
-  time.
+And because evaluating the product in \eqref{eq:singleDelta0} takes $O(k)$ time,
+we have that the time for \eqref{eq:singleDelta0} is at most
+$$
+  O\left(\left[\max_{j \in [k]} \; (b^j d^j)\right]^k \right).
+$$
+
+Then, note that computing the period of rational numbers via known classical methods takes 
+exponential time in the number of digits of the denominator. So, computing
+$\rationalPeriod$ takes $O(d^j)$ time. Then, computing the $\digSumPeriodic$
+can take $O(d^j)$ time. 
+We can thus see that period finding takes at most
+$$
+O\left(k \max_{j \in [k]} d^j \right)
+$$
+time.
+
+Because \eqref{eq:singleDelta0} must be computed for each dimension, the algorithm
+runs in 
+$$
+  O\left(k \max_{j \in [k]} d^j \right) + 
+  O\left(\max_{j \in [k]} \; D (b^j d^j)^k \right) = 
+  O\left(\max_{j \in [k]} \; D (b^j d^j)^k \right)
+$$
+time.
+Note that $b^j, d^j$ are also exponential in the size of the input. 
+We can thus see that our running time is quite atrocious (its worse than exponential).
+Moreover, the algorithm does not produce a proof, verifiable in polytime, for closure 
+or lack there of. Thus, our algorithm is in neither NP or coNP.
+
+\section{Interesting Properties and an attempt at certificates}
+We will now proceed to go over some interesting properties of the closure question
+which may give rise to an algorithm in NP, coNP, or even BQP. These properties were discovered
+in the author's pursuit of simplifying the question. Moreover, these properties may guide
+some intuition as to the probability of closure for random rational seeds, a fixed $k$, 
+and fixed bases $b$.
+
+\subsection{Property 1: Restricted Monomials and Closure}
+Define $A_d = \set{j \mid j \in [k] \; \text{and}\; \inclIndic{d}{j} = 1}$, in other words,
+$A_d$ is the set of rational parameters which are included in determining the position along the $d$th dimension.
+Also, for function $f: \Z_\commonBase^{|A_d|} \rightarrow \Z_\commonBase$ and $\{a_1, a_2, ..., a_{|A_d|} \} = A_d$, we will denote
+$$
+  f\left(\digSumPeriodicNoJ^{a_1}, \digSumPeriodicNoJ^{a_2}, ..., \digSumPeriodicNoJ^{a_{A_d}}\right)
+  = f\left(\digSumPeriodicNoJ\right).
+$$
+
+Then, let
+$$
+\mathcal{M} = \{f : f(\pmb{x}) = \pm x_1 \pm x_2 ... \pm x_{|A_d|}\}.
+$$
+In other words, $\mathcal{M}$ is the set of all multinomials with $|A_d|$ variables with
+degree 1 and coefficients $\pm1$.
+Then,
+if \begin{equation}
+\label{eq:satisfy-multi}
+f\left(\digSumPeriodicNoJ\right) \neq 0
+\end{equation}
+for all $f \in \mathcal{M}$ and $d \in [D]$, the turtle will always draw a closed shape. See 
+Appendix \ref{appendix:prop1} for the proof.
+
+Satisfying \eqref{eq:satisfy-multi} is true for all $f$ is equivalent to
+$$
+  \prod_{f \in \mathcal{M}} f(\digSumPeriodicNoJ) \neq 0.
+$$
+
+where $\prod_{f \in \mathcal{M}} f$ is a polynomial of degree
+at most $2^{|A_d|} \leq 2^k$.
+
+If we were to then assume that $(\digSumPeriodicNoJ^1, ..., \digSumPeriodicNoJ^k)$ 
+is uniformly and randomly draw from $\Z_\commonBase^k$, we then know by the 
+Schwartz-Zippel Lemma
+$$
+  \Pr\left[\prod_{f \in \mathcal{M}} f(\digSumPeriodicNoJ) = 0\right] < \frac{2^k}{\commonBase}.
+$$
+% TODO: cite,
+So, this would leave us with
+$$
+  \Pr\left[\prod_{f \in \mathcal{M}} f(\digSumPeriodicNoJ) \neq 0\right] > 1 - \frac{2^k}{\commonBase}.
+$$
+In particular, this means that the probability of closure would be at least
+$$
+1 - \frac{2^k}{\commonBase}.
+$$
+
+\begin{remark}[Randomness assumption]
+  The randomness assumption, that $(\digSumPeriodicNoJ^1, ..., \digSumPeriodicNoJ^k)$
+  is drawn from a random distribution is very much not true. But, given a rational parameter
+  there does seem to be some element of randomness for $\digSumPeriodic$. See \cite{OnDecSeq} for more information.
 \end{remark}
-
-
 \section{Conclusion}
 
 \section{Open Questions}
@@ -361,7 +436,7 @@ $0 \leq \totalPeriod \leq \rationalPeriodTotal \cdot \lcm{j \in [k]} b^j \leq \r
 
 \appendix
 \section{Proving Property 1}
-\label{AppendixPeriod}
+\label{appendix:prop1}
 \include{PaperAppendix.tex}
 
 \bibliographystyle{alpha}

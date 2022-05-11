@@ -1043,6 +1043,8 @@ INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/bbm/bbm8.tfm
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/bbm/bbm6.tfm
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/bbm/bbm12.tfm
+INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmbx8.tfm
+INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmbx6.tfm
 INPUT ./PaperAppendix.tex
 OUTPUT PaperAppendix.aux
 INPUT ./PaperAppendix.tex
