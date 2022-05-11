@@ -1,4 +1,7 @@
-Before getting to the main result, we need to first prove the following lemma
+First let $I = \sqrt{-1}$ instead of $i$. This is done as $i$ is already reserved
+to represent the current time step.
+
+Now, before getting to the main proof, we need to prove the following lemma
 \begin{lemma}{For all $j \in [k]$ and $x, y \in \N$ where $y < \rationalPeriodTotal$, we have that 
   $$
     \theta_{xT' + y}^j = x\cdot \digSumPeriodic + \sum_{q = 0}^y \digit(n, b, d, q)
@@ -18,7 +21,6 @@ Before getting to the main result, we need to first prove the following lemma
   \end{proof}
 \end{lemma}
 
-\subsubsection{Closing along a single dimension}
 Let $\changeTotalOneDim$ be the change of position along dimension $d$
 from timestep 0 to $T$.
 We are now ready to determine if we ``close" along one dimension. I.e.\ does
@@ -31,12 +33,12 @@ $A_d$ is the set of rational parameters which are included in determining the po
 We can then see that
 \begin{align*}
 \changeTotalOneDim &=\sum_{i = 1}^T \combSingleTerm{d}\\
-  &=\sum_{i = 1}^T \prod_{j = 1}^k \left(\half \left(\exp\left({\numbToAngle \rationalAngle{i} I}\right) +  \exp\left(-\numbToAngle \rationalAngle{i} I\right)\right)\right)^\inclIndic{d}{j}\\
-  &= 2^{-|A|} \sum_{p= 0}^{\frac{\totalPeriod}{\rationalPeriodTotal} - 1} \sum_{q = 0}^{\rationalPeriodTotal - 1}
+  &=\pm\sum_{i = 1}^T \prod_{j = 1}^k \left(\half \left(\exp\left({\numbToAngle \rationalAngle{i} I}\right) \pm \exp\left(-\numbToAngle \rationalAngle{i} I\right)\right)\right)^\inclIndic{d}{j}\\
+  &= \pm 2^{-|A|} \sum_{p= 0}^{\frac{\totalPeriod}{\rationalPeriodTotal} - 1} \sum_{q = 0}^{\rationalPeriodTotal - 1}
     \prod_{j \in A_d} \left(
-      \exp\left(\numbToAngle\rationalAngle{p \rationalPeriodTotal + q} I\right) +  \exp\left(-\numbToAngle\rationalAngle{p \rationalPeriodTotal + q} I\right)\right)
+      \exp\left(\numbToAngle\rationalAngle{p \rationalPeriodTotal + q} I\right) \pm  \exp\left(-\numbToAngle\rationalAngle{p \rationalPeriodTotal + q} I\right)\right)
 \end{align*}
-by the Euler form of $\cos$.
+by the Euler form of $\cos$ and $\sin$ and the fact that $\changeTotalOneDim$ is real.
 
 \newcommand{\periodFrac}{\frac{\totalPeriod}{\rationalPeriod}}
 \newcommand{\periodFracRational}{\frac{\rationalPeriodTotal}{\rationalPeriod}}
@@ -45,15 +47,16 @@ by the Euler form of $\cos$.
 Next, observe that 
 \begin{align*}
   &\prod_{j \in A_d} \left(
-      \exp\left(\numbToAngle\rationalAngle{p \rationalPeriodTotal + q} I\right) +  \exp\left(-\numbToAngle\rationalAngle{p \rationalPeriodTotal + q} I\right)\right)\\
+      \exp\left(\numbToAngle\rationalAngle{p \rationalPeriodTotal + q} I\right) \pm  \exp\left(-\numbToAngle\rationalAngle{p \rationalPeriodTotal + q} I\right)\right)\\
  =& 
   \exp(\numbToAngleNoJ{1}\rationalAngleJ{p \rationalPeriodTotal + q}{1} + \numbToAngleNoJ{2}\rationalAngleJ{p \rationalPeriodTotal + q}{2} + ... + \numbToAngleNoJ{d}\rationalAngleJ{p \rationalPeriodTotal + q}{d}) 
-  + \exp(\numbToAngleNoJ{1}\rationalAngleJ{p \rationalPeriodTotal + q}{1} - \numbToAngleNoJ{2}\rationalAngleJ{p \rationalPeriodTotal + q}{2} + ... + \numbToAngleNoJ{d}\rationalAngleJ{p \rationalPeriodTotal + q}{d}) + ... \\
-  &+ \exp(-\numbToAngleNoJ{1}\rationalAngleJ{p \rationalPeriodTotal + q}{1} - \numbToAngleNoJ{2}\rationalAngleJ{p \rationalPeriodTotal + q}{2} - ... - \numbToAngleNoJ{d}\rationalAngleJ{p \rationalPeriodTotal + q}{d})
+  \pm \exp(\numbToAngleNoJ{1}\rationalAngleJ{p \rationalPeriodTotal + q}{1} - \numbToAngleNoJ{2}\rationalAngleJ{p \rationalPeriodTotal + q}{2} + ... + \numbToAngleNoJ{d}\rationalAngleJ{p \rationalPeriodTotal + q}{d}) + ... \\
+  &\pm \exp(-\numbToAngleNoJ{1}\rationalAngleJ{p \rationalPeriodTotal + q}{1} - \numbToAngleNoJ{2}\rationalAngleJ{p \rationalPeriodTotal + q}{2} - ... - \numbToAngleNoJ{d}\rationalAngleJ{p \rationalPeriodTotal + q}{d})
 \end{align*}
 which then equals
 \begin{equation}
  \sum_{\beta \in \set{0,1}^{|A_d|}} 
+		\pm
     \exp\left(
       	\commonToAngle I
         \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
@@ -67,15 +70,17 @@ Then, we have that
 % TODO: update with common base stuff...
 \begin{align*}
  \changeTotalOneDim =&
-  2^{-|A|} \sum_{p= 0}^{\frac{\totalPeriod}{\rationalPeriodTotal} - 1} \sum_{q = 0}^{\rationalPeriodTotal - 1}
+  \pm 2^{-|A|} \sum_{p= 0}^{\frac{\totalPeriod}{\rationalPeriodTotal} - 1} \sum_{q = 0}^{\rationalPeriodTotal - 1}
  \sum_{\beta \in \set{0,1}^{|A_d|}} 
+ 	 \pm
     \exp\left(
         \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
         \rationalAngle{p \rationalPeriodTotal + q}I
       \right)\\
  =&
-  2^{-|A|} 
+  \pm 2^{-|A|} 
  \sum_{\beta \in \set{0,1}^{|A_d|}} 
+		\pm
      \sum_{p= 0}^{\frac{\totalPeriod}{\rationalPeriodTotal} - 1} \sum_{q = 0}^{\rationalPeriodTotal - 1}
     \exp\left(
         \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
@@ -141,7 +146,7 @@ We then use \eqref{eq:decomposeExp} to show that $Q$ equals
     \right)\right)\right].
 \end{equation}
 
-\subsubsection*{Case 1}
+\subsubsection*{Case 1: $\sum_{j \in A_d} -1 ^ {\beta_{(j)}} \digSumPeriodic \neq 0$}
 Define
 $$
   C_\beta = \sum_{q = 0}^{\rationalPeriodTotal - 1}
@@ -190,55 +195,26 @@ So, for $\sum_{j \in A_d} -1 ^ {\beta_{(j)}}\digSumPeriodic \neq 0$, we have tha
 \end{align*}
 where $W_{\totalOverRationalFrac}^p$ is the $\totalOverRationalFrac^{th}$ root of unity.
 
+\subsubsection*{Case 2: $\sum_{j \in A_d} -1 ^ {\beta_{(j)}} \digSumPeriodic = 0$}
 If $\sum_{j \in A_d} -1 ^ {\beta_{(j)}} \digSumPeriodic = 0$, then 
 \begin{align*}
   \eqWTSInnerProd &= C_\beta \sum_{p= 0}^{\frac{\totalPeriod}{\rationalPeriodTotal} - 1} \exp(0) \\
   &= C_\beta.
 \end{align*}
+So $$\eqWTSInnerProd = 0$$ iff $C_\beta = 0$.
 
-So, we have now shown that \eqref{eq:wts01} is always $0$ or $1$. In particular, we also have our first 
-closure result. If, $\forall \beta \in \set{0, 1}^{|A_d|}$, $\sum_{j \in A_d} -1 ^ {\beta_{(j)}} \neq 0$,
+\subsubsection*{To conclude}
+If, $\forall \beta \in \set{0, 1}^{|A_d|}$, $\sum_{j \in A_d} -1 ^ {\beta_{(j)}} \neq 0$
+or $C_\beta = 0$, then
 \begin{align*}
-  \sum_{i = 1}^T \combSingleTerm{d} &=  2^{-|A|} 
+  \changeTotalOneDim &= \sum_{i = 1}^T \combSingleTerm{d} \\&=  2^{-|A|}
   \sum_{\beta \in \set{0,1}^{|A_d|}} 
       \sum_{p= 0}^{\frac{\totalPeriod}{\rationalPeriodTotal} - 1} \sum_{q = 0}^{\rationalPeriodTotal - 1}
      \exp\left(
          \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
          \rationalAngle{p \rationalPeriodTotal + q}I
        \right) \\
-        &= 0
+        &= 0.
 \end{align*}
-for all $d \in D$.
-So then, $\Delta P_{0, T} = 0$ whenever 
-no degree $1$ multinomials with coefficients of $-1$ or $1$ and $|A_d|$ variables has a root of $(\digSumPeriodicNoJ^1, \digSumPeriodicNoJ^2, ..., \digSumPeriodicNoJ^{|A_d|})$.
-In other words, if variables, $x_1 = \digSumPeriodicNoJ^1, x_2 = \digSumPeriodicNoJ^2, ...$, there does not exist a multinomial
-of form 
-$$
-  \pm x_1 \pm x_2 \pm ... \pm x_{|A_d|} = 0.
-$$
-
-Said differently, let multinomial $m: \Z_{\commonBase} \rightarrow \Z_{\commonBase}$ be such that
-\begin{equation*}
-  m(x_1, x_2, ..., x_{|A_d|}) = \prod_{\beta \in \set{0, 1}^{|A_d|}} \left(\sum_{j \in A_d} -1^{\beta_j}AAA \right).
-\end{equation*}
-Then, if $m(\digSumPeriodicNoJ^1, \digSumPeriodicNoJ^2, ..., \digSumPeriodicNoJ^{|A_d|}) \neq 0$,
-we know that the shape must close.
-
-
-\subsubsection*{There does exist}
-
-% TODO: replace this eqWTSInnerProf with like P_{}(d) or smthng...
-In the case that $\exists \beta \in \set{0, 1}^{|A_d|}$ such that $\sum_{j \in A_d} -1 ^ {\beta_{(j)}} = 0$, it is still possible
-for
-$$
-\eqWTSInnerProd = 0
-$$
-if $C_\beta = 0$. So, 
-\begin{equation*}
-  \sum_{q = 0}^{\rationalPeriodTotal - 1}
-  \exp\left(
-      \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
-        \sum_{\ell = 0}^{q}\mathrm{digit}(n, b, d, \ell)
-  \right) = 0
-\end{equation*}
-
+If the above is true for all $d \in D$, then 
+$\Delta P_{0, T} = 0$.

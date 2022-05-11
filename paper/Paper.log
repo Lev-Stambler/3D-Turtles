@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021) (preloaded format=pdflatex 2022.1.19)  11 MAY 2022 11:35
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021) (preloaded format=pdflatex 2022.1.19)  11 MAY 2022 11:49
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -705,13 +705,8 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 \openout2 = `PaperAppendix.aux'.
 
  (./PaperAppendix.tex
-Package hyperref Info: bookmark level for unknown lemma defaults to 0 on input line 2.
-
-
-Package hyperref Warning: Difference (2) between bookmark levels is greater 
-(hyperref)                than one, level fixed on input line 21.
-
-[7
+Package hyperref Info: bookmark level for unknown lemma defaults to 0 on input line 5.
+ [7
 
 ] [8] [9]) [10] (./Paper.bbl (./Paper.brf)
 \tf@brf=\write4
@@ -732,23 +727,23 @@ Underfull \hbox (badness 10000) in paragraph at lines 13--13
 
 ] (./Paper.aux (./PaperAppendix.aux))
 Package rerunfilecheck Info: File `Paper.out' has not changed.
-(rerunfilecheck)             Checksum: C97D8CEE7AF7659B150AFAE8648C44C5;3889.
+(rerunfilecheck)             Checksum: 3AC9215674941D0AE289F3EA1ACB604D;3653.
 Package rerunfilecheck Info: File `Paper.brf' has not changed.
 (rerunfilecheck)             Checksum: 3BEB3139FAC580701FE715AC9E716F1B;319.
  ) 
 Here is how much of TeX's memory you used:
- 18212 strings out of 478286
- 308330 string characters out of 5846741
- 601465 words of memory out of 5000000
- 36041 multiletter control sequences out of 15000+600000
+ 18211 strings out of 478286
+ 308300 string characters out of 5846741
+ 601406 words of memory out of 5000000
+ 36040 multiletter control sequences out of 15000+600000
  478889 words of font info for 68 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  102i,14n,105p,406b,469s stack positions out of 5000i,500n,10000p,200000b,80000s
  </home/lev/.texlive2021/texmf-var/fonts/pk/ljfour/public/bbm/bbm10.657pk></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on Paper.pdf (12 pages, 229035 bytes).
+Output written on Paper.pdf (12 pages, 228094 bytes).
 PDF statistics:
- 293 PDF objects out of 1000 (max. 8388607)
- 251 compressed objects within 3 object streams
+ 289 PDF objects out of 1000 (max. 8388607)
+ 247 compressed objects within 3 object streams
  64 named destinations out of 1000 (max. 500000)
- 193 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 185 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,15 +1,15 @@
 # Fdb version 3
-["bibtex Paper"] 1652283334 "Paper.aux" "Paper.bbl" "Paper" 1652283335
+["bibtex Paper"] 1652283632 "Paper.aux" "Paper.bbl" "Paper" 1652284166
   "/usr/local/texlive/2021/texmf-dist/bibtex/bst/base/alpha.bst" 1292289607 23907 a5f93555796fb564b924339521f10a7c ""
-  "Paper.aux" 1652283335 5599 a7fc81503f0e42296bf1363d7d4753bb "pdflatex"
-  "PaperAppendix.aux" 1652283335 2188 197055848943bea7fbc6117147b72d1c "pdflatex"
+  "Paper.aux" 1652284166 5599 a7fc81503f0e42296bf1363d7d4753bb "pdflatex"
+  "PaperAppendix.aux" 1652284166 1983 9bbe527b09cb427a00d34367333c032a "pdflatex"
   "bib/ref.bib" 1652283108 4093 dd831e8ed1450b87dba4f570932760ec ""
   (generated)
   "Paper.bbl"
   "Paper.blg"
-["pdflatex"] 1652283334 "/home/lev/code/near/NFT-MathDraw/paper/Paper.tex" "Paper.pdf" "Paper" 1652283335
+["pdflatex"] 1652284165 "/home/lev/code/near/NFT-MathDraw/paper/Paper.tex" "Paper.pdf" "Paper" 1652284166
   "/home/lev/.texlive2021/texmf-var/fonts/pk/ljfour/public/bbm/bbm10.657pk" 1643197891 7808 68f02e3e18e746d1b31bca1043bbf1e2 ""
-  "/home/lev/code/near/NFT-MathDraw/paper/Paper.tex" 1652283332 18303 302ad8f6a398e53526fc33023d360186 ""
+  "/home/lev/code/near/NFT-MathDraw/paper/Paper.tex" 1652283547 18489 791f72034de51c174e6e5ad93f9cdee1 ""
   "/usr/local/texlive/2021/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2021/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
   "/usr/local/texlive/2021/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1246382020 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -160,13 +160,13 @@
   "/usr/local/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1642605541 4379201 880d78f4a2bde4f491e7d718ab91f390 ""
   "/usr/local/texlive/2021/texmf-var/web2c/pdftex/pdflatex.fmt" 1642605583 2796620 8a1a95f7408ee5fc56f565bc9a0ba6f6 ""
   "/usr/local/texlive/2021/texmf.cnf" 1642605535 455 5b996dcaa0eb4ef14a83b026bc0a008c ""
-  "Paper.aux" 1652283335 5599 a7fc81503f0e42296bf1363d7d4753bb "pdflatex"
-  "Paper.bbl" 1652283334 919 f087bb1826fad6ec251f8c075d8b02ae "bibtex Paper"
-  "Paper.brf" 1652283335 319 3beb3139fac580701fe715ac9e716f1b "pdflatex"
-  "Paper.out" 1652283335 3889 c97d8cee7af7659b150afae8648c44c5 "pdflatex"
-  "Paper.tex" 1652283332 18303 302ad8f6a398e53526fc33023d360186 ""
-  "PaperAppendix.aux" 1652283335 2188 197055848943bea7fbc6117147b72d1c "pdflatex"
-  "PaperAppendix.tex" 1652281705 10077 851ac2507bb5742ac09d4fb7f23175ac ""
+  "Paper.aux" 1652284166 5599 a7fc81503f0e42296bf1363d7d4753bb "pdflatex"
+  "Paper.bbl" 1652283633 919 f087bb1826fad6ec251f8c075d8b02ae "bibtex Paper"
+  "Paper.brf" 1652284166 319 3beb3139fac580701fe715ac9e716f1b "pdflatex"
+  "Paper.out" 1652284166 3653 3ac9215674941d0ae289f3ea1acb604d "pdflatex"
+  "Paper.tex" 1652283547 18489 791f72034de51c174e6e5ad93f9cdee1 ""
+  "PaperAppendix.aux" 1652284166 1983 9bbe527b09cb427a00d34367333c032a "pdflatex"
+  "PaperAppendix.tex" 1652284165 9162 00a855ffd04d402ddace8336a48e9551 ""
   "TCSToolkit.sty" 1652279902 8139 eeb274602a36c67a7804c9e9710baf76 ""
   (generated)
   "Paper.aux"
