@@ -1,46 +1,47 @@
 This is BibTeX, Version 0.99d (TeX Live 2021)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: Paper.aux
+A level-1 auxiliary file: PaperAppendix.aux
 The style file: alpha.bst
 Database file #1: bib/ref.bib
-You've used 1 entry,
+You've used 4 entries,
             2543 wiz_defined-function locations,
-            564 strings with 4681 characters,
-and the built_in function-call counts, 296 in all, are:
-= -- 27
-> -- 8
-< -- 1
-+ -- 2
-- -- 2
-* -- 12
-:= -- 55
-add.period$ -- 4
-call.type$ -- 1
-change.case$ -- 5
-chr.to.int$ -- 1
-cite$ -- 1
-duplicate$ -- 11
-empty$ -- 26
-format.name$ -- 3
-if$ -- 60
+            592 strings with 5232 characters,
+and the built_in function-call counts, 1416 in all, are:
+= -- 144
+> -- 43
+< -- 3
++ -- 13
+- -- 12
+* -- 100
+:= -- 234
+add.period$ -- 13
+call.type$ -- 4
+change.case$ -- 21
+chr.to.int$ -- 4
+cite$ -- 4
+duplicate$ -- 55
+empty$ -- 116
+format.name$ -- 18
+if$ -- 287
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 0
-newline$ -- 9
-num.names$ -- 3
-pop$ -- 12
+missing$ -- 3
+newline$ -- 24
+num.names$ -- 12
+pop$ -- 21
 preamble$ -- 1
-purify$ -- 6
+purify$ -- 25
 quote$ -- 0
-skip$ -- 9
+skip$ -- 44
 stack$ -- 0
-substring$ -- 7
-swap$ -- 1
-text.length$ -- 1
-text.prefix$ -- 0
+substring$ -- 100
+swap$ -- 4
+text.length$ -- 3
+text.prefix$ -- 2
 top$ -- 0
-type$ -- 8
+type$ -- 32
 warning$ -- 0
-while$ -- 2
-width$ -- 2
-write$ -- 15
+while$ -- 14
+width$ -- 5
+write$ -- 54

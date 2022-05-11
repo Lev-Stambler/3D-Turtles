@@ -1,9 +1,25 @@
-\begin{thebibliography}{ho}
+\begin{thebibliography}{Sho97}
+
+\bibitem[Blu60]{NDimSphericalCoord}
+L.~E. Blumenson.
+\newblock A derivation of n-dimensional spherical coordinates.
+\newblock {\em The American Mathematical Monthly}, 67(1):63--66, 1960.
 
 \bibitem[ho]{MathOverflowFracPeriod}
 Glen~O (https://math.stackexchange.com/users/67842/glen o).
 \newblock Length of period of decimal expansion of a fraction.
 \newblock Mathematics Stack Exchange.
 \newblock URL:https://math.stackexchange.com/q/2611737 (version: 2018-01-19).
+
+\bibitem[KC81]{OnDecSeq}
+S.~Kak and A.~Chatterjee.
+\newblock On decimal sequences (corresp.).
+\newblock {\em IEEE Transactions on Information Theory}, 27(5):647--652, 1981.
+
+\bibitem[Sho97]{Shor_1997}
+Peter~W. Shor.
+\newblock Polynomial-time algorithms for prime factorization and discrete
+  logarithms on a quantum computer.
+\newblock {\em {SIAM} Journal on Computing}, 26(5):1484--1509, oct 1997.
 
 \end{thebibliography}
