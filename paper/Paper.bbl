@@ -1,4 +1,4 @@
-\begin{thebibliography}{Sho97}
+\begin{thebibliography}{MH22}
 
 \bibitem[Blu60]{NDimSphericalCoord}
 L.~E. Blumenson.
@@ -15,6 +15,11 @@ Glen~O (https://math.stackexchange.com/users/67842/glen o).
 S.~Kak and A.~Chatterjee.
 \newblock On decimal sequences (corresp.).
 \newblock {\em IEEE Transactions on Information Theory}, 27(5):647--652, 1981.
+
+\bibitem[MH22]{NumberphileVid}
+Brady~Haran Matt~Henderson.
+\newblock Plotting pi and searching for mona lisa - numberphile.
+\newblock \url{https://www.youtube.com/watch?v=tkC1HHuuk7c}, February 2022.
 
 \bibitem[Sho97]{Shor_1997}
 Peter~W. Shor.

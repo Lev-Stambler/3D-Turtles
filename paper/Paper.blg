@@ -4,44 +4,44 @@ The top-level auxiliary file: Paper.aux
 A level-1 auxiliary file: PaperAppendix.aux
 The style file: alpha.bst
 Database file #1: bib/ref.bib
-You've used 4 entries,
+You've used 5 entries,
             2543 wiz_defined-function locations,
-            592 strings with 5232 characters,
-and the built_in function-call counts, 1416 in all, are:
-= -- 144
-> -- 43
-< -- 3
-+ -- 13
-- -- 12
-* -- 100
-:= -- 234
-add.period$ -- 13
-call.type$ -- 4
-change.case$ -- 21
-chr.to.int$ -- 4
-cite$ -- 4
-duplicate$ -- 55
-empty$ -- 116
-format.name$ -- 18
-if$ -- 287
+            598 strings with 5393 characters,
+and the built_in function-call counts, 1685 in all, are:
+= -- 170
+> -- 51
+< -- 4
++ -- 15
+- -- 14
+* -- 113
+:= -- 278
+add.period$ -- 16
+call.type$ -- 5
+change.case$ -- 26
+chr.to.int$ -- 5
+cite$ -- 5
+duplicate$ -- 66
+empty$ -- 141
+format.name$ -- 21
+if$ -- 344
 int.to.chr$ -- 1
 int.to.str$ -- 0
 missing$ -- 3
-newline$ -- 24
-num.names$ -- 12
-pop$ -- 21
+newline$ -- 29
+num.names$ -- 15
+pop$ -- 29
 preamble$ -- 1
-purify$ -- 25
+purify$ -- 31
 quote$ -- 0
-skip$ -- 44
+skip$ -- 55
 stack$ -- 0
-substring$ -- 100
-swap$ -- 4
-text.length$ -- 3
+substring$ -- 107
+swap$ -- 5
+text.length$ -- 4
 text.prefix$ -- 2
 top$ -- 0
-type$ -- 32
+type$ -- 40
 warning$ -- 0
-while$ -- 14
-width$ -- 5
-write$ -- 54
+while$ -- 16
+width$ -- 7
+write$ -- 66
