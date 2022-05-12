@@ -1,7 +1,10 @@
 \backcite {NumberphileVid}{{1}{1}{section.1}}
 \backcite {NDimSphericalCoord}{{4}{3.4.1}{subsubsection.3.4.1}}
-\backcite {MathOverflowFracPeriod}{{4}{4.1.1}{subsubsection.4.1.1}}
+\backcite {MathOverflowFracPeriod}{{4}{4.1.1}{equation.4.1}}
 \backcite {MathOverflowFracPeriod}{{4}{4.1}{remark.4.1}}
 \backcite {Shor_1997}{{4}{4.1}{remark.4.1}}
 \backcite {OnDecSeq}{{5}{4.2}{remark.4.2}}
-\backcite {OnDecSeq}{{7}{5.1}{remark.5.1}}
+\backcite {Shwartz}{{7}{5.1}{equation.5.6}}
+\backcite {Zip}{{7}{5.1}{equation.5.6}}
+\backcite {OnDecSeq}{{8}{5.1}{remark.5.1}}
+\backcite {barak_2097}{{9}{3}{Item.5}}

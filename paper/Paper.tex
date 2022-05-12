@@ -263,17 +263,21 @@ after every period length. If the total update is nonzero, the Turtle will not d
 shape.
 
 \subsection{Finding period $T$}
-\subsubsection{Finding the period of $\frac{n}{d}$}
-We will first aim to find period $T$ of the state $\pmb{s}$.
-For some $(n, b, d, \theta) \in \pmb{s}_0$, by \cite{MathOverflowFracPeriod},
+We now show how to find a period $T$ of state $\pmb{s}$.
+
+\subsubsection{Finding the period of a fraction}
+For some $(n, b, d, \theta) \in \pmb{s}_0$,
 we have that the period of the decimal expansion of $\frac{n}{d}$
 can be determined by finding the smallest $\rationalPeriod$ such that
 \begin{equation}
 \label{eq:nd-period}
-b ^ {\rationalPeriod} \equiv 1 \mod d.
+b ^ {\rationalPeriod} \equiv 1 \mod d
 \end{equation}
+by \cite{MathOverflowFracPeriod}.
 More generally though, any nontrivial $\rationalPeriod$ satisfying equation \ref{eq:nd-period}
-will be a period of $\frac{n}{d}$.
+will be a period of $\frac{n}{d}$. In other words, the decimal sequence specified 
+by $\frac{n}{d}$ will repeat after every $\rationalPeriod$ steps for all digits 
+$n > n_0$ for some fixed $n_0$.
 
 Next, let $$
 \rationalPeriodTotal = \lcm{j \in [k]}\; \rationalPeriod.
@@ -427,7 +431,8 @@ in the author's pursuit of simplifying the question. Moreover, these properties 
 some intuition as to the probability of closure for random rational seeds, a fixed $k$, 
 and fixed bases $b$.
 
-\subsection{Property 1: Restricted Monomials and Closure}
+\subsection{Property 1: Restricted Multinomials and Closure}
+\label{prop:1}
 Define $A_d = \set{j \mid j \in [k] \; \text{and}\; \inclIndic{d}{j} = 1}$, in other words,
 $A_d$ is the set of rational parameters which are included in determining the position along the $d$th dimension.
 Also, for function $f: \Z_\commonBase^{|A_d|} \rightarrow \Z_\commonBase$ and $\{a_1, a_2, ..., a_{|A_d|} \} = A_d$, we will denote
@@ -459,12 +464,11 @@ where $\prod_{f \in \mathcal{M}} f$ is a polynomial of degree
 at most $2^{|A_d|} \leq 2^k$.
 
 If we were to then assume that $(\digSumPeriodicNoJ^1, ..., \digSumPeriodicNoJ^k)$ 
-is uniformly and randomly draw from $\Z_\commonBase^k$, we then know by the 
-Schwartz-Zippel Lemma
+is uniformly and randomly draw from $\Z_\commonBase^k$, we then know that
 $$
-  \Pr\left[\prod_{f \in \mathcal{M}} f(\digSumPeriodicNoJ) = 0\right] < \frac{2^k}{\commonBase}.
+  \Pr\left[\prod_{f \in \mathcal{M}} f(\digSumPeriodicNoJ) = 0\right] < \frac{2^k}{\commonBase}
 $$
-% TODO: cite,
+by the Schwartz-Zippel Lemma \cite{Shwartz} \cite{Zip}.
 So, this would leave us with
 $$
   \Pr\left[\prod_{f \in \mathcal{M}} f(\digSumPeriodicNoJ) \neq 0\right] > 1 - \frac{2^k}{\commonBase}.
@@ -484,11 +488,74 @@ with a decreasing $k$. Moreover, a larger $\commonBase$ also increases the lower
   there does seem to be some element of randomness for $\digSumPeriodic$. See \cite{OnDecSeq} for more information.
 \end{remark}
 
+\subsection{Property 2: Root of Restricted Multinomial and Closure}
+First note that
+$$
+\mathcal{M} = \{f : f(\pmb{x}) = \pm x_1 \pm x_2 ... \pm x_{|A_d|}\} = 
+  \left\{\sum_{j \in |A_d|} (-1)^{\beta_j}\digSumPeriodic : \beta \in \set{0, 1}^{|A_d|} \right\}.
+$$
+Let $f_\beta \in \mathcal{M}$ then equal $\sum_{j \in |A_d|} (-1)^{\beta_j}\digSumPeriodic$.
+
+Then, let
+$$
+  \mathcal{B} = \left\{\beta: f_\beta(\sigma) = 0\right\}
+$$
+and $\overline{\mathcal{B}} = \mathcal{M} \setminus \mathcal{B}$. Then, if for all
+$\beta \in \mathcal{B}$,
+$$
+\sum_{q = 0}^{\rationalPeriodTotal - 1}
+  \exp\left(
+      I 
+      \commonToAngle 
+      \sum_{\ell = 0}^{q}
+      \sum_{j \in A_d}
+          \left(-1\right) ^ {\beta_{j}}
+          \numbToCommon
+          \mathrm{digit}(n, b, d, \ell)
+  \right) = 0
+$$
+the Turtle will draw a closed shape. While this may seem arbitrary, there is a unique
+and interesting geometric interpretation. 
+Let rational sequence $a_1, a_2, ..., a_{\rationalPeriodTotal}$ be equal to
+$
+\forall \ell \in [\rationalPeriodTotal]
+$,
+$$
+a_\ell = \sum_{j \in A_d}
+\left(-1\right) ^ {\beta_{j}}
+\numbToCommon
+\mathrm{digit}(n, b, d, \ell).
+$$
+In other words, we are creating a ``common" rational sequence by summing and subtracting
+our rational parameters in the least common multiple base $\commonBase$. Then,
+if $$
+\sum_{q = 0}^{\rationalPeriodTotal - 1}
+\exp\left(
+    I 
+    \commonToAngle 
+    \sum_{\ell = 0}^{q}
+      a_\ell
+  \right) = 0
+$$
+the Turtle closes. If $r_i = \commonToAngle \sum_{\ell = 0}^{q} a_\ell$ for 
+$i \in \set{0, ..., \rationalPeriodTotal - 1}$. Then $\exp(I \cdot r_i)$ can be thought of as some point around the 
+unit circle. Also, note that $r_{i + 1} = r_i + \commonToAngle a_{i+1}$. In otherwords,
+$r_i$ denotes some position around the complex unit circle where the subsequent updates
+to position are given by a sum and subtraction of rational parameters. Then, if the center of
+mass of these points around the unit circle is $0$, the Turtle draws a closed shape!
+The authors are unsure as to the underlying intuition for why this is true.
+
+% TODO: picture!!!!
+
+
+Over one common period for a all rational sequences, 
+$\rationalPeriodTotal$,
+
+
 \section{Open Questions and Future Work}
 A whole host of questions naturally arise from this problem. We will proceed to list
 the ones which immediately stand out. For a complete list of open problems, which have
 been solved, and the associated (financial) reward to each question, see our website
-::::TODO::::
 \begin{enumerate}
   \item \textbf{Periodic Digit Sum in NP?}: As far as the authors are aware, given 
   any rational number, $\frac{n}{d}$ in a fixed base $b$, is finding the sum of the digits in
@@ -509,7 +576,7 @@ been solved, and the associated (financial) reward to each question, see our web
   \item \textbf{Distribution }: Given a random rational number $\frac{n}{d}$
   where $n \sim \Z_q$ and $d \sim \Z_q$ for some fixed $q \in \N$, what is the distribution
   of $\sigma$, the periodic digital sum modulo base $b$? Specifically, is the distribution
-  indistinguishable (TODO: cite meaning) from the uniform distribution of $\Z_b$? 
+  indistinguishable \cite{barak_2097} from the uniform distribution of $\Z_b$? 
   See remark \ref{remark:digSumRandomness} for an application of this result.
 
   \item \textbf{Decomposition}: This one is totally out of left field. From our analysis,
@@ -523,6 +590,16 @@ been solved, and the associated (financial) reward to each question, see our web
   (where the approximation ``goodness" could be measured as a function of
   average distance from the original line to the line generated via the sequence of rationals).
 
+  \item \textbf{Closure in BQP?}: Given that closure is intimately tied with period finding,
+  the authors wonder if this problem is in BQP (Bounded-error Quantum Polynomial Time). An algorithm
+  or existence result suffices.
+
+  \item \textbf{A different approach?}: Could a change in basis and/ or vector calculus be used (as a means of dealing 
+  with the change of basis from spherical coordinates to cartesian) to simplify the problem analysis?
+  The authors conjecture yes as all updates are in spherical coordinates but most of the paper's analysis
+  is done in cartesian space. But, it is not immediately obvious to the authors
+  how a change of basis could be applied.
+
 
 \end{enumerate}
 
@@ -531,9 +608,8 @@ been solved, and the associated (financial) reward to each question, see our web
 \section*{Acknowledgments}
 
 
-\appendix
-\section{Proving Property 1}
-\label{appendix:prop1}
+
+\newpage
 \include{PaperAppendix.tex}
 
 \bibliographystyle{alpha}
@@ -542,5 +618,3 @@ been solved, and the associated (financial) reward to each question, see our web
 
 
 \end{document}
-
-% TODO: put b\theta / 2pi in State UPDATE

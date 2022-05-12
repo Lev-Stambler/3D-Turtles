@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021) (preloaded format=pdflatex 2022.1.19)  12 MAY 2022 08:15
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021) (preloaded format=pdflatex 2022.1.19)  12 MAY 2022 09:11
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -566,12 +566,12 @@ File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 ) [1
 
 {/usr/local/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-<fig/Turtle1D13Div113.png, id=100, 706.64pt x 652.4375pt>
+<fig/Turtle1D13Div113.png, id=104, 706.64pt x 652.4375pt>
 File: fig/Turtle1D13Div113.png Graphic file (type png)
 <use fig/Turtle1D13Div113.png>
 Package pdftex.def Info: fig/Turtle1D13Div113.png  used on input line 114.
 (pdftex.def)             Requested size: 227.62204pt x 210.1581pt.
-<fig/Turtle1DNotClosed.png, id=102, 502.87875pt x 329.23pt>
+<fig/Turtle1DNotClosed.png, id=106, 502.87875pt x 329.23pt>
 File: fig/Turtle1DNotClosed.png Graphic file (type png)
 <use fig/Turtle1DNotClosed.png>
 Package pdftex.def Info: fig/Turtle1DNotClosed.png  used on input line 119.
@@ -593,176 +593,156 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 265.
 
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 266.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\begingroup' on input line 266.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\endgroup' on input line 266.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\@@over' on input line 266.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 266.
-
-Package hyperref Info: bookmark level for unknown remark defaults to 0 on input line 282.
+Package hyperref Info: bookmark level for unknown remark defaults to 0 on input line 286.
 [4]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 319.
+(hyperref)                removing `math shift' on input line 323.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\theta' on input line 319.
+(hyperref)                removing `\theta' on input line 323.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 319.
+(hyperref)                removing `superscript' on input line 323.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 319.
+(hyperref)                removing `math shift' on input line 323.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 341.
+(hyperref)                removing `math shift' on input line 345.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\setbox' on input line 341.
+(hyperref)                removing `\setbox' on input line 345.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 341.
+(hyperref)                removing `\z@' on input line 345.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\hbox' on input line 341.
+(hyperref)                removing `\hbox' on input line 345.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\dimen@' on input line 341.
+(hyperref)                removing `\dimen@' on input line 345.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\wd' on input line 341.
+(hyperref)                removing `\wd' on input line 345.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 341.
+(hyperref)                removing `\z@' on input line 345.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                \kern -0.52956pt
-(hyperref)                removed on input line 341.
+(hyperref)                removed on input line 345.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\copy' on input line 341.
+(hyperref)                removing `\copy' on input line 345.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 341.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                \kern 24.88pt
-(hyperref)                replaced by space on input line 341.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                \kern 0.26477pt
-(hyperref)                removed on input line 341.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\raise' on input line 341.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\ex@' on input line 341.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\copy' on input line 341.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 341.
+(hyperref)                removing `\z@' on input line 345.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                \kern 24.88pt
-(hyperref)                replaced by space on input line 341.
+(hyperref)                replaced by space on input line 345.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                \kern 0.26477pt
-(hyperref)                removed on input line 341.
+(hyperref)                removed on input line 345.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\box' on input line 341.
+(hyperref)                removing `\raise' on input line 345.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 341.
+(hyperref)                removing `\ex@' on input line 345.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 341.
+(hyperref)                removing `\copy' on input line 345.
 
-[5] [6] [7] [8]
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\z@' on input line 345.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                \kern 24.88pt
+(hyperref)                replaced by space on input line 345.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                \kern 0.26477pt
+(hyperref)                removed on input line 345.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\box' on input line 345.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\z@' on input line 345.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 345.
+
+[5] [6] [7] [8] [9]
 \openout2 = `PaperAppendix.aux'.
 
  (./PaperAppendix.tex
-Package hyperref Info: bookmark level for unknown lemma defaults to 0 on input line 5.
- [9
+Package hyperref Info: bookmark level for unknown lemma defaults to 0 on input line 9.
+ [10
 
-] [10] [11]) [12] (./Paper.bbl (./Paper.brf)
+] [11] [12]) [13] (./Paper.bbl (./Paper.brf)
 \tf@brf=\write4
 \openout4 = `Paper.brf'.
 
 
-Underfull \hbox (badness 5924) in paragraph at lines 13--13
+Underfull \hbox (badness 5924) in paragraph at lines 17--17
 []\OT1/cmr/m/n/10.95 Glen O (https://math.stackexchange.com/users/67842/glen o).  Length of pe-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 13--13
+Underfull \hbox (badness 10000) in paragraph at lines 17--17
 \OT1/cmr/m/n/10.95 riod of dec-i-mal ex-pan-sion of a frac-tion.  Math-e-mat-ics Stack Ex-change.
  []
 
-<<ot1tt.cmap>>) [13
+<<ot1tt.cmap>>) [14
 
 
 ] (./Paper.aux (./PaperAppendix.aux))
 Package rerunfilecheck Info: File `Paper.out' has not changed.
-(rerunfilecheck)             Checksum: 64972819927D29BA72FEECD080CDD49D;3742.
+(rerunfilecheck)             Checksum: AE317C768E5FFB95D6DAE90CBB68EDB5;4185.
 Package rerunfilecheck Info: File `Paper.brf' has not changed.
-(rerunfilecheck)             Checksum: D6D72915F38E7257D4F02D545ECA8B6B;365.
+(rerunfilecheck)             Checksum: 46AE8455CAC9D20532E6201A2D5A2DE0;481.
  ) 
 Here is how much of TeX's memory you used:
- 18328 strings out of 478286
- 310411 string characters out of 5846741
- 602903 words of memory out of 5000000
- 36136 multiletter control sequences out of 15000+600000
+ 18350 strings out of 478286
+ 310638 string characters out of 5846741
+ 606154 words of memory out of 5000000
+ 36151 multiletter control sequences out of 15000+600000
  479057 words of font info for 69 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 102i,14n,105p,406b,403s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 102i,14n,105p,433b,477s stack positions out of 5000i,500n,10000p,200000b,80000s
  </home/lev/.texlive2021/texmf-var/fonts/pk/ljfour/public/bbm/bbm10.657pk></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on Paper.pdf (14 pages, 367227 bytes).
+Output written on Paper.pdf (15 pages, 374301 bytes).
 PDF statistics:
- 324 PDF objects out of 1000 (max. 8388607)
- 274 compressed objects within 3 object streams
- 74 named destinations out of 1000 (max. 500000)
- 199 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 344 PDF objects out of 1000 (max. 8388607)
+ 293 compressed objects within 3 object streams
+ 81 named destinations out of 1000 (max. 500000)
+ 207 words of extra memory for PDF output out of 10000 (max. 10000000)
 

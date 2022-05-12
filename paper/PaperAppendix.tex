@@ -1,3 +1,7 @@
+\appendix
+\section{Proving Property 1 and 2}
+\label{appendix:prop1}
+
 First let $I = \sqrt{-1}$ instead of $i$. This is done as $i$ is already reserved
 to represent the current time step.
 
@@ -120,26 +124,29 @@ So then, by equation \eqref{eq:expBreakdown}, we get that
 \label{eq:decomposeExp}
 =&
 \exp\left(
-    \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
+    I \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
     \cdot p \cdot
     \digSumPeriodic
 \right)
 \exp\left(
-    \sum_{j \in A_d} -1 ^ {\beta_{(j)}} \numbToCommon
-      \sum_{\ell = 0}^{q}\mathrm{digit}(n^j, b^j, d^j, \ell).
+    I \sum_{j \in A_d} -1 ^ {\beta_{(j)}} \numbToCommon
+      \sum_{\ell = 0}^{q}\mathrm{digit}(n^j, b^j, d^j, \ell)
 \right).
 \end{align}
+
+% TODO: careful read through and w/ I.
+% TODO: clean up and fix the lack of $2pi$ correction factor
 
 We then use \eqref{eq:decomposeExp} to show that $Q$ equals
 \begin{equation}
 \label{eq:inner-outer-split}
   \sum_{p= 0}^{\frac{\totalPeriod}{\rationalPeriodTotal} - 1} \left[
-    \exp\left(
+    I \exp\left(
       pI \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
       \digSumPeriodic
     \right)
   \left(
-  \sum_{q = 0}^{\rationalPeriodTotal - 1}
+  I \sum_{q = 0}^{\rationalPeriodTotal - 1}
     \exp\left(
         \sum_{j \in A_d} -1 ^ {\beta_{(j)}} \numbToCommon
           \sum_{\ell = 0}^{q}\mathrm{digit}(n^j, b^j, d^j, \ell)
