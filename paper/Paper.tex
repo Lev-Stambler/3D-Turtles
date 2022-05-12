@@ -184,11 +184,6 @@ Then, note that if there exists a period $T$ such that
 $\Delta P_{i, i + \ell T} = 0$ for all $i, \ell \in N$, 
 $p_{i + \ell T} = p_{i}$ and the turtle forms a closed shape.
 
-% TODO: ask closure question
-% TODO: show result that if $(s_{a}^1, ... ) = (s_{b}^1,...)$ then $b-a$ is a period for the state
-% and Delta p_a = p_b and is thus invariant under mod b-a. So, if Delta p_{b-a} \neq 0 
-% we have that the turtle will not move in a closed shape. If Delta p_{b-a} = 0, it will  
-
 \subsection{Specifying the task ahead of us}
 For our case, we consider $Comb, SU_i^j$ to all be memoryless (i.e.\ there output
 is uniquely determined by the current input). So, we can simplify the overall question.
@@ -315,6 +310,7 @@ such that
 In other words, $\rationalPeriodTotal$ is the digital sum over one period.
 
 \begin{remark}[Complexity]
+\label{remark:digsum-complexity}
   For $d > 2$, prime, and coprime to $b$, we can find $\digSumPeriodic$
   in polytime by multiplying $(b - 1) \cdot \frac{d-1}{2} \mod b$ \cite{OnDecSeq}. The authors are unsure
   as to the complexity of finding $\digSumPeriodic$ otherwise.
@@ -482,11 +478,53 @@ Somewhat surprisingly, we can then see that probability of closure may increase 
 with a decreasing $k$. Moreover, a larger $\commonBase$ also increases the lower bound!
 
 \begin{remark}[Randomness assumption]
+\label{remark:digSumRandomness}
   The randomness assumption, that $(\digSumPeriodicNoJ^1, ..., \digSumPeriodicNoJ^k)$
   is drawn from a random distribution is very much not true. But, given a rational parameter
   there does seem to be some element of randomness for $\digSumPeriodic$. See \cite{OnDecSeq} for more information.
 \end{remark}
-\section{Open Questions}
+
+\section{Open Questions and Future Work}
+A whole host of questions naturally arise from this problem. We will proceed to list
+the ones which immediately stand out. For a complete list of open problems, which have
+been solved, and the associated (financial) reward to each question, see our website
+::::TODO::::
+\begin{enumerate}
+  \item \textbf{Periodic Digit Sum in NP?}: As far as the authors are aware, given 
+  any rational number, $\frac{n}{d}$ in a fixed base $b$, is finding the sum of the digits in
+  one period modulo $b$ in $NP$? I.e. could one give a poly-size
+  certificate to a poly-time verifier which verifies if a digital sum equals $\sigma \in \Z_b$?
+  The size of the input is the number of bits required to describe $\frac{n}{d}$. The authors 
+  feel that intuitively the answer should be yes. A certificate could potentially be related
+  to the factors of the denominator and the period length. I.e.\ we know how to find
+  the periodic digital sum of a prime in polynomial time (see \ref{remark:digsum-complexity}). So,
+  could we somehow use this in combination with a prime factorization?
+
+  \item \textbf{Closure in NP or CoNP?}: For fixed bases of size $b$, is closure in NP of CoNP?
+  I.e.\ is there is a poly-sized certificate and poly-time verifier which can prove or disprove
+  that $D-1$ rationals draw a closed shape? The author's are uncertain here but conjecture
+  may be in CoNP. Either a gadget based reduction or a direct algorithm to generate a valid
+  certificate suffice to answer this question.
+
+  \item \textbf{Distribution }: Given a random rational number $\frac{n}{d}$
+  where $n \sim \Z_q$ and $d \sim \Z_q$ for some fixed $q \in \N$, what is the distribution
+  of $\sigma$, the periodic digital sum modulo base $b$? Specifically, is the distribution
+  indistinguishable (TODO: cite meaning) from the uniform distribution of $\Z_b$? 
+  See remark \ref{remark:digSumRandomness} for an application of this result.
+
+  \item \textbf{Decomposition}: This one is totally out of left field. From our analysis,
+  it seems as if using rational numbers to draw out shapes has a lot of underlying complexity
+  but also a lot of structure. The authors were wondering if given any closed shape $\ell$ which
+  can be described with $n$ bits, could poly-n bits be used in combination with the rational
+  sequence drawing algorithm described throughout this paper as description of $\ell$.
+  In other words, could some sort of ``Fourier Transform" be done between an explicitly described
+  closed shape and a sequence of rationals? We are also interested whether $1 - \epsilon$
+  approximation exists 
+  (where the approximation ``goodness" could be measured as a function of
+  average distance from the original line to the line generated via the sequence of rationals).
+
+
+\end{enumerate}
 
 \section{Conclusion}
 

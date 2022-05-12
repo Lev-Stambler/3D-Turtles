@@ -1,15 +1,15 @@
 # Fdb version 3
-["bibtex Paper"] 1652356257 "Paper.aux" "Paper.bbl" "Paper" 1652356348
+["bibtex Paper"] 1652357329 "Paper.aux" "Paper.bbl" "Paper" 1652357718
   "/usr/local/texlive/2021/texmf-dist/bibtex/bst/base/alpha.bst" 1292289607 23907 a5f93555796fb564b924339521f10a7c ""
-  "Paper.aux" 1652356348 6145 cf450bc1ec8b611c45e5cd679a6f12f3 "pdflatex"
-  "PaperAppendix.aux" 1652356348 1995 80b84b2e389a29b2c5a953462cc2d13f "pdflatex"
+  "Paper.aux" 1652357718 6458 f2d14dd4325c880260b540d12618867a "pdflatex"
+  "PaperAppendix.aux" 1652357718 1995 8bd8ae2c524aa34e6ffeea2f7fade5fd "pdflatex"
   "bib/ref.bib" 1652354206 4365 b74d69d048c57aee71573da9544547dc ""
   (generated)
   "Paper.bbl"
   "Paper.blg"
-["pdflatex"] 1652356347 "/home/lev/code/near/NFT-MathDraw/paper/Paper.tex" "Paper.pdf" "Paper" 1652356348
+["pdflatex"] 1652357717 "/home/lev/code/near/NFT-MathDraw/paper/Paper.tex" "Paper.pdf" "Paper" 1652357718
   "/home/lev/.texlive2021/texmf-var/fonts/pk/ljfour/public/bbm/bbm10.657pk" 1643197891 7808 68f02e3e18e746d1b31bca1043bbf1e2 ""
-  "/home/lev/code/near/NFT-MathDraw/paper/Paper.tex" 1652356346 21921 72af29f91865df1d8a685de7b95453d5 ""
+  "/home/lev/code/near/NFT-MathDraw/paper/Paper.tex" 1652357716 24510 6bb403691b086263f8614c5389b7a756 ""
   "/usr/local/texlive/2021/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2021/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
   "/usr/local/texlive/2021/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1246382020 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -164,12 +164,12 @@
   "/usr/local/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1642605541 4379201 880d78f4a2bde4f491e7d718ab91f390 ""
   "/usr/local/texlive/2021/texmf-var/web2c/pdftex/pdflatex.fmt" 1642605583 2796620 8a1a95f7408ee5fc56f565bc9a0ba6f6 ""
   "/usr/local/texlive/2021/texmf.cnf" 1642605535 455 5b996dcaa0eb4ef14a83b026bc0a008c ""
-  "Paper.aux" 1652356348 6145 cf450bc1ec8b611c45e5cd679a6f12f3 "pdflatex"
-  "Paper.bbl" 1652356257 1119 d2842f5a1e050b54bf882bf9471adcff "bibtex Paper"
-  "Paper.brf" 1652356348 365 d6d72915f38e7257d4f02d545eca8b6b "pdflatex"
-  "Paper.out" 1652356348 3653 22ad89285ea7509f343de009e28cbea9 "pdflatex"
-  "Paper.tex" 1652356346 21921 72af29f91865df1d8a685de7b95453d5 ""
-  "PaperAppendix.aux" 1652356348 1995 80b84b2e389a29b2c5a953462cc2d13f "pdflatex"
+  "Paper.aux" 1652357718 6458 f2d14dd4325c880260b540d12618867a "pdflatex"
+  "Paper.bbl" 1652357330 1119 d2842f5a1e050b54bf882bf9471adcff "bibtex Paper"
+  "Paper.brf" 1652357718 365 d6d72915f38e7257d4f02d545eca8b6b "pdflatex"
+  "Paper.out" 1652357718 3742 64972819927d29ba72feecd080cdd49d "pdflatex"
+  "Paper.tex" 1652357716 24510 6bb403691b086263f8614c5389b7a756 ""
+  "PaperAppendix.aux" 1652357718 1995 8bd8ae2c524aa34e6ffeea2f7fade5fd "pdflatex"
   "PaperAppendix.tex" 1652284165 9162 00a855ffd04d402ddace8336a48e9551 ""
   "TCSToolkit.sty" 1652355876 8161 1dd397e09614164a0a908bcceda97b81 ""
   "fig/Turtle1D13Div113.png" 1652355629 134516 7fc9c0f334ca46b24d6a748cd38e4954 ""
