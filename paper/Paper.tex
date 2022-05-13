@@ -100,46 +100,51 @@ some rational, some irrational. More specifically, they place an object in 2D, c
 space starting at $(0, 0)$ and ``facing" to the right. They then take a generating number, like $\pi$ or $35/99$, 
 which gives a decimal sequence ($3.14...$ and $0.\bar{35}$ respectively). 
 Then, at time step $i$, $i \geq 1$, they rotate the object by the $i$th digit divided by the base of
-the decimal sequence. Then, the Turtle moves a constant distance in the direction which it faces.
+the decimal sequence. Then, the turtle moves a constant distance in the direction which it faces.
 For example, if the second digit is 4, the turtle is rotated by $\frac{4}{10}$ths of a circle
 counterclockwise at time step 2 and then moves 10 units in its new direction.
-\begin{figure}[ht]
+\begin{figure}[h]
   \centering
   \includegraphics[width=8cm]{fig/turtle2dtimestep.png}
   \caption{The turtle moving according to decimal sequence $0.223$ in base $10$.}
 \end{figure}
 
-Whenever the Turtle moves, the program draws a red line along the Turtle's path. Thus,
+Whenever the turtle moves, the program draws a red line along the turtle's path. Thus,
 different lines are drawn.
 The authors noticed that using rational numbers to generate the sequence often drew geometrically
 aesthetic, closed shapes.
 
-\begin{figure}[ht]
+\begin{figure}[h]
   \centering
   \includegraphics[width=8cm]{fig/Turtle1D13Div113.png}
   \caption{The closed shape generated from $\frac{13}{113} = 0.0977443609...$ in base $10$.}
 \end{figure}
-\begin{figure}[ht]
+\begin{figure}[h]
   \centering
   \includegraphics[width=8cm]{fig/Turtle1DNotClosed.png}
   \caption{A non-closing shape generated from $\frac{2134}{9999} = 0.\overline{2134}$ in base $10$.}
 \end{figure}
 
 Naturally, the authors were curious whether a Turtle in ``3D" would also draw 
-aesthetic shapes. In other words, what if the Turtle's orientation was described
+aesthetic shapes. In other words, what if the turtle's orientation was described
 by 2 angles, pitch and yaw. The pitch and yaw would then by independently updated
 by 2 decimal sequences generated from 2 rational numbers.
 % TODO: figure
-After writing the program, we noticed that the Turtle would often fail
-to close. In other words, the Turtle would go off in one direction forever.
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=8cm]{fig/turtle.png}
+  \caption{The above is a placeholder, I would like to get Shiva to help me design a 3D graphic here}
+\end{figure}
+After writing the program, we noticed that the turtle would often fail
+to close. In other words, the turtle would go off in one direction forever.
 % TODO: picture of failing to close.
-But, the Turtle \textit{sometimes} closed.
+But, the turtle \textit{sometimes} closed.
 
-The authors then proceeded to ask why the Turtle would sometimes close and sometimes
+The authors then proceeded to ask why the turtle would sometimes close and sometimes
 go off into the ether. After finding a closed form solution in 3 dimensional space,
 we proceeded to ask the same question in $D$ dimensional space: given $D - 1$ 
-rational decimal sequences which determine the Turtle's orientation in space,
-does the Turtle move in a closed shape (i.e.\ is the Turtle position always contained
+rational decimal sequences which determine the turtle's orientation in space,
+does the turtle move in a closed shape (i.e.\ is the turtle position always contained
 within some $D$ dimensional sphere off constant radius)?
 
 % \section{Background}
@@ -147,9 +152,10 @@ within some $D$ dimensional sphere off constant radius)?
 % - Euler's formula
 % - I payed attention in some of my lectures
 
+\pagebreak
 \section{Definitions and questions}
 \subsection{Definitions}
-Say you (yes you!) had a turtle living in $D$ dimensional Euclidean
+Say we had a turtle, Jimbo, living in $D$ dimensional Euclidean
 space and in discrete time. At time step $i$, where $i \in \Z$ and $i > 0$,
 the turtle has position $p_i \in \R^D$.
 Then, lets define $\Delta p_{i+1} = p_{i+1} - p_i$; in other words, $\Delta p_{i+1}$ is the change in position from time $i$ to $i + 1$.
@@ -263,8 +269,8 @@ In understanding whether a set of given rationals, bases, and updated functions
 draw a closed shape in $D$ dimensional space, we first need to find the period of 
 the update delta, $\Delta p_i$. We then know that the total update over a period will be repeated 
 indefinitely. Consequently, we then seek to find the total change in position over a period. 
-If the total change is $0$, the shape will close as the Turtle will end up at its starting point
-after every period length. If the total update is nonzero, the Turtle will not draw a closed
+If the total change is $0$, the shape will close as the turtle will end up at its starting point
+after every period length. If the total update is nonzero, the turtle will not draw a closed
 shape.
 
 \subsection{Finding period $T$}
@@ -519,7 +525,7 @@ $$
           \mathrm{digit}(n, b, d, \ell)
   \right) = 0
 $$
-the Turtle will draw a closed shape. While this may seem arbitrary, there is a unique
+the turtle will draw a closed shape. While this may seem arbitrary, there is a unique
 and interesting geometric interpretation. 
 Let a rational decimal sequence $a_1, a_2, ..., a_{\rationalPeriodTotal}$ be equal to
 $
@@ -542,13 +548,13 @@ if $$
       a_\ell
   \right) = 0
 $$
-the Turtle closes.
+the turtle closes.
 If $r_i = \commonToAngle \sum_{\ell = 0}^{q} a_\ell$ for 
 $i \in \set{0, ..., \rationalPeriodTotal - 1}$, then $\exp(I \cdot r_i)$ can be thought of as some point at angle $r_i$ around the 
 complex unit circle. Also, note that $r_{i + 1} = r_i + \commonToAngle a_{i+1}$. In otherwords,
 $r_i$ denotes some position around the complex unit circle where the subsequent updates
 to position are given the $a_i$s, which are a sum and subtraction of rational parameters. Then, if the center of
-mass of these points around the unit circle is $0$, the Turtle draws a closed shape!
+mass of these points around the unit circle is $0$, the turtle draws a closed shape!
 The authors are unsure as to the underlying intuition for why this is true.
 
 % TODO: picture!!!!
