@@ -76,13 +76,12 @@
 
 \pagebreak
 \section*{Abstract}
-Given an object in cartesian space, we ask whether a repeating sequence 
-of spherical updates to the object's position cause it to travel on a closed path.
-A spherical update to a position in $D$-dimensional space can be written as
+Given an object in $D$ dimensional cartesian space, we ask whether a repeating sequence 
+of deltas to the object's position cause it to travel on a closed path.
+We consider deltas specified in a spherical basis which can be written as
 $\left(r, \theta_1, \theta_2, ..., \theta_{D-1}\right)$.
 In this paper, we consider $D-1$ non-terminating
-rational numbers where for time-step $i$, the spherical updates' difference function
-is given by $r' \leftarrow r$, 
+rational numbers where for time-step $i$, the deltas are given by $r' \leftarrow r$, 
 $\theta_1' \leftarrow \theta_1 + \mathrm{digit}(q_1, i)$, ..., 
 $\theta_{D-1}' \leftarrow \theta_{D-1} + \mathrm{digit}(q_{D-1}, i)$.
 We then proceed to derive a formula for finding if the object takes a closed, repeating path.
@@ -92,53 +91,63 @@ relate it to discrete log, roots of a multinomial, and center of mass.
 
 
 \section{Introduction}
-A glum Pittsburgh day inspired the authors to take a random walk down YouTube's recommended
+A glum Pittsburgh day inspired the authors to take a random walk down YouTube's recommended section
 when they encountered the Numberphile video on ``Plotting Pi" \cite{NumberphileVid}.
 In the video, Henderson and Brady introduce the idea of taking a Python Turtle and
 deriving a series of updates to its position based off of various decimal sequences, 
 some rational, some irrational. More specifically, they place an object in 2D, cartesian
 space starting at $(0, 0)$ and ``facing" to the right. They then take a generating number, like $\pi$ or $35/99$, 
-which gives a decimal sequence ($3.14...$ and $0.\bar{35}$ respectively). 
+which gives a decimal sequence ($3.14...$ and $0.\overline{35}$ respectively). 
 Then, at time step $i$, $i \geq 1$, they rotate the object by the $i$th digit divided by the base of
 the decimal sequence. Then, the turtle moves a constant distance in the direction which it faces.
 For example, if the second digit is 4, the turtle is rotated by $\frac{4}{10}$ths of a circle
 counterclockwise at time step 2 and then moves 10 units in its new direction.
-\begin{figure}[h]
+\begin{figure}[h!]
   \centering
   \includegraphics[width=8cm]{fig/turtle2dtimestep.png}
   \caption{The turtle moving according to decimal sequence $0.223$ in base $10$.}
 \end{figure}
 
-Whenever the turtle moves, the program draws a red line along the turtle's path. Thus,
-different lines are drawn.
+Whenever the turtle moves, the program draws a red line along the turtle's path.
 The authors noticed that using rational numbers to generate the sequence often drew geometrically
 aesthetic, closed shapes.
 
-\begin{figure}[h]
+\begin{figure}[h!]
   \centering
   \includegraphics[width=8cm]{fig/Turtle1D13Div113.png}
-  \caption{The closed shape generated from $\frac{13}{113} = 0.0977443609...$ in base $10$.}
+  \caption{A closed 2D shape generated from $\frac{13}{113} = 0.0977443609...$ in base $10$.}
 \end{figure}
-\begin{figure}[h]
+\begin{figure}[h!]
   \centering
   \includegraphics[width=8cm]{fig/Turtle1DNotClosed.png}
-  \caption{A non-closing shape generated from $\frac{2134}{9999} = 0.\overline{2134}$ in base $10$.}
+  \caption{A non-closing 2D shape generated from $\frac{2134}{9999} = 0.\overline{2134}$ in base $10$.}
 \end{figure}
 
 Naturally, the authors were curious whether a Turtle in ``3D" would also draw 
-aesthetic shapes. In other words, what if the turtle's orientation was described
+interesting paths. In other words, what if the turtle's orientation was described
 by 2 angles, pitch and yaw. The pitch and yaw would then by independently updated
 by 2 decimal sequences generated from 2 rational numbers.
 % TODO: figure
-\begin{figure}[h]
+\begin{figure}[h!]
   \centering
   \includegraphics[width=8cm]{fig/turtle.png}
-  \caption{The above is a placeholder, I would like to get Shiva to help me design a 3D graphic here}
+  \caption{The above is a placeholder, I would like to get Shiva to help me design a 3D graphic here similar to Figure 1 but in 3D}
 \end{figure}
 After writing the program, we noticed that the turtle would often fail
 to close. In other words, the turtle would go off in one direction forever.
-% TODO: picture of failing to close.
+% TODO: picture of failing to close in 3d space
 But, the turtle \textit{sometimes} closed.
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=8cm]{fig/failclose3d.png}
+  \caption{A non closing 3D shape generated from $\frac{102}{999} = 0.\overline{102}$ and $\frac{223}{999} = 0.\overline{223}$ in base 10.}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=8cm]{fig/tempclose.jpeg}
+  \caption{A closing 3D shape generate from (?????... this is a placeholder).}
+\end{figure}
 
 The authors then proceeded to ask why the turtle would sometimes close and sometimes
 go off into the ether. After finding a closed form solution in 3 dimensional space,
@@ -151,8 +160,8 @@ within some $D$ dimensional sphere off constant radius)?
 % - Digital math
 % - Euler's formula
 % - I payed attention in some of my lectures
-
 \pagebreak
+
 \section{Definitions and questions}
 \subsection{Definitions}
 Say we had a turtle, Jimbo, living in $D$ dimensional Euclidean
@@ -160,10 +169,10 @@ space and in discrete time. At time step $i$, where $i \in \Z$ and $i > 0$,
 the turtle has position $p_i \in \R^D$.
 Then, lets define $\Delta p_{i+1} = p_{i+1} - p_i$; in other words, $\Delta p_{i+1}$ is the change in position from time $i$ to $i + 1$.
 
-Now say that the turtle's movement is determined by $k$ seed parameter drawn from
-the same set. Then, for some state space $\mathcal{S}$,
+Now say that the turtle's movement is determined by $k$ parameter drawn from
+the same set, $\mathcal{P}$. Then, for some state space $\mathcal{S}$,
 define $s_i^j \in \mathcal{S}$ to be some arbitrary
-state associated with timestamp $i$ for the $j$th seed parameter where $j \in [k]$.
+state associated with time-step $i$ for the $j$th seed parameter where $j \in [k]$.
 Also, define $\pmb{s}_i = (s_i^1, s_i^2, ..., s_i^k)$.
 Next we will define a set of functions $SU^j: \mathcal{S} \rightarrow \mathcal{S}$
 (for $S$tate $U$pdater) such that $s_{i + 1}^j = SU^j(s_i^j, i)$. Note that for
@@ -181,7 +190,7 @@ Finally, let us define
 $$
   \Delta P_{a, b} = \sum_{i = a}^{b} \Delta p_i.
 $$
-In other words, $\Delta P_{a, b}$ is the change in position from timestep $a$ to $b$.
+In other words, $\Delta P_{a, b}$ is the change in position from time-step $a$ to $b$.
 
 \subsection{The problem}
 Say we are given, $Comb$, $SU^j$, $p_0$, and $s^j_0$ for all $j \in [k]$.
@@ -191,12 +200,12 @@ $$
   p_{i + \ell T} = p_{i}
 $$
 for all $i, \ell \in \N$.
-Then, note that if there exists a period $T$ such that 
+Then, note that iff there exists a period $T$ such that 
 $\Delta P_{i, i + \ell T} = 0$ for all $i, \ell \in N$, 
 $p_{i + \ell T} = p_{i}$ and the turtle forms a closed shape.
 
 \subsection{Specifying the task ahead of us}
-For our case, we consider $Comb, SU_i^j$ to be uniquely determined by the current input.
+For our case, we consider $Comb, SU_i^j$ to be uniquely determined by the current state.
 So, we can simplify the overall question.
 If, $\pmb{s}_i = \pmb{s}_{i + \ell T}$ for some $T \in \N$ and all $i \in \N$, then 
 $\Delta p_{i} = \Delta p_{i + \ell T}$. So then,
@@ -211,8 +220,8 @@ break down our problem into two parts:
 \subsection{Some more restrictions on our problem}
 We further restrict the problem by only considering $\mathcal{S} = \N^4$ where for $(n, d, b, \theta) \in \mathcal{S}$,
 $n$ is the numerator of a rational in fraction form, $d$ is the denominator, 
-$b$ is the base (i.e.\ base 10, base 12, etc.),
-and $\frac{2\theta}{b \pi}$ is an ``angle" associated with the state.
+$b$ is the base,
+and $\frac{2 \pi \theta}{b}$ is an ``angle" associated with the state.
 
 Then, let $\sinOrCos: \R \rightarrow \R$ equal $\cos$ or $\sin$. 
 
@@ -226,15 +235,15 @@ instead of ``seed parameter" from here on out.
 
 Moreover, we consider the case where
 $$
-  Comb((., ., ., ., \theta^1), (., ., ., ., \theta^2), ..., (., ., ., ., \theta^k)) =
+  Comb((n^1, d^1, b^1, \theta^1), (n^2, b^2, b^2, \theta^2), ..., (n^k, d^k, b^k, \theta^k)) =
     \left(\combSingleTerm{1}, ..., \combSingleTerm{D}\right)
 $$
-where $\mathrm{incl}_d^j \in \set{0, 1}$ for $d \in [D]$ indicates whether to include a given
-$x \in R$ determined by rational parameter $j$ for position update in the $d$th dimension.
+where $\mathrm{incl}_d^j \in \set{0, 1}$ for $d \in [D]$ indicates whether to ``include" a
+rational parameter $j$ for position update in the $d$th dimension.
 
 Finally, for simplicity's sake, assume that $\theta = 0$ for all $(n, b, d, \theta) \in \pmb{s}_0$,
-$n < d$, and $\frac{n}{d}$'s decimal expansion is periodic after some $N \geq 0$ decimal places
-and does not terminate in base $b$.
+$n < d$, $\frac{n}{d}$'s decimal expansion is periodic after some $N \geq 0$ decimal places,
+and the decimal expansion does not terminate in base $b$.
 
 Also, lets set 
 $$\commonBase = \lcm{(n, b, d, \theta) \in \pmb{s}_0} b.$$
@@ -244,8 +253,8 @@ $\commonBase$ can be thought of as a ``common base" among all rational parameter
 \subsubsection{Some intuition}
 While the restrictions may seem arbitrary, they aptly match our original problem statement.
 The original problem statement derives a spherical change in position based off of a rational number's
-digit at a particular timestep. The polar change in position also has a fixed radius. Translating
-from a polar to cartesian update then only requires products of $\sin$s and $\cos$s. See \cite{NDimSphericalCoord}
+digit at a particular time-step. The spherical change in position also has a fixed radius. Translating
+from a spherical to cartesian update then only requires products of $\sin$'s and $\cos$'s. See \cite{NDimSphericalCoord}
 for more details.
 
 Take the three dimensional case for instance. The turtle's update cartesian space
@@ -273,10 +282,10 @@ If the total change is $0$, the shape will close as the turtle will end up at it
 after every period length. If the total update is nonzero, the turtle will not draw a closed
 shape.
 
-\subsection{Finding period $T$}
+\subsection{Finding the state's period}
 We now show how to find a period $T$ of state $\pmb{s}$.
 
-\subsubsection{Finding the period of a fraction}
+\subsubsection{Finding the period of a decimal sequence}
 For some $(n, b, d, \theta) \in \pmb{s}_0$,
 we have that the period of the decimal expansion of $\frac{n}{d}$
 can be determined by finding the smallest $\rationalPeriod$ such that
@@ -303,7 +312,7 @@ $$
 \end{remark}
 
 \subsubsection{Digital sum}
-Next, we introduce the idea digital sums.
+Next, we introduce the idea of digital sums.
 For some number $N \in \N$, $N$ can be represented in base $b$ via
 \begin{equation}
   N = \sum_{i=0}^{m} d_i b^i
@@ -322,16 +331,17 @@ such that
 \begin{equation}
   \digSumPeriodic = \sum_{i = i_0}^{i_0 + \rationalPeriodTotal} \mathrm{digit}(n, d, b, i).
 \end{equation}
-In other words, $\rationalPeriodTotal$ is the digital sum over one period.
+In other words, $\digSumPeriodic$ is the digital sum over 
+a common decimal sequence period for all rational parameters.
 
 \begin{remark}[Complexity]
 \label{remark:digsum-complexity}
   For $d > 2$, prime, and coprime to $b$, we can find $\digSumPeriodic$
-  in polytime by multiplying $(b - 1) \cdot \frac{d-1}{2} \mod b$ \cite{OnDecSeq}. The authors are unsure
+  in polytime by multiplying $\frac{\commonBase}{b}(b - 1) \cdot \frac{d-1}{2} \mod b$ \cite{OnDecSeq}. The authors are unsure
   as to the complexity of finding $\digSumPeriodic$ otherwise.
 \end{remark}
 
-\subsubsection{Finding a period of $\rationalAngleNotime$} % TODO: redifine things in terms of theta...
+\subsubsection{Finding a period of a parameter's state} % TODO: redifine things in terms of theta...
 For $(n^j, b^j, d^j, \theta_i^j) = s_i^j$,
 recall that $\rationalAngle{i + 1} = \rationalAngle{i} + \mathrm{digit}(n, b, d, i) \mod b$.
 So, after period $\rationalPeriodTotal$,
@@ -343,19 +353,18 @@ So, after $p$ periods of length $\rationalPeriodTotal$ where $p  \cdot \digSumPe
 $$
 \theta_{i + p\rationalPeriodTotal} \equiv \theta_i + 0 \equiv \theta_i.
 $$
-For simplicity, lets define
+Now, lets define
 $$
   T^j = p\rationalPeriodTotal
 $$
 where $T^j$ is a period of the state for rational parameter $j$.
-% TODO: remove $i$ from the state and somehow have it be implicit.... 
 
 % Oh man... we are going to have to define an intermediate total period...
 % One for all T'...
 % and then have a sum for T
-\subsubsection{Finding the period of $\pmb{s}$}
+\subsubsection{Finding the period of the overall state}
 We can first see that for $\stateNotime{j} \in \pmb{s}$, $\stateNotime{j}$
-has period of $\statePeriod$. So, $\pmb{s}$ must have a period, $\totalPeriod$, of
+has period of $\statePeriod$. So, $\pmb{s}$ must have a period $\totalPeriod$ equaling
 $$
 \lcm{j \in [k]}\; T^j.
 $$
@@ -364,16 +373,9 @@ I.e.\ $\pmb{s}_i = \pmb{s}_{i + T}$ for all $i \in \N$.
 
 
 
-% TODO: cite https://math.stackexchange.com/questions/377683/length-of-period-of-decimal-expansion-of-a-fraction
-% TODO: formula in poly time
-% TODO: hmmm... specify i > n_0 (to get rid of initial stuff...)
-
-% https://en.wikipedia.org/wiki/Digital_root#:~:text=The%20digital%20root%20(also%20repeated,single%2Ddigit%20number%20is%20reached.
-
-
 \subsection{Finding the change in position over a period}
 So now that we know the period of $\totalStateNotime$, we can ask if
-$\Delta P_{i, i + T} = 0$. % TODO: reference
+$\Delta P_{i, i + T} = 0$.
 
 Note that 
 $$
@@ -435,7 +437,7 @@ We can thus see that our running time is quite atrocious (its worse than exponen
 Moreover, the algorithm does not produce a proof, verifiable in polytime, for closure 
 or lack there of. Thus, our algorithm is in neither NP or coNP.
 
-\section{Interesting Properties and an attempt at certificates}
+\section{Interesting Properties}
 We will now proceed to go over some interesting properties of the closure question
 which may give rise to an algorithm in NP, coNP, or even BQP. These properties were discovered
 in the author's pursuit of simplifying the question. Moreover, these properties may guide
@@ -463,10 +465,10 @@ if \begin{equation}
 \label{eq:satisfy-multi}
 f\left(\digSumPeriodicNoJ\right) \neq 0
 \end{equation}
-for all $f \in \mathcal{M}$ and $d \in [D]$, the turtle will always draw a closed shape. See 
+for all $f \in \mathcal{M}$ and all dimensions, the turtle will always draw a closed shape. See 
 Appendix \ref{appendix:prop1} for the proof.
 
-Satisfying \eqref{eq:satisfy-multi} is true for all $f$ is equivalent to
+Then, satisfying \eqref{eq:satisfy-multi} for all $f$ in a dimension is equivalent to
 $$
   \prod_{f \in \mathcal{M}} f(\digSumPeriodicNoJ) \neq 0.
 $$
@@ -509,9 +511,9 @@ Let $f_\beta \in \mathcal{M}$ then equal $\sum_{j \in |A_d|} (-1)^{\beta_j}\numb
 
 Then, let
 $$
-  \mathcal{B} = \left\{\beta: f_\beta(\sigma) = 0\right\}
+  \mathcal{B} = \left\{\beta: f_\beta(\sigma) = 0\right\}.
 $$
-and $\overline{\mathcal{B}} = \mathcal{M} \setminus \mathcal{B}$. Then, if for all
+Then, if for all
 $\beta \in \mathcal{B}$,
 $$
 \sum_{q = 0}^{\rationalPeriodTotal - 1}
@@ -538,7 +540,7 @@ a_\ell = \sum_{j \in A_d}
 \mathrm{digit}(n, b, d, \ell).
 $$
 In other words, we are creating a ``common" rational sequence by summing and subtracting
-our rational parameters in the least common multiple base $\commonBase$. Then,
+our rational parameters in base $\commonBase$. Then,
 if $$
 \sum_{q = 0}^{\rationalPeriodTotal - 1}
 \exp\left(
@@ -557,9 +559,30 @@ to position are given the $a_i$s, which are a sum and subtraction of rational pa
 mass of these points around the unit circle is $0$, the turtle draws a closed shape!
 The authors are unsure as to the underlying intuition for why this is true.
 
-% TODO: picture!!!!
+
+For example, say that rational parameters $\frac{22,022}{99,999} = 0.\overline{22022}$ and
+$\frac{200}{99,999} = 0.\overline{00200}$ determine the movement in the $x$, $y$, and $z$ axis for $3$ dimensions.
+Then, $\sigma^1 = 8$ and $\sigma^2 = 2$. Also note that we are in base 10 so $b^1 = b^2 = \commonBase = 10$.
+Also, $f_{00}(8, 2) = 8 + 2 = 10 \equiv 0 \mod 10$. But then, we have that $a = 0.\overline{22222}$.
+So then, the ``movement" around the unit circle ends up being evenly spaced out and the center of mass
+is 0. Thus, we know that the turtle will close.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=8cm]{fig/evenspacing.png}
+  \caption{If $a = 0.\overline{22222}$, then $r_1, ..., r_5$ are spaced around the unit circle as shown in the figure. We can thus
+  see that the center of mass is 0.}
+  
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=8cm]{fig/3DTurtleCenterOfMass.png}
+  \caption{The turtle moving according to rationals $\frac{22,022}{99,999}$ and $\frac{200}{99,999}$.}
+\end{figure}
 
 
+\pagebreak
 \section{Open Questions and Future Work}
 A whole host of questions naturally arise from this problem. We will proceed to list
 the ones which immediately stand out. For a complete list of open problems, which have
@@ -571,15 +594,14 @@ been solved, and the associated (financial) reward to each question, see our web
   certificate to a poly-time verifier which verifies if a digital sum equals $\sigma \in \Z_b$?
   The size of the input is the number of bits required to describe $\frac{n}{d}$. The authors 
   feel that intuitively the answer should be yes. A certificate could potentially be related
-  to the factors of the denominator and the period length. I.e.\ we know how to find
+  to the prime factors of the denominator and the period length. I.e.\ we know how to find
   the periodic digital sum of a prime in polynomial time (see \ref{remark:digsum-complexity}). So,
   could we somehow use this in combination with a prime factorization?
 
   \item \textbf{Closure in NP or CoNP?}: For fixed bases of size $b$, is closure in NP of CoNP?
   I.e.\ is there is a poly-sized certificate and poly-time verifier which can prove or disprove
   that $D-1$ rationals draw a closed shape? The author's are uncertain here but conjecture
-  may be in CoNP. Either a gadget based reduction or a direct algorithm to generate a valid
-  certificate suffice to answer this question.
+  may be in CoNP.
 
   \item \textbf{Distribution }: Given a random rational number $\frac{n}{d}$
   where $n \sim \Z_q$ and $d \sim \Z_q$ for some fixed $q \in \N$, what is the distribution
@@ -595,12 +617,11 @@ been solved, and the associated (financial) reward to each question, see our web
   In other words, could some sort of ``Fourier Transform" be done between an explicitly described
   closed shape and a sequence of rationals? We are also interested whether $1 - \epsilon$
   approximation exists 
-  (where the approximation ``goodness" could be measured as a function of
+  (where the approximation factor could be measured as a function of
   average distance from the original line to the line generated via the sequence of rationals).
 
   \item \textbf{Closure in BQP?}: Given that closure is intimately tied with period finding,
-  the authors wonder if this problem is in BQP (Bounded-error Quantum Polynomial Time). An algorithm
-  or existence result suffices.
+  the authors wonder if this problem is in BQP (Bounded-error Quantum Polynomial Time).
 
   \item \textbf{A different approach?}: Could a change in basis and/ or vector calculus be used (as a means of dealing 
   with the change of basis from spherical coordinates to cartesian) to simplify the problem analysis?
@@ -612,12 +633,12 @@ been solved, and the associated (financial) reward to each question, see our web
 \end{enumerate}
 
 \section*{Acknowledgments}
-The authors would like to thank their roommate Phu Nguyen for helping me work through the closure proofs
-as well as inspiring me to pursue this project. The authors would also like to thank C.J. Argue
+The authors would like to thank their roommate Phu Nguyen for helping them work through the closure proofs
+as well as inspiring them to pursue this project. The authors would also like to thank C.J. Argue
 for assisting with the initial intuition and for providing encouragement. Moreover, the authors
 would like to acknowledge Shiva Peri for doing a fantastic job putting together the artistic aspects
-of the project as well as the website. Finally, the author would like to thank all their fantastic friends
-from college who inspired and encouraged them to pursue their interests.
+of the project as well as the website. Finally, the author would like to thank all their friends
+who encouraged them to pursue their interests.
 
 
 

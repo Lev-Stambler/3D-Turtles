@@ -108,7 +108,7 @@ Then, lets fix some $\beta \in \set{0, 1}^{|A_d|}$, define $Q$ such that
 \label{eq:wts01}  
   Q = \eqWTSInnerProd.
 \end{equation}
-We will simplify $Q$ to show 2 distinct cases where $Q = 0$ for any choice of $\beta$.
+We will proceed $Q$ to show 2 distinct cases where $Q = 0$ for any choice of $\beta$.
 
 Observe that 
 \begin{align}
@@ -189,7 +189,7 @@ Moreover, note that
       pI \cdot \digSumPeriodic 
     \right)
 \end{align*}
-and that  because $-1^{\beta_{(j)}} \cdot \numbToAngle pI \cdot \digSumPeriodic \equiv 0 \mod b^j$
+and that  because $-1^{\beta_{(j)}} \cdot \numbToAngle pI \cdot \digSumPeriodic \equiv 0 \mod b^j$,
 \begin{equation*}
    -1^{\beta_{(j)}} \cdot \commonToAngle \numbToCommon pI \cdot \digSumPeriodic = \alpha \cdot 2\pi
 \end{equation*}
@@ -199,7 +199,8 @@ for some $\alpha \in \N$. So,
 \end{equation*}
 when $p = \frac{\totalPeriod}{\rationalPeriodTotal}$. 
 
-Because $\digSumPeriodic$ is a constant, we can conclude that
+
+We can conclude that
 \begin{equation*}
  \exp\left(
       I \commonToAngle \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
@@ -213,7 +214,7 @@ $$\sum_{j \in A_d} -1 ^ {\beta_{(j)}}
       \digSumPeriodic \not\equiv 0 \mod \commonBase
 $$
 
-So, for $\sum_{j \in A_d} -1 ^ {\beta_{(j)}}\numbToCommon \digSumPeriodic \neq 0$, we have that
+So, for $\sum_{j \in A_d} -1 ^ {\beta_{(j)}}\numbToCommon \digSumPeriodic \not\equiv 0$, we have that
 \begin{align*}
   \eqWTSInnerProd &= C_\beta \sum_{p= 0}^{\frac{\totalPeriod}{\rationalPeriodTotal} - 1}
     \exp\left(
@@ -226,8 +227,8 @@ So, for $\sum_{j \in A_d} -1 ^ {\beta_{(j)}}\numbToCommon \digSumPeriodic \neq 0
 \end{align*}
 where $W_{\totalOverRationalFrac}^p$ is the $\totalOverRationalFrac^{th}$ root of unity.
 
-\subsubsection*{Case 2: $\sum_{j \in A_d} -1 ^ {\beta_{(j)}} \digSumPeriodic = 0$}
-If $\sum_{j \in A_d} -1 ^ {\beta_{(j)}} \digSumPeriodic = 0$, then 
+\subsubsection*{Case 2: $\sum_{j \in A_d} -1 ^ {\beta_{(j)}} \numbToCommon \digSumPeriodic \equiv 0 \mod \commonBase$}
+Now,
 \begin{align*}
   \eqWTSInnerProd &= C_\beta \sum_{p= 0}^{\frac{\totalPeriod}{\rationalPeriodTotal} - 1} \exp(0) \\
   &= C_\beta.
@@ -235,7 +236,7 @@ If $\sum_{j \in A_d} -1 ^ {\beta_{(j)}} \digSumPeriodic = 0$, then
 So $$\eqWTSInnerProd = 0$$ if $C_\beta = 0$.
 
 \subsubsection*{To conclude}
-If, $\forall \beta \in \set{0, 1}^{|A_d|}$, $\sum_{j \in A_d} -1 ^ {\beta_{(j)}} \neq 0$
+If, $\forall \beta \in \set{0, 1}^{|A_d|}$, $\sum_{j \in A_d} -1 ^ {\beta_{(j)}} \numbToCommon \digSumPeriodic \not\equiv 0$
 or $C_\beta = 0$, then
 \begin{align*}
   \changeTotalOneDim &= \sum_{i = 1}^T \combSingleTerm{d} \\&=  2^{-|A|}
