@@ -1044,6 +1044,11 @@ INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmex10.tfm
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam10.tfm
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/latex-fonts/lasy10.tfm
+INPUT ./fig/turtle2dtimestep.png
+INPUT ./fig/turtle2dtimestep.png
+INPUT fig/turtle2dtimestep.png
+INPUT ./fig/turtle2dtimestep.png
+INPUT ./fig/turtle2dtimestep.png
 INPUT ./fig/Turtle1D13Div113.png
 INPUT ./fig/Turtle1D13Div113.png
 INPUT fig/Turtle1D13Div113.png

@@ -78,8 +78,9 @@ Then, we have that
  \sum_{\beta \in \set{0,1}^{|A_d|}} 
  	 \pm
     \exp\left(
+      	\commonToAngle I
         \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
-        \rationalAngle{p \rationalPeriodTotal + q}I
+        \numbToCommon \rationalAngle{p \rationalPeriodTotal + q}
       \right)\\
  =&
   \pm 2^{-|A|} 
@@ -87,15 +88,18 @@ Then, we have that
 		\pm
      \sum_{p= 0}^{\frac{\totalPeriod}{\rationalPeriodTotal} - 1} \sum_{q = 0}^{\rationalPeriodTotal - 1}
     \exp\left(
+      	\commonToAngle I
         \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
-        \rationalAngle{p \rationalPeriodTotal + q}I
+        \numbToCommon \rationalAngle{p \rationalPeriodTotal + q}
       \right).
 \end{align*}
 
 \newcommand{\eqWTSInnerProd}{
   \sum_{p= 0}^{\frac{\totalPeriod}{\rationalPeriodTotal} - 1} \sum_{q = 0}^{\rationalPeriodTotal - 1}
     \exp\left(
+      	\commonToAngle I 
         \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
+        \numbToCommon 
         \rationalAngle{p \rationalPeriodTotal + q}I
       \right)}
 
@@ -109,22 +113,27 @@ We will simplify $Q$ to show 2 distinct cases where $Q = 0$ for any choice of $\
 Observe that 
 \begin{align}
   \exp(\rationalAngle{p \rationalPeriodTotal + q}I)
-  &= \exp\left(p \cdot \digSumPeriodic +
-    \numbToCommon \sum_{\ell = p \rationalPeriodTotal}^{p \rationalPeriodTotal + q}\mathrm{digit}(n^j, b^j, d^j, \ell)\right) \tag{by lemma \ref{lemma:angleBreakdown}} \\
-    \label{eq:expBreakdown}
-    &= \exp\left(p \cdot \digSumPeriodic\right) \exp\left(\numbToCommon \sum_{\ell = 0}^{q}\mathrm{digit}(n, b, d, \ell)\right).
+  &= \exp\left(
+      p \cdot \digSumPeriodic +
+      \sum_{\ell = p \rationalPeriodTotal}^{p \rationalPeriodTotal + q}\mathrm{digit}(n^j, b^j, d^j, \ell)\right)\tag{by lemma \ref{lemma:angleBreakdown}} \\
+      \label{eq:expBreakdown}
+      &= \exp\left(p \cdot \digSumPeriodic\right) \exp\left(\sum_{\ell = 0}^{q}\mathrm{digit}(n, b, d, \ell)\right).
 \end{align}
 
 So then, by equation \eqref{eq:expBreakdown}, we get that
 \begin{align}
 &\exp\left(
     \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
+    \cdot
+    \numbToCommon \cdot
     \rationalAngle{p \rationalPeriodTotal + q}I
 \right)\notag \\ 
 \label{eq:decomposeExp}
 =&
 \exp\left(
     I \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
+    \cdot
+    \numbToCommon
     \cdot p \cdot
     \digSumPeriodic
 \right)
@@ -142,22 +151,25 @@ We then use \eqref{eq:decomposeExp} to show that $Q$ equals
 \label{eq:inner-outer-split}
   \sum_{p= 0}^{\frac{\totalPeriod}{\rationalPeriodTotal} - 1} \left[
     I \exp\left(
-      pI \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
+      pI \commonToAngle \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
+      \numbToCommon
       \digSumPeriodic
     \right)
   \left(
   I \sum_{q = 0}^{\rationalPeriodTotal - 1}
     \exp\left(
+        \commonToAngle
         \sum_{j \in A_d} -1 ^ {\beta_{(j)}} \numbToCommon
           \sum_{\ell = 0}^{q}\mathrm{digit}(n^j, b^j, d^j, \ell)
     \right)\right)\right].
 \end{equation}
 
-\subsubsection*{Case 1: $\sum_{j \in A_d} -1 ^ {\beta_{(j)}} \digSumPeriodic \neq 0$}
+\subsubsection*{Case 1: $\sum_{j \in A_d} (-1) ^ {\beta_{(j)}} \numbToCommon \digSumPeriodic \not\equiv 0 \mod \commonBase$}
 Define
 $$
   C_\beta = \sum_{q = 0}^{\rationalPeriodTotal - 1}
   \exp\left(
+      \commonToAngle
       \sum_{j \in A_d} -1 ^ {\beta_{(j)}} \numbToCommon
         \sum_{\ell = 0}^{q}\mathrm{digit}(n, b, d, \ell)
   \right).
@@ -165,36 +177,48 @@ $$
 Moreover, note that 
 \begin{align*}
   &\exp\left(
-      pI \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
+      pI \commonToAngle \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
+      \numbToCommon
       \digSumPeriodic
     \right)
-  = \prod_{j \in A_d} \exp\left(-1^{\beta_{(j)}} pI \cdot \digSumPeriodic \right)
+  = \prod_{j \in A_d} \exp\left(
+      -1^{\beta_{(j)}}
+     \cdot
+    	\numbToAngle
+     \cdot
+      pI \cdot \digSumPeriodic 
+    \right)
 \end{align*}
-and that 
+and that  because $-1^{\beta_{(j)}} \cdot \numbToAngle pI \cdot \digSumPeriodic \equiv 0 \mod b^j$
 \begin{equation*}
-  \exp\left(-1^{\beta_{(j)}} pI \cdot \digSumPeriodic \right) = \exp\left(0\right) = 1
+   -1^{\beta_{(j)}} \cdot \commonToAngle \numbToCommon pI \cdot \digSumPeriodic = \alpha \cdot 2\pi
 \end{equation*}
-when $p = \frac{\totalPeriod}{\rationalPeriodTotal}$. So, we can see that
-$$
-\prod_{j \in A_d} \exp\left(-1^{\beta_{(j)}} pI \cdot \digSumPeriodic \right) = 1
-$$
-when $p = \frac{\totalPeriod}{\rationalPeriodTotal}$.
+for some $\alpha \in \N$. So,
+\begin{equation*}
+  \exp\left(-1^{\beta_{(j)}} \cdot\numbToAngle \cdot pI \cdot \digSumPeriodic \right) = \exp\left(0\right) = 1
+\end{equation*}
+when $p = \frac{\totalPeriod}{\rationalPeriodTotal}$. 
 
 Because $\digSumPeriodic$ is a constant, we can conclude that
 \begin{equation*}
  \exp\left(
-      I \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
+      I \commonToAngle \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
+      \numbToAngle
       \digSumPeriodic
     \right) 
 \end{equation*}
-is a $\totalOverRationalFrac^{th}$ root of unity iff 
-$$\sum_{j \in A_d} -1 ^ {\beta_{(j)}}\digSumPeriodic \neq 0$$
+is a $\totalOverRationalFrac^{th}$ root of unity iff
+$$\sum_{j \in A_d} -1 ^ {\beta_{(j)}}
+      \numbToCommon
+      \digSumPeriodic \not\equiv 0 \mod \commonBase
+$$
 
-So, for $\sum_{j \in A_d} -1 ^ {\beta_{(j)}}\digSumPeriodic \neq 0$, we have that
+So, for $\sum_{j \in A_d} -1 ^ {\beta_{(j)}}\numbToCommon \digSumPeriodic \neq 0$, we have that
 \begin{align*}
   \eqWTSInnerProd &= C_\beta \sum_{p= 0}^{\frac{\totalPeriod}{\rationalPeriodTotal} - 1}
     \exp\left(
-      pI \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
+      pI \commonToAngle \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
+      \numbToCommon
       \digSumPeriodic
     \right) \\
     &= C_\beta \sum_{p = 0}^{\totalOverRationalFrac - 1}\exp\left(W_{\totalOverRationalFrac}^p\right) \\
@@ -208,7 +232,7 @@ If $\sum_{j \in A_d} -1 ^ {\beta_{(j)}} \digSumPeriodic = 0$, then
   \eqWTSInnerProd &= C_\beta \sum_{p= 0}^{\frac{\totalPeriod}{\rationalPeriodTotal} - 1} \exp(0) \\
   &= C_\beta.
 \end{align*}
-So $$\eqWTSInnerProd = 0$$ iff $C_\beta = 0$.
+So $$\eqWTSInnerProd = 0$$ if $C_\beta = 0$.
 
 \subsubsection*{To conclude}
 If, $\forall \beta \in \set{0, 1}^{|A_d|}$, $\sum_{j \in A_d} -1 ^ {\beta_{(j)}} \neq 0$
@@ -218,7 +242,9 @@ or $C_\beta = 0$, then
   \sum_{\beta \in \set{0,1}^{|A_d|}} 
       \sum_{p= 0}^{\frac{\totalPeriod}{\rationalPeriodTotal} - 1} \sum_{q = 0}^{\rationalPeriodTotal - 1}
      \exp\left(
+       \commonToAngle
          \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
+         \numbToCommon
          \rationalAngle{p \rationalPeriodTotal + q}I
        \right) \\
         &= 0.

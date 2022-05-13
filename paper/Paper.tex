@@ -33,6 +33,7 @@
 \newcommand{\digit}{\mathrm{digit}}
 \newcommand{\commonBase}{{\pmb{b}}}
 \newcommand{\numbToCommon}{\frac{\commonBase}{b^j}}
+\newcommand{\numbToCommonNoJ}[1]{\frac{\commonBase}{b^{#1}}}
 \newcommand{\commonToAngle}{\frac{2\pi}{\commonBase}}
 \newcommand{\sinOrCos}{\phi^j}
 \newcommand{\combSingleTerm}[1]{\prod_{j=1}^k \sinOrCos\left(\numbToAngle \cdot \theta^j\right) ^ {\inclIndic{#1}{j}}}
@@ -102,7 +103,11 @@ Then, at time step $i$, $i \geq 1$, they rotate the object by the $i$th digit di
 the decimal sequence. Then, the Turtle moves a constant distance in the direction which it faces.
 For example, if the second digit is 4, the turtle is rotated by $\frac{4}{10}$ths of a circle
 counterclockwise at time step 2 and then moves 10 units in its new direction.
-% TODO: diagram, timestep 1 --> 2 --> 3
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=8cm]{fig/turtle2dtimestep.png}
+  \caption{The turtle moving according to decimal sequence $0.223$ in base $10$.}
+\end{figure}
 
 Whenever the Turtle moves, the program draws a red line along the Turtle's path. Thus,
 different lines are drawn.
@@ -137,10 +142,10 @@ rational decimal sequences which determine the Turtle's orientation in space,
 does the Turtle move in a closed shape (i.e.\ is the Turtle position always contained
 within some $D$ dimensional sphere off constant radius)?
 
-\section{Background}
-- Digital math
-- Euler's formula
-- I payed attention in some of my lectures
+% \section{Background}
+% - Digital math
+% - Euler's formula
+% - I payed attention in some of my lectures
 
 \section{Definitions and questions}
 \subsection{Definitions}
@@ -173,20 +178,20 @@ $$
 In other words, $\Delta P_{a, b}$ is the change in position from timestep $a$ to $b$.
 
 \subsection{The problem}
-Say we are given, $Comb$, hh$SU^j$, $p_0$, and $s^j_0$ for all $j \in [k]$.
+Say we are given, $Comb$, $SU^j$, $p_0$, and $s^j_0$ for all $j \in [k]$.
 Informally, the question is whether the turtle draws a ``closed" shape or not.\\
 More formally, is there some period $T$ such that 
 $$
   p_{i + \ell T} = p_{i}
 $$
-for $i, \ell \in \N$.
+for all $i, \ell \in \N$.
 Then, note that if there exists a period $T$ such that 
 $\Delta P_{i, i + \ell T} = 0$ for all $i, \ell \in N$, 
 $p_{i + \ell T} = p_{i}$ and the turtle forms a closed shape.
 
 \subsection{Specifying the task ahead of us}
-For our case, we consider $Comb, SU_i^j$ to all be memoryless (i.e.\ there output
-is uniquely determined by the current input). So, we can simplify the overall question.
+For our case, we consider $Comb, SU_i^j$ to be uniquely determined by the current input.
+So, we can simplify the overall question.
 If, $\pmb{s}_i = \pmb{s}_{i + \ell T}$ for some $T \in \N$ and all $i \in \N$, then 
 $\Delta p_{i} = \Delta p_{i + \ell T}$. So then,
 $\Delta P_{i, i + \ell T} = \Delta P_{i, i + \ell' T}$ for all $\ell, \ell' \in \N$.
@@ -437,7 +442,7 @@ Define $A_d = \set{j \mid j \in [k] \; \text{and}\; \inclIndic{d}{j} = 1}$, in o
 $A_d$ is the set of rational parameters which are included in determining the position along the $d$th dimension.
 Also, for function $f: \Z_\commonBase^{|A_d|} \rightarrow \Z_\commonBase$ and $\{a_1, a_2, ..., a_{|A_d|} \} = A_d$, we will denote
 $$
-  f\left(\digSumPeriodicNoJ^{a_1}, \digSumPeriodicNoJ^{a_2}, ..., \digSumPeriodicNoJ^{a_{A_d}}\right)
+  f\left(\numbToCommonNoJ{a_1} \digSumPeriodicNoJ^{a_1}, \numbToCommonNoJ{a_2}\digSumPeriodicNoJ^{a_2}, ..., \numbToCommonNoJ{a_{A_d}}\digSumPeriodicNoJ^{a_{A_d}}\right)
   = f\left(\digSumPeriodicNoJ\right).
 $$
 
@@ -464,7 +469,7 @@ where $\prod_{f \in \mathcal{M}} f$ is a polynomial of degree
 at most $2^{|A_d|} \leq 2^k$.
 
 If we were to then assume that $(\digSumPeriodicNoJ^1, ..., \digSumPeriodicNoJ^k)$ 
-is uniformly and randomly draw from $\Z_\commonBase^k$, we then know that
+is uniformly and randomly draw from $\Z_\commonBase^k$ and $\commonBase$ is a prime, we then know that
 $$
   \Pr\left[\prod_{f \in \mathcal{M}} f(\digSumPeriodicNoJ) = 0\right] < \frac{2^k}{\commonBase}
 $$
@@ -492,9 +497,9 @@ with a decreasing $k$. Moreover, a larger $\commonBase$ also increases the lower
 First note that
 $$
 \mathcal{M} = \{f : f(\pmb{x}) = \pm x_1 \pm x_2 ... \pm x_{|A_d|}\} = 
-  \left\{\sum_{j \in |A_d|} (-1)^{\beta_j}\digSumPeriodic : \beta \in \set{0, 1}^{|A_d|} \right\}.
+  \left\{\sum_{j \in |A_d|} (-1)^{\beta_j} \numbToCommon \digSumPeriodic : \beta \in \set{0, 1}^{|A_d|} \right\}.
 $$
-Let $f_\beta \in \mathcal{M}$ then equal $\sum_{j \in |A_d|} (-1)^{\beta_j}\digSumPeriodic$.
+Let $f_\beta \in \mathcal{M}$ then equal $\sum_{j \in |A_d|} (-1)^{\beta_j}\numbToCommon \digSumPeriodic$.
 
 Then, let
 $$
@@ -516,7 +521,7 @@ $$
 $$
 the Turtle will draw a closed shape. While this may seem arbitrary, there is a unique
 and interesting geometric interpretation. 
-Let rational sequence $a_1, a_2, ..., a_{\rationalPeriodTotal}$ be equal to
+Let a rational decimal sequence $a_1, a_2, ..., a_{\rationalPeriodTotal}$ be equal to
 $
 \forall \ell \in [\rationalPeriodTotal]
 $,
@@ -537,19 +542,16 @@ if $$
       a_\ell
   \right) = 0
 $$
-the Turtle closes. If $r_i = \commonToAngle \sum_{\ell = 0}^{q} a_\ell$ for 
-$i \in \set{0, ..., \rationalPeriodTotal - 1}$. Then $\exp(I \cdot r_i)$ can be thought of as some point around the 
-unit circle. Also, note that $r_{i + 1} = r_i + \commonToAngle a_{i+1}$. In otherwords,
+the Turtle closes.
+If $r_i = \commonToAngle \sum_{\ell = 0}^{q} a_\ell$ for 
+$i \in \set{0, ..., \rationalPeriodTotal - 1}$, then $\exp(I \cdot r_i)$ can be thought of as some point at angle $r_i$ around the 
+complex unit circle. Also, note that $r_{i + 1} = r_i + \commonToAngle a_{i+1}$. In otherwords,
 $r_i$ denotes some position around the complex unit circle where the subsequent updates
-to position are given by a sum and subtraction of rational parameters. Then, if the center of
+to position are given the $a_i$s, which are a sum and subtraction of rational parameters. Then, if the center of
 mass of these points around the unit circle is $0$, the Turtle draws a closed shape!
 The authors are unsure as to the underlying intuition for why this is true.
 
 % TODO: picture!!!!
-
-
-Over one common period for a all rational sequences, 
-$\rationalPeriodTotal$,
 
 
 \section{Open Questions and Future Work}
@@ -603,9 +605,13 @@ been solved, and the associated (financial) reward to each question, see our web
 
 \end{enumerate}
 
-\section{Conclusion}
-
 \section*{Acknowledgments}
+The authors would like to thank their roommate Phu Nguyen for helping me work through the closure proofs
+as well as inspiring me to pursue this project. The authors would also like to thank C.J. Argue
+for assisting with the initial intuition and for providing encouragement. Moreover, the authors
+would like to acknowledge Shiva Peri for doing a fantastic job putting together the artistic aspects
+of the project as well as the website. Finally, the author would like to thank all their fantastic friends
+from college who inspired and encouraged them to pursue their interests.
 
 
 
