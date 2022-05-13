@@ -399,7 +399,7 @@ for all $d \in D$.
 We can thus check for closure by computing \eqref{eq:singleDelta0} for each dimension.
 
 \subsection{Algorithm complexity}
-The algorithm we provide in equation \eqref{eq:singleDelta0} runs in time exponential 
+The algorithm we provide in equation \eqref{eq:singleDelta0} runs in worse than exponential time
 in the size of the input assuming the Word RAM model. 
 The period for the rational generated from rational parameter $j$, $1 \leq \rationalPeriod \leq d^j$. Then,
 the period over all rationals generated from parameters is at most 
@@ -416,20 +416,20 @@ $$
 
 Then, note that computing the period of rational numbers via known classical methods takes 
 exponential time in the number of digits of the denominator. So, computing
-$\rationalPeriod$ takes $O(d^j)$ time. Then, computing the $\digSumPeriodic$
+$\rationalPeriod$ takes $\widetilde{O}(d^j)$ time. Then, computing the $\digSumPeriodic$
 can take $O(d^j)$ time. 
 We can thus see that period finding takes at most
 $$
-O\left(k \max_{j \in [k]} d^j \right)
+\widetilde{O}\left(k \max_{j \in [k]} d^j \right)
 $$
 time.
 
 Because \eqref{eq:singleDelta0} must be computed for each dimension, the algorithm
 runs in 
 $$
-  O\left(k \max_{j \in [k]} d^j \right) + 
+  \widetilde{O}\left(k \max_{j \in [k]} d^j \right) + 
   O\left(\max_{j \in [k]} \; D (b^j d^j)^k \right) = 
-  O\left(\max_{j \in [k]} \; D (b^j d^j)^k \right)
+  \widetilde{O}\left(\max_{j \in [k]} \; D (b^j d^j)^k \right)
 $$
 time.
 Note that $b^j, d^j$ are also exponential in the size of the input. 
