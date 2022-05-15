@@ -26,8 +26,6 @@
 \newcommand{\numbToAngle}{\frac{2\pi}{b^j}}
 \newcommand{\numbToAngleNoJ}[1]{\frac{2\pi}{b^{#1}}}
 \newcommand{\combSingleTermCos}[1]{\prod_{j=1}^k \cos\left(\numbToAngle \cdot \theta^j\right) ^ {\inclIndic{#1}{j}}}
-\newcommand{\digSumPeriodic}{\sigma^j}
-\newcommand{\digSumPeriodicNoJ}{{\sigma}}
 \newcommand{\totalOverRationalFrac}{\frac{\totalPeriod}{\rationalPeriodTotal}}
 \newcommand{\changeTotalOneDim}{\Delta P_{0, T}^d}
 \newcommand{\digit}{\mathrm{digit}}
@@ -37,6 +35,8 @@
 \newcommand{\commonToAngle}{\frac{2\pi}{\commonBase}}
 \newcommand{\sinOrCos}{\phi^j}
 \newcommand{\combSingleTerm}[1]{\prod_{j=1}^k \sinOrCos\left(\numbToAngle \cdot \theta^j\right) ^ {\inclIndic{#1}{j}}}
+\newcommand{\digSumPeriodic}{\sigma^j}
+\newcommand{\digSumPeriodicNoJ}{{\sigma}}
 
 
 %
@@ -324,14 +324,14 @@ to give the digital sum such that
   \mathrm{digSum}(N) = \sum_{i=0}^{m} d_i.
 \end{equation}
 
-Moreover, define $\digSumPeriodic \in \Z_b$
+Moreover, for the $j$th rational parameter define $\digSumPeriodic \in \Z_{\commonBase}$
 such that
 % TODO: define T within the func from another func
 % TODO: bettr defn
 \begin{equation}
-  \digSumPeriodic = \sum_{i = i_0}^{i_0 + \rationalPeriodTotal} \mathrm{digit}(n, d, b, i).
+  \digSumPeriodic = \numbToCommon \sum_{i = i_0}^{i_0 + \rationalPeriodTotal} \mathrm{digit}(n^j, d^j, b^j, i).
 \end{equation}
-In other words, $\digSumPeriodic$ is the digital sum over 
+In other words, $\digSumPeriodic$ is the ``normalized" digital sum over 
 a common decimal sequence period for all rational parameters.
 
 \begin{remark}[Complexity]
@@ -450,7 +450,7 @@ Define $A_d = \set{j \mid j \in [k] \; \text{and}\; \inclIndic{d}{j} = 1}$, in o
 $A_d$ is the set of rational parameters which are included in determining the position along the $d$th dimension.
 Also, for function $f: \Z_\commonBase^{|A_d|} \rightarrow \Z_\commonBase$ and $\{a_1, a_2, ..., a_{|A_d|} \} = A_d$, we will denote
 $$
-  f\left(\numbToCommonNoJ{a_1} \digSumPeriodicNoJ^{a_1}, \numbToCommonNoJ{a_2}\digSumPeriodicNoJ^{a_2}, ..., \numbToCommonNoJ{a_{A_d}}\digSumPeriodicNoJ^{a_{A_d}}\right)
+  f\left(\digSumPeriodicNoJ^{a_1}, \digSumPeriodicNoJ^{a_2}, ..., \digSumPeriodicNoJ^{a_{A_d}}\right)
   = f\left(\digSumPeriodicNoJ\right).
 $$
 
@@ -505,7 +505,7 @@ with a decreasing $k$. Moreover, a larger $\commonBase$ also increases the lower
 First note that
 $$
 \mathcal{M} = \{f : f(\pmb{x}) = \pm x_1 \pm x_2 ... \pm x_{|A_d|}\} = 
-  \left\{\sum_{j \in |A_d|} (-1)^{\beta_j} \numbToCommon \digSumPeriodic : \beta \in \set{0, 1}^{|A_d|} \right\}.
+  \left\{\sum_{j \in |A_d|} (-1)^{\beta_j} \digSumPeriodic : \beta \in \set{0, 1}^{|A_d|} \right\}.
 $$
 Let $f_\beta \in \mathcal{M}$ then equal $\sum_{j \in |A_d|} (-1)^{\beta_j}\numbToCommon \digSumPeriodic$.
 
@@ -523,7 +523,6 @@ $$
       \sum_{\ell = 0}^{q}
       \sum_{j \in A_d}
           \left(-1\right) ^ {\beta_{j}}
-          \numbToCommon
           \mathrm{digit}(n, b, d, \ell)
   \right) = 0
 $$
@@ -563,7 +562,7 @@ The authors are unsure as to the underlying intuition for why this is true.
 For example, say that rational parameters $\frac{22,022}{99,999} = 0.\overline{22022}$ and
 $\frac{200}{99,999} = 0.\overline{00200}$ determine the movement in the $x$, $y$, and $z$ axis for $3$ dimensions.
 Then, $\sigma^1 = 8$ and $\sigma^2 = 2$. Also note that we are in base 10 so $b^1 = b^2 = \commonBase = 10$.
-Also, $f_{00}(8, 2) = 8 + 2 = 10 \equiv 0 \mod 10$. But then, we have that $a = 0.\overline{22222}$.
+So, $f_{00}(8, 2) = 8 + 2 = 10 \equiv 0 \mod 10$. But then, we have that $a = 0.\overline{22222}$.
 So then, the ``movement" around the unit circle ends up being evenly spaced out and the center of mass
 is 0. Thus, we know that the turtle will close.
 

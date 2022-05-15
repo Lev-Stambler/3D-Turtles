@@ -132,8 +132,6 @@ So then, by equation \eqref{eq:expBreakdown}, we get that
 =&
 \exp\left(
     I \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
-    \cdot
-    \numbToCommon
     \cdot p \cdot
     \digSumPeriodic
 \right)
@@ -152,7 +150,6 @@ We then use \eqref{eq:decomposeExp} to show that $Q$ equals
   \sum_{p= 0}^{\frac{\totalPeriod}{\rationalPeriodTotal} - 1} \left[
     I \exp\left(
       pI \commonToAngle \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
-      \numbToCommon
       \digSumPeriodic
     \right)
   \left(
@@ -164,7 +161,7 @@ We then use \eqref{eq:decomposeExp} to show that $Q$ equals
     \right)\right)\right].
 \end{equation}
 
-\subsubsection*{Case 1: $\sum_{j \in A_d} (-1) ^ {\beta_{(j)}} \numbToCommon \digSumPeriodic \not\equiv 0 \mod \commonBase$}
+\subsubsection*{Case 1: $\sum_{j \in A_d} (-1) ^ {\beta_{(j)}} \digSumPeriodic \not\equiv 0 \mod \commonBase$}
 Define
 $$
   C_\beta = \sum_{q = 0}^{\rationalPeriodTotal - 1}
@@ -178,24 +175,23 @@ Moreover, note that
 \begin{align*}
   &\exp\left(
       pI \commonToAngle \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
-      \numbToCommon
       \digSumPeriodic
     \right)
   = \prod_{j \in A_d} \exp\left(
       -1^{\beta_{(j)}}
      \cdot
-    	\numbToAngle
+    	\commonToAngle
      \cdot
       pI \cdot \digSumPeriodic 
     \right)
 \end{align*}
-and that  because $-1^{\beta_{(j)}} \cdot \numbToAngle pI \cdot \digSumPeriodic \equiv 0 \mod b^j$,
+and then  because $-1^{\beta_{(j)}} \cdot \commonToAngle pI \cdot \digSumPeriodic \equiv 0 \mod \commonBase$,
 \begin{equation*}
-   -1^{\beta_{(j)}} \cdot \commonToAngle \numbToCommon pI \cdot \digSumPeriodic = \alpha \cdot 2\pi
+   -1^{\beta_{(j)}} \cdot \commonToAngle pI \cdot \digSumPeriodic = \alpha \cdot 2\pi
 \end{equation*}
 for some $\alpha \in \N$. So,
 \begin{equation*}
-  \exp\left(-1^{\beta_{(j)}} \cdot\numbToAngle \cdot pI \cdot \digSumPeriodic \right) = \exp\left(0\right) = 1
+  \exp\left(-1^{\beta_{(j)}} \cdot\commonToAngle \cdot pI \cdot \digSumPeriodic \right) = \exp\left(0\right) = 1
 \end{equation*}
 when $p = \frac{\totalPeriod}{\rationalPeriodTotal}$. 
 
@@ -204,22 +200,19 @@ We can conclude that
 \begin{equation*}
  \exp\left(
       I \commonToAngle \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
-      \numbToAngle
       \digSumPeriodic
     \right) 
 \end{equation*}
 is a $\totalOverRationalFrac^{th}$ root of unity iff
 $$\sum_{j \in A_d} -1 ^ {\beta_{(j)}}
-      \numbToCommon
       \digSumPeriodic \not\equiv 0 \mod \commonBase
 $$
 
-So, for $\sum_{j \in A_d} -1 ^ {\beta_{(j)}}\numbToCommon \digSumPeriodic \not\equiv 0$, we have that
+So, for $\sum_{j \in A_d} -1 ^ {\beta_{(j)}} \digSumPeriodic \not\equiv 0$, we have that
 \begin{align*}
   \eqWTSInnerProd &= C_\beta \sum_{p= 0}^{\frac{\totalPeriod}{\rationalPeriodTotal} - 1}
     \exp\left(
       pI \commonToAngle \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
-      \numbToCommon
       \digSumPeriodic
     \right) \\
     &= C_\beta \sum_{p = 0}^{\totalOverRationalFrac - 1}\exp\left(W_{\totalOverRationalFrac}^p\right) \\
@@ -227,7 +220,7 @@ So, for $\sum_{j \in A_d} -1 ^ {\beta_{(j)}}\numbToCommon \digSumPeriodic \not\e
 \end{align*}
 where $W_{\totalOverRationalFrac}^p$ is the $\totalOverRationalFrac^{th}$ root of unity.
 
-\subsubsection*{Case 2: $\sum_{j \in A_d} -1 ^ {\beta_{(j)}} \numbToCommon \digSumPeriodic \equiv 0 \mod \commonBase$}
+\subsubsection*{Case 2: $\sum_{j \in A_d} -1 ^ {\beta_{(j)}} \digSumPeriodic \equiv 0 \mod \commonBase$}
 Now,
 \begin{align*}
   \eqWTSInnerProd &= C_\beta \sum_{p= 0}^{\frac{\totalPeriod}{\rationalPeriodTotal} - 1} \exp(0) \\
