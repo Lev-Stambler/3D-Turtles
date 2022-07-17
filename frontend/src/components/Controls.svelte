@@ -1,4 +1,7 @@
 <script lang="ts">
+	import type { Rational } from 'src/interfaces';
+	import { rationalFromStr, rationalToStr } from '../math/rationals';
+
 	import { createEventDispatcher } from 'svelte';
 
 	import {
@@ -10,6 +13,8 @@
 		controlParams
 	} from '../store';
 	import RationalButtonGroup from './RationalButtonGroup.svelte';
+
+	let yaw: Rational, pitch: Rational, distance: Rational;
 
 	const dispatch = createEventDispatcher();
 
@@ -28,24 +33,37 @@
 		dispatch('paramchange', {});
 	};
 
-	let yaw = default_angle_1;
-	let pitch = default_angle_2;
-	let distance = default_distance;
+	const copyShareUrl = async () => {
+		const rationals = [yaw, pitch, distance].map(rationalToStr).join(';');
+		const urlHashData = `${rationals};${$controlParams.pathWidth}`;
+		const url = `${location.href.split('#')[0]}#${urlHashData}`;
+		try {
+			await navigator.clipboard.writeText(url);
+			alert(`Copied ${url} to clipboard. Share it with friends!`);
+		} catch (e) {
+			alert(`Failed to copy the URL to the clipboard. Manually share it with friends via ${url}`);
+		}
+	};
+
+	yaw = $parameters.initParams[0];
+	pitch = $parameters.initParams[1];
+	distance = $parameters.initParams[2];
 </script>
 
 <section>
 	<button on:click={updateParams}>Reset</button>
 	<button on:click={toggleRunning}>{$controlParams.running ? 'Pause' : 'Play'}</button>
-	<button on:click={togglePreview}
-		>{$controlParams.displayPreview ? 'show preview' : 'hide preview'}</button
-	>
 	<input type="range" bind:value={$controlParams.pathWidth} min="0.01" max="10" step=".01" />
 
 	<!-- TODO: control this from URL param -->
 	{#if $controlParams.allowControls}
+		<button on:click={togglePreview}
+			>{$controlParams.displayPreview ? 'hide preview' : 'show preview'}</button
+		>
 		<RationalButtonGroup name="Yaw" bind:rational={yaw} on:paramchange={updateParams} />
 		<RationalButtonGroup name="Pitch" bind:rational={pitch} on:paramchange={updateParams} />
 		<!-- <RationalButtonGroup name="Distance" bind:rational={distance} on:paramchange={updateParams} /> -->
+		<button on:click={copyShareUrl}>Share</button>
 	{/if}
 </section>
 

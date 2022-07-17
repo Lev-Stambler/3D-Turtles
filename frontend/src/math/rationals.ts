@@ -56,3 +56,15 @@ export function precomputeRationalDistances(rational: Rational): number[] {
 	}
 	return distances;
 }
+
+export const rationalToStr = (r: Rational): string =>
+	[r.n, r.d, r.b].map((a) => a.toString()).join(',');
+
+export const rationalFromStr = (s: string): Rational => {
+	const spl = s.split(',');
+	return {
+		n: parseInt(spl[0]),
+		d: parseInt(spl[1]),
+		b: parseInt(spl[2])
+	};
+};

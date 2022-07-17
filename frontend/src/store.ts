@@ -4,10 +4,12 @@ import {
 	getRationalAngleIterator,
 	getRationalDistanceIterator,
 	precomputeRationalAngles,
-	precomputeRationalDistances
+	precomputeRationalDistances,
+	rationalFromStr
 } from './math/rationals';
 
 export type StoredParameters = {
+	initParams: [Rational, Rational, Rational];
 	angles: Angle[];
 	distance: IterableIterator<number>;
 	distance_preview: number[];
@@ -20,6 +22,7 @@ export const default_distance: Rational = { n: 8, d: 9, b: 10 };
 
 export const generateParams = (a1: Rational, a2: Rational, d: Rational): any => {
 	return {
+		initParams: [a1, a2, d],
 		angles: [
 			{
 				iterator: getRationalAngleIterator({
@@ -92,16 +95,35 @@ export let parameters: Writable<StoredParameters> = writable(
 	generateParams(default_angle_1, default_angle_2, default_distance)
 );
 
-export type ControlParameters = {
-	running: boolean;
-	pathWidth: number;
-	displayPreview: boolean;
-	allowControls: boolean;
-};
-
 export let controlParams: Writable<ControlParameters> = writable({
 	running: false,
 	pathWidth: 0.5,
 	displayPreview: true,
 	allowControls: true
 });
+
+// Parse URL parameters to set a default for the parameters
+export const setParams = () => {
+	try {
+		const urlData = location.href.split('#')[1];
+		const strs = urlData.split(';');
+		const [yaw, pitch, distance] = strs.slice(0, 3).map(rationalFromStr);
+		controlParams.update((params) => {
+			params.pathWidth = parseFloat(strs[3]);
+			return { ...params, displayPreview: false, allowControls: false, running: true };
+		});
+		parameters.set(generateParams(yaw, pitch, distance));
+	} catch (e) {
+		controlParams.update((p) => {
+			return { ...p, allowControls: true, displayPreview: true };
+		});
+		console.log('Could not parse URL params using defaults', e);
+	}
+};
+
+export type ControlParameters = {
+	running: boolean;
+	pathWidth: number;
+	displayPreview: boolean;
+	allowControls: boolean;
+};

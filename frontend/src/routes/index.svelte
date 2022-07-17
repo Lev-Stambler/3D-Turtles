@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { parameters, controlParams } from '../store';
+	import { parameters, controlParams, setParams } from '../store';
 	import {
 		defaultBounds,
 		defaultPath,
@@ -24,6 +24,7 @@
 
 	import Controls from '../components/Controls.svelte';
 	import TurtlePathMesh from '../components/TurtlePathMesh.svelte';
+	import { onMount } from 'svelte';
 
 	const sphereGeometry = new SphereGeometry(1);
 
@@ -89,41 +90,70 @@
 			maxZ: 0
 		};
 	};
+	let loading = true;
+	onMount(() => {
+		setParams();
+		loading = false;
+	});
 </script>
 
-<div class="container">
-	<Controls on:paramchange={reset} />
-	<Canvas>
-		<OrthographicCamera far={1000000000000} position={cameraPos}>
-			<OrbitControls
-				enableDamping
-				autoRotate
-				autoRotateSpeed={0.5}
-				target={getCentroid(path.bounds)}
-			/>
-		</OrthographicCamera>
+<!-- <svelte:body on:load={() => setParams()} /> -->
 
-		<DirectionalLight shadow color={'#EDBD9C'} position={{ x: -15, y: 45, z: 20 }} />
-		<HemisphereLight skyColor={0x4c8eac} groundColor={0xac844c} intensity={0.6} />
+<div class="wrapper">
+	{#if loading}
+		<div class="loading--wrapper"><div>Loading...</div></div>
+	{:else}
+		<!-- else content here -->
+		<div class="container">
+			<Controls on:paramchange={reset} />
+			<Canvas>
+				<OrthographicCamera far={1000000000000} position={cameraPos}>
+					<OrbitControls
+						enableDamping
+						autoRotate
+						autoRotateSpeed={0.5}
+						target={getCentroid(path.bounds)}
+					/>
+				</OrthographicCamera>
 
-		<TurtlePathMesh turtle={path} />
-		{#if displayPreview}
-			<TurtlePathMesh turtle={preview} />
-		{/if}
+				<DirectionalLight shadow color={'#EDBD9C'} position={{ x: -15, y: 45, z: 20 }} />
+				<HemisphereLight skyColor={0x4c8eac} groundColor={0xac844c} intensity={0.6} />
 
-		<!-- origin -->
-		<Mesh geometry={sphereGeometry} material={new MeshStandardMaterial({ color: 'black' })} />
+				<TurtlePathMesh turtle={path} />
+				{#if displayPreview}
+					<TurtlePathMesh turtle={preview} />
+				{/if}
 
-		<!-- turtle head -->
-		<Mesh
-			geometry={sphereGeometry}
-			position={new Vector3(...pos)}
-			material={new MeshStandardMaterial({ color: 'green' })}
-		/>
-	</Canvas>
+				<!-- origin -->
+				<Mesh geometry={sphereGeometry} material={new MeshStandardMaterial({ color: 'black' })} />
+
+				<!-- turtle head -->
+				<Mesh
+					geometry={sphereGeometry}
+					position={new Vector3(...pos)}
+					material={new MeshStandardMaterial({ color: 'green' })}
+				/>
+			</Canvas>
+		</div>
+	{/if}
 </div>
 
 <style>
+	:global(body) {
+		overflow: hidden;
+	}
+	.loading--wrapper > div {
+		height: min-content;
+	}
+	.loading--wrapper {
+		display: grid;
+		align-content: center;
+		justify-content: center;
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+		position: absolute;
+	}
 	.container {
 		position: fixed;
 		top: 0;
