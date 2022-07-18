@@ -50,23 +50,27 @@
   <button on:click={toggleRunning}
     >{$controlParams.running ? "Pause" : "Play"}</button
   >
+
   <input
-    type="range"
     bind:value={$controlParams.pathWidth}
+    type="range"
     min="0.01"
     max="2.5"
     step=".01"
   />
 
-  <!-- TODO: control this from URL param -->
   {#if $controlParams.allowControls}
-    <input
-      type="range"
-      bind:value={$controlParams.numStepsPerLoop}
-      min="1"
-      max="100"
-      step="1"
-    />
+    <br />
+    <label>
+      steps:
+      <input
+        type="number"
+        bind:value={$controlParams.numStepsPerLoop}
+        min="1"
+        max="100"
+        step="1"
+      />
+    </label>
 
     <button on:click={togglePreview}
       >{$controlParams.displayPreview ? "hide preview" : "show preview"}</button
@@ -90,6 +94,16 @@
   button {
     border: none;
     margin: none;
+  }
+
+  label {
+    display: grid;
+    grid-template-columns: 50px 100px;
+  }
+
+  input {
+    border: none;
+    background-color: aliceblue;
   }
 
   section {
