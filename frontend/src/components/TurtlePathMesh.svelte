@@ -18,7 +18,7 @@
     material={turtle.mat}
   >
     {#each turtle.points as p}
-      <Instance position={p} scale={turtle.width} />
+      <Instance position={p} scale={turtle.width * 1.01} />
     {/each}
   </InstancedMesh>
 

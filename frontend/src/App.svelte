@@ -22,14 +22,15 @@
 
   import { SphereGeometry, Vector3, MeshStandardMaterial } from "three";
   import {
+    AmbientLight,
     Canvas,
     DirectionalLight,
-    HemisphereLight,
     Mesh,
     OrbitControls,
     OrthographicCamera,
-    type Position,
   } from "@threlte/core";
+
+  import { GLTF } from "@threlte/extras";
 
   import Controls from "./components/Controls.svelte";
   import TurtlePathMesh from "./components/TurtlePathMesh.svelte";
@@ -54,7 +55,6 @@
 
   //////////////// Three js scene stuff
 
-  let cameraPos: Position = { x: 1, y: 1, z: 1 };
   let pos: PosType = [0, 0, 0];
   let steps: number = 0;
 
@@ -76,6 +76,12 @@
     }
   };
 
+  const stepWrapper = () => {
+    for (let i = 0; i < $controlParams.numStepsPerLoop; i++) {
+      step();
+    }
+  };
+
   let timer_id: NodeJS.Timer;
   controlParams.subscribe((newParams) => {
     running = newParams.running;
@@ -84,7 +90,7 @@
 
     clearInterval(timer_id);
     if (running) {
-      timer_id = setInterval(step, $parameters.sleepTimeMs);
+      timer_id = setInterval(stepWrapper, newParams.sleepTimeMs);
     }
   });
 
@@ -103,6 +109,7 @@
       maxZ: 0,
     };
   };
+
   let loading = true;
   onMount(() => {
     setParams();
@@ -119,8 +126,12 @@
     <!-- else content here -->
     <div class="container">
       <Controls on:paramchange={reset} />
-      <Canvas>
-        <OrthographicCamera far={1000000000000} position={cameraPos}>
+      <Canvas rendererParameters={{ logarithmicDepthBuffer: true }}>
+        <OrthographicCamera
+          frustumCulled
+          far={1000000000000000000000}
+          position={{ x: 1, y: 1, z: 1 }}
+        >
           <OrbitControls
             enableDamping
             autoRotate
@@ -129,16 +140,8 @@
           />
         </OrthographicCamera>
 
-        <DirectionalLight
-          shadow
-          color={"#EDBD9C"}
-          position={{ x: -15, y: 45, z: 20 }}
-        />
-        <HemisphereLight
-          skyColor={0x4c8eac}
-          groundColor={0xac844c}
-          intensity={0.6}
-        />
+        <AmbientLight />
+        <DirectionalLight position={{ x: -15, y: 45, z: 20 }} />
 
         <TurtlePathMesh turtle={path} />
         {#if displayPreview}
@@ -152,10 +155,16 @@
         />
 
         <!-- turtle head -->
-        <Mesh
+        <!-- <Mesh
           geometry={sphereGeometry}
           position={new Vector3(...pos)}
           material={new MeshStandardMaterial({ color: "green" })}
+        /> -->
+
+        <GLTF
+          url={"/src/public/3d-turtle.glb"}
+          position={new Vector3(...pos)}
+          scale={5}
         />
       </Canvas>
     </div>
