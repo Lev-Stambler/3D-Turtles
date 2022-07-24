@@ -157,11 +157,7 @@
         />
 
         <!-- turtle head -->
-        <GLTF
-          url={"/src/public/3d-turtle.glb"}
-          position={new Vector3(...pos)}
-          scale={5}
-        />
+        <GLTF url={"/3d-turtle.glb"} position={new Vector3(...pos)} scale={5} />
       </Canvas>
     </div>
   {/if}
