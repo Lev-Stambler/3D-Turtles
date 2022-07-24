@@ -62,7 +62,7 @@
   {#if $controlParams.allowControls}
     <br />
     <label>
-      steps:
+      speed:
       <input
         type="number"
         bind:value={$controlParams.numStepsPerLoop}

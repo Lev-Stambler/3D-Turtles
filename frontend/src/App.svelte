@@ -1,7 +1,6 @@
 <script lang="ts">
   import { parameters, controlParams, setParams } from "./store";
   import {
-    defaultBounds,
     defaultPath,
     MAX_STEPS,
     previewPath,
@@ -27,7 +26,7 @@
     DirectionalLight,
     Mesh,
     OrbitControls,
-    OrthographicCamera,
+    PerspectiveCamera,
   } from "@threlte/core";
 
   import { GLTF } from "@threlte/extras";
@@ -127,20 +126,23 @@
     <div class="container">
       <Controls on:paramchange={reset} />
       <Canvas rendererParameters={{ logarithmicDepthBuffer: true }}>
-        <OrthographicCamera
+        <PerspectiveCamera
+          fov={45}
           frustumCulled
           far={1000000000000000000000}
-          position={{ x: 1, y: 1, z: 1 }}
+          position={{ x: 100, y: 100, z: 100 }}
         >
           <OrbitControls
-            enableDamping
             autoRotate
-            autoRotateSpeed={0.5}
+            autoRotateSpeed={0.05}
+            enableDamping
+            enablePan={false}
+            zoomSpeed={1.5}
             target={getCentroid(path.bounds)}
           />
-        </OrthographicCamera>
+        </PerspectiveCamera>
 
-        <AmbientLight />
+        <AmbientLight intensity={0.7} />
         <DirectionalLight position={{ x: -15, y: 45, z: 20 }} />
 
         <TurtlePathMesh turtle={path} />
@@ -155,12 +157,6 @@
         />
 
         <!-- turtle head -->
-        <!-- <Mesh
-          geometry={sphereGeometry}
-          position={new Vector3(...pos)}
-          material={new MeshStandardMaterial({ color: "green" })}
-        /> -->
-
         <GLTF
           url={"/src/public/3d-turtle.glb"}
           position={new Vector3(...pos)}
