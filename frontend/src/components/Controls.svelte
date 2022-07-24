@@ -28,7 +28,7 @@
 
   const copyShareUrl = async () => {
     const rationals = [yaw, pitch, distance].map(rationalToStr).join(";");
-    const urlHashData = `${rationals};${$controlParams.pathWidth}`;
+    const urlHashData = `${rationals};${$controlParams.pathWidth};${$controlParams.numStepsPerLoop}`;
     const url = `${location.href.split("#")[0]}#${urlHashData}`;
     try {
       await navigator.clipboard.writeText(url);

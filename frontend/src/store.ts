@@ -111,6 +111,7 @@ export const setParams = () => {
 		const [yaw, pitch, distance] = strs.slice(0, 3).map(rationalFromStr);
 		controlParams.update((params) => {
 			params.pathWidth = parseFloat(strs[3]);
+			params.numStepsPerLoop = parseInt(strs[4]);
 			return { ...params, displayPreview: false, allowControls: false, running: true };
 		});
 		parameters.set(generateParams(yaw, pitch, distance));
