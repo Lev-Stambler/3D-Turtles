@@ -1,4 +1,6 @@
 import {
+	DoubleSide,
+	FrontSide,
 	Material,
 	MeshLambertMaterial,
 	MeshNormalMaterial,
@@ -78,7 +80,7 @@ const clearMaterial = new MeshLambertMaterial({
 	// transparent: true,
 	// opacity: 0.1
 });
-const defaultMaterial = new MeshStandardMaterial({ color: 'red' });
+const defaultMaterial = new MeshStandardMaterial({ color: 'red', side: FrontSide });
 
 export const defaultPath: TurtlePath = {
 	points: [new Vector3()],

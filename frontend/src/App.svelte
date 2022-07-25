@@ -1,7 +1,6 @@
 <script lang="ts">
   import { parameters, controlParams, setParams } from "./store";
   import {
-    defaultBounds,
     defaultPath,
     MAX_STEPS,
     previewPath,
@@ -22,14 +21,15 @@
 
   import { SphereGeometry, Vector3, MeshStandardMaterial } from "three";
   import {
+    AmbientLight,
     Canvas,
     DirectionalLight,
-    HemisphereLight,
     Mesh,
     OrbitControls,
-    OrthographicCamera,
-    type Position,
+    PerspectiveCamera,
   } from "@threlte/core";
+
+  import { GLTF } from "@threlte/extras";
 
   import Controls from "./components/Controls.svelte";
   import TurtlePathMesh from "./components/TurtlePathMesh.svelte";
@@ -54,7 +54,6 @@
 
   //////////////// Three js scene stuff
 
-  let cameraPos: Position = { x: 1, y: 1, z: 1 };
   let pos: PosType = [0, 0, 0];
   let steps: number = 0;
 
@@ -76,6 +75,12 @@
     }
   };
 
+  const stepWrapper = () => {
+    for (let i = 0; i < $controlParams.numStepsPerLoop; i++) {
+      step();
+    }
+  };
+
   let timer_id: NodeJS.Timer;
   controlParams.subscribe((newParams) => {
     running = newParams.running;
@@ -84,7 +89,7 @@
 
     clearInterval(timer_id);
     if (running) {
-      timer_id = setInterval(step, $parameters.sleepTimeMs);
+      timer_id = setInterval(stepWrapper, newParams.sleepTimeMs);
     }
   });
 
@@ -103,6 +108,7 @@
       maxZ: 0,
     };
   };
+
   let loading = true;
   onMount(() => {
     setParams();
@@ -119,26 +125,25 @@
     <!-- else content here -->
     <div class="container">
       <Controls on:paramchange={reset} />
-      <Canvas>
-        <OrthographicCamera far={1000000000000} position={cameraPos}>
+      <Canvas rendererParameters={{ logarithmicDepthBuffer: true }}>
+        <PerspectiveCamera
+          fov={45}
+          frustumCulled
+          far={1000000000000000000000}
+          position={{ x: 100, y: 100, z: 100 }}
+        >
           <OrbitControls
-            enableDamping
             autoRotate
-            autoRotateSpeed={0.5}
+            autoRotateSpeed={0.05}
+            enableDamping
+            enablePan={false}
+            zoomSpeed={1.5}
             target={getCentroid(path.bounds)}
           />
-        </OrthographicCamera>
+        </PerspectiveCamera>
 
-        <DirectionalLight
-          shadow
-          color={"#EDBD9C"}
-          position={{ x: -15, y: 45, z: 20 }}
-        />
-        <HemisphereLight
-          skyColor={0x4c8eac}
-          groundColor={0xac844c}
-          intensity={0.6}
-        />
+        <AmbientLight intensity={0.7} />
+        <DirectionalLight position={{ x: -15, y: 45, z: 20 }} />
 
         <TurtlePathMesh turtle={path} />
         {#if displayPreview}
@@ -152,11 +157,7 @@
         />
 
         <!-- turtle head -->
-        <Mesh
-          geometry={sphereGeometry}
-          position={new Vector3(...pos)}
-          material={new MeshStandardMaterial({ color: "green" })}
-        />
+        <GLTF url={"/3d-turtle.glb"} position={new Vector3(...pos)} scale={5} />
       </Canvas>
     </div>
   {/if}

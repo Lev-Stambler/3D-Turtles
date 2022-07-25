@@ -13,7 +13,6 @@ export type StoredParameters = {
 	angles: Angle[];
 	distance: IterableIterator<number>;
 	distance_preview: number[];
-	sleepTimeMs: number;
 };
 
 export const default_angle_1: Rational = { n: 7, d: 213, b: 4 };
@@ -87,7 +86,7 @@ export const generateParams = (a1: Rational, a2: Rational, d: Rational): any => 
 			d: d.d,
 			b: d.b
 		}),
-		sleepTimeMs: 10
+		
 	};
 };
 
@@ -98,6 +97,8 @@ export let parameters: Writable<StoredParameters> = writable(
 export let controlParams: Writable<ControlParameters> = writable({
 	running: false,
 	pathWidth: 0.5,
+	numStepsPerLoop: 1,
+	sleepTimeMs: 10,
 	displayPreview: true,
 	allowControls: true
 });
@@ -110,6 +111,7 @@ export const setParams = () => {
 		const [yaw, pitch, distance] = strs.slice(0, 3).map(rationalFromStr);
 		controlParams.update((params) => {
 			params.pathWidth = parseFloat(strs[3]);
+			params.numStepsPerLoop = parseInt(strs[4]);
 			return { ...params, displayPreview: false, allowControls: false, running: true };
 		});
 		parameters.set(generateParams(yaw, pitch, distance));
@@ -124,6 +126,8 @@ export const setParams = () => {
 export type ControlParameters = {
 	running: boolean;
 	pathWidth: number;
+	numStepsPerLoop: number;
+	sleepTimeMs: number;
 	displayPreview: boolean;
 	allowControls: boolean;
 };
