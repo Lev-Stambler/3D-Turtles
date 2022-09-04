@@ -15,17 +15,20 @@ NOTES:
   - To prevent the deployed contract from being modified or deleted, it should not have any access
     keys on its account.
 */
+use std::convert::TryFrom;
+
 use near_contract_standards::non_fungible_token::metadata::{
     NFTContractMetadata, NonFungibleTokenMetadataProvider, TokenMetadata, NFT_METADATA_SPEC,
 };
 use near_contract_standards::non_fungible_token::NonFungibleToken;
 use near_contract_standards::non_fungible_token::{Token, TokenId};
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
-use near_sdk::collections::{LazyOption, LookupSet};
+use near_sdk::collections::{LazyOption, LookupSet, UnorderedSet};
+use near_sdk::env::promise_batch_action_add_key_with_full_access;
 use near_sdk::json_types::ValidAccountId;
 use near_sdk::serde::{Deserialize, Serialize};
 use near_sdk::{
-    env, near_bindgen, AccountId, BorshStorageKey, PanicOnDefault, Promise, PromiseOrValue,
+    env, near_bindgen, AccountId, Balance, BorshStorageKey, PanicOnDefault, Promise, PromiseOrValue,
 };
 
 near_sdk::setup_alloc!();
@@ -49,7 +52,7 @@ pub struct Contract {
     /// The maximum number of NFTs to be minted
     max_supply: u32,
     /// The price (in whole Near) for each NFT
-    mint_price: u32,
+    mint_price: Balance,
     /// Keep track of the minted rational pairs
     minted_rational_pairs: LookupSet<(Rational, Rational)>,
     /// base media URL:
@@ -70,21 +73,21 @@ enum StorageKey {
 #[near_bindgen]
 impl Contract {
     #[init]
-    pub fn new_default_meta(owner_id: ValidAccountId) -> Self {
+    pub fn new_default_meta() -> Self {
         Self::new(
-            owner_id,
+            ValidAccountId::try_from(env::predecessor_account_id()).unwrap(),
             NFTContractMetadata {
                 spec: NFT_METADATA_SPEC.to_string(),
-                name: "Example NEAR non-fungible token".to_string(),
-                symbol: "EXAMPLE".to_string(),
-                icon: Some(DATA_IMAGE_SVG_NEAR_ICON.to_string()),
+                name: "3D Turles".to_string(),
+                symbol: "3DTURT".to_string(),
+                icon: Some(DATA_IMAGE_SVG_NEAR_ICON.to_string()), // TODO:
                 base_uri: None,
-                reference: None,
+                reference: None, // TODO: the github page
                 reference_hash: None,
             },
-            3,
+            U128(10_u128),
             1_000,
-            "".to_string(),
+            "https://3d-turtle.netlify.app".to_string(), // TODO: fix me
         )
     }
 
@@ -92,7 +95,7 @@ impl Contract {
     pub fn new(
         owner_id: ValidAccountId,
         metadata: NFTContractMetadata,
-        mint_price: u32,
+        mint_price: U128,
         max_supply: u32,
         base_url: String,
     ) -> Self {
@@ -107,10 +110,80 @@ impl Contract {
                 Some(StorageKey::Approval),
             ),
             metadata: LazyOption::new(StorageKey::Metadata, Some(&metadata)),
-            mint_price,
+            mint_price: mint_price.into(),
             max_supply,
             minted_rational_pairs: LookupSet::new(b"s"),
             base_url,
+        }
+    }
+
+    // TODO: factor out dup code
+    pub fn nft_minted(&self, r1: Rational, r2: Rational) -> bool {
+        let r1_simplified = r1.reduce();
+        let r2_simplified = r2.reduce();
+
+        if self
+            .minted_rational_pairs
+            .contains(&(r1_simplified.clone(), r2_simplified.clone()))
+            || self
+                .minted_rational_pairs
+                .contains(&(r2_simplified.clone(), r1_simplified.clone()))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    fn internal_mint(
+        &mut self,
+        token_id: TokenId,
+        token_owner_id: ValidAccountId,
+        token_metadata: Option<TokenMetadata>,
+    ) -> Token {
+        if self.tokens.token_metadata_by_id.is_some() && token_metadata.is_none() {
+            env::panic(b"Must provide metadata");
+        }
+        if self.tokens.owner_by_id.get(&token_id).is_some() {
+            env::panic(b"token_id must be unique");
+        }
+
+        let owner_id: AccountId = token_owner_id.into();
+
+        // Core behavior: every token must have an owner
+        self.tokens.owner_by_id.insert(&token_id, &owner_id);
+
+        // Metadata extension: Save metadata, keep variable around to return later.
+        // Note that check above already panicked if metadata extension in use but no metadata
+        // provided to call.
+        self.tokens
+            .token_metadata_by_id
+            .as_mut()
+            .and_then(|by_id| by_id.insert(&token_id, &token_metadata.as_ref().unwrap()));
+
+        // Enumeration extension: Record tokens_per_owner for use with enumeration view methods.
+        if let Some(tokens_per_owner) = &mut self.tokens.tokens_per_owner {
+            let mut token_ids = tokens_per_owner.get(&owner_id).unwrap_or_else(|| {
+                UnorderedSet::new(
+                    near_contract_standards::non_fungible_token::core::StorageKey::TokensPerOwner {
+                        account_hash: env::sha256(owner_id.as_bytes()),
+                    },
+                )
+            });
+            token_ids.insert(&token_id);
+            tokens_per_owner.insert(&owner_id, &token_ids);
+        }
+
+        // Approval Management extension: return empty HashMap as part of Token
+        let approved_account_ids = if self.tokens.approvals_by_id.is_some() {
+            Some(HashMap::new())
+        } else {
+            None
+        };
+        Token {
+            token_id,
+            owner_id,
+            metadata: token_metadata,
+            approved_account_ids,
         }
     }
 
@@ -123,7 +196,15 @@ impl Contract {
     /// `self.tokens.mint` will enforce `predecessor_account_id` to equal the `owner_id` given in
     /// initialization call to `new`.
     #[payable]
-    pub fn nft_mint(&mut self, r1: Rational, r2: Rational, receiver_id: ValidAccountId) -> Token {
+    pub fn nft_mint(
+        &mut self,
+        r1: Rational,
+        r2: Rational,
+        thickness: f32,
+        speed: u16,
+        receiver_id: ValidAccountId,
+    ) -> Token {
+        let init_storage_usage = env::storage_usage();
         if self.tokens.owner_by_id.len() >= self.max_supply as u64 {
             panic!("Cannot mint more than {} tokens", self.max_supply);
         }
@@ -138,44 +219,72 @@ impl Contract {
                 .minted_rational_pairs
                 .contains(&(r2_simplified.clone(), r1_simplified.clone()))
         {
-            panic!("Cannot remint the same pair");
+            panic!("These fractions have already been minted!");
         }
 
         self.minted_rational_pairs
             .insert(&(r1_simplified.clone(), r2_simplified.clone()));
 
-        let token_id = Self::make_title(&r1_simplified, &r2_simplified);
-        self.tokens.mint(
+        let title = Self::make_title(&r1_simplified, &r2_simplified);
+        let token_id = Self::make_id(&r1_simplified, &r2_simplified);
+        let token = self.internal_mint(
             token_id.clone(),
             receiver_id,
             Some(TokenMetadata {
-                title: Some(token_id),
+                title: Some(title),
                 description: None,
-                media: Some(self.make_media_url(&r1_simplified, &r2_simplified)),
+                media: Some(self.make_media_url(&r1_simplified, &r2_simplified, thickness, speed)),
                 media_hash: None,
                 copies: Some(1u64),
-                issued_at: todo!(),
+                issued_at: Some(env::block_timestamp().to_string()),
                 expires_at: None,
                 starts_at: None,
                 updated_at: None,
                 extra: None,
-                reference: todo!(),
+                reference: Some("TODO: me".to_string()),
                 reference_hash: None,
             }),
-        )
+        );
+        let final_storage_usage = env::storage_usage();
+        let storage_costs: Balance = (u128::from(final_storage_usage)
+            - u128::from(init_storage_usage))
+            * env::storage_byte_cost();
+
+        assert!(
+            env::attached_deposit() >= self.mint_price + storage_costs,
+            "Expected the attached amount to equal the mint price of"
+        );
+        // Transfer tokens to the owner
+        Promise::new(self.tokens.owner_id.to_string()).transfer(self.mint_price);
+        let transfer_back = env::attached_deposit() - (self.mint_price + storage_costs);
+
+        // Transfer remaining tokens back to the sender
+        if transfer_back > 0 {
+            Promise::new(env::predecessor_account_id()).transfer(transfer_back);
+        }
+
+        token
     }
 }
 
 impl Contract {
     fn make_title(r1: &Rational, r2: &Rational) -> String {
-        format!("{}/{} b{} -- {}/{} b{}", r1.n, r1.d, r1.b, r2.n, r2.d, r2.b)
+        format!("{} / {} base {}, {} / {} base {}", r1.n, r1.d, r1.b, r2.n, r2.d, r2.b)
+    }
+
+    fn make_id(r1: &Rational, r2: &Rational) -> String {
+        format!("n{},d{},b{}--n{},d{},b{}", r1.n, r1.d, r1.b, r2.n, r2.d, r2.b)
     }
 
     // TODO:
-    fn make_media_url(&self, r1: &Rational, r2: &Rational) -> String {
+    fn make_media_url(&self, r1: &Rational, r2: &Rational, thickness: f32, speed: u16) -> String {
+        assert!(
+            0. < thickness && thickness <= 3.,
+            "thickness must be in range (0, 3]"
+        );
         format!(
-            "{}/#{}/{} b{} -- {}/{} b{}",
-            self.base_url, r1.n, r1.d, r1.b, r2.n, r2.d, r2.b
+            "{}/#{},{},{};{},{},{};8,9,10;{};{}",
+            self.base_url, r1.n, r1.d, r1.b, r2.n, r2.d, r2.b, thickness, speed
         )
     }
 }
