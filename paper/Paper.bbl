@@ -1,9 +1,46 @@
-\begin{thebibliography}{ho}
+\begin{thebibliography}{MH22}
+
+\bibitem[Bar97]{barak_2097}
+Boaz Barak.
+\newblock Computational indistinguishability, pseudorandom generators, 2097.
+
+\bibitem[Blu60]{NDimSphericalCoord}
+L.~E. Blumenson.
+\newblock A derivation of n-dimensional spherical coordinates.
+\newblock {\em The American Mathematical Monthly}, 67(1):63--66, 1960.
 
 \bibitem[ho]{MathOverflowFracPeriod}
 Glen~O (https://math.stackexchange.com/users/67842/glen o).
 \newblock Length of period of decimal expansion of a fraction.
 \newblock Mathematics Stack Exchange.
 \newblock URL:https://math.stackexchange.com/q/2611737 (version: 2018-01-19).
+
+\bibitem[KC81]{OnDecSeq}
+S.~Kak and A.~Chatterjee.
+\newblock On decimal sequences (corresp.).
+\newblock {\em IEEE Transactions on Information Theory}, 27(5):647--652, 1981.
+
+\bibitem[MH22]{NumberphileVid}
+Brady~Haran Matt~Henderson.
+\newblock Plotting pi and searching for mona lisa - numberphile.
+\newblock \url{https://www.youtube.com/watch?v=tkC1HHuuk7c}, February 2022.
+
+\bibitem[Sch80]{Shwartz}
+J.~T. Schwartz.
+\newblock Fast probabilistic algorithms for verification of polynomial
+  identities.
+\newblock {\em J. ACM}, 27(4):701–717, oct 1980.
+
+\bibitem[Sho97]{Shor_1997}
+Peter~W. Shor.
+\newblock Polynomial-time algorithms for prime factorization and discrete
+  logarithms on a quantum computer.
+\newblock {\em {SIAM} Journal on Computing}, 26(5):1484--1509, oct 1997.
+
+\bibitem[Zip79]{Zip}
+Richard Zippel.
+\newblock Probabilistic algorithms for sparse polynomials.
+\newblock In Edward~W. Ng, editor, {\em Symbolic and Algebraic Computation},
+  pages 216--226, Berlin, Heidelberg, 1979. Springer Berlin Heidelberg.
 
 \end{thebibliography}

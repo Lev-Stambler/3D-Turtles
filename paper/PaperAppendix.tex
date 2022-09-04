@@ -1,0 +1,247 @@
+\appendix
+\section{Proving Property 1 and 2}
+\label{appendix:prop1}
+
+First let $I = \sqrt{-1}$ instead of $i$. This is done as $i$ is already reserved
+to represent the current time step.
+
+Now, before getting to the main proof, we need to prove the following lemma
+\begin{lemma}{For all $j \in [k]$ and $x, y \in \N$ where $y < \rationalPeriodTotal$, we have that 
+  $$
+    \theta_{xT' + y}^j = x\cdot \digSumPeriodic + \sum_{q = 0}^y \digit(n, b, d, q)
+  $$}
+  \label{lemma:angleBreakdown}
+  \begin{proof}
+    We can then see that for $(n, b, d, \theta_{x\rationalPeriodTotal + y}^j) \in \pmb{s}_{x\rationalPeriodTotal + y}$,
+    \begin{align*}
+      \rationalAngle{x \rationalPeriodTotal + y} &= \sum_{i = 0}^{x \rationalPeriodTotal + y} \mathrm{digit}(n, b, d, i) \\
+      &= \sum_{p = 0}^{(x- 1)\rationalPeriodTotal} \sum_{q=0}^{\rationalPeriodTotal - 1} \mathrm{digit}(n, b, d, p\rationalPeriodTotal + q)
+          + \sum_{q = x \rationalPeriodTotal}^{x \rationalPeriodTotal + y} \mathrm{digit}(n, b, d, q)\\
+      &= x \cdot \digSumPeriodic + \sum_{q = x \rationalPeriodTotal}^{\rationalPeriodTotal + y}\mathrm{digit}(n, b, d, q)\\
+      &= x \cdot \digSumPeriodic + \sum_{q = 0}^{y}\mathrm{digit}(n, b, d, q)
+    \end{align*}
+    because $\mathrm{digit}(n, b, d, x\rationalPeriodTotal + \ell) = \mathrm{digit}(n, b, d, \ell)$ for any $\ell \in \N$
+    by definition of periodicity.
+  \end{proof}
+\end{lemma}
+
+Let $\changeTotalOneDim$ be the change of position along dimension $d$
+from timestep 0 to $T$.
+We are now ready to determine if we ``close" along one dimension. I.e.\ does
+$
+\changeTotalOneDim = 0
+$?
+
+Define $A_d = \set{j \mid j \in [k] \; \text{and}\; \inclIndic{d}{j} = 1}$, in other words,
+$A_d$ is the set of rational parameters which are included in determining the position along the $d$th dimension.
+We can then see that
+\begin{align*}
+\changeTotalOneDim &=\sum_{i = 1}^T \combSingleTerm{d}\\
+  &=\pm\sum_{i = 1}^T \prod_{j = 1}^k \left(\half \left(\exp\left({\numbToAngle \rationalAngle{i} I}\right) \pm \exp\left(-\numbToAngle \rationalAngle{i} I\right)\right)\right)^\inclIndic{d}{j}\\
+  &= \pm 2^{-|A|} \sum_{p= 0}^{\frac{\totalPeriod}{\rationalPeriodTotal} - 1} \sum_{q = 0}^{\rationalPeriodTotal - 1}
+    \prod_{j \in A_d} \left(
+      \exp\left(\numbToAngle\rationalAngle{p \rationalPeriodTotal + q} I\right) \pm  \exp\left(-\numbToAngle\rationalAngle{p \rationalPeriodTotal + q} I\right)\right)
+\end{align*}
+by the Euler form of $\cos$ and $\sin$ and the fact that $\changeTotalOneDim$ is real.
+
+\newcommand{\periodFrac}{\frac{\totalPeriod}{\rationalPeriod}}
+\newcommand{\periodFracRational}{\frac{\rationalPeriodTotal}{\rationalPeriod}}
+
+% TODO: not entirely correct with d
+Next, observe that 
+\begin{align*}
+  &\prod_{j \in A_d} \left(
+      \exp\left(\numbToAngle\rationalAngle{p \rationalPeriodTotal + q} I\right) \pm  \exp\left(-\numbToAngle\rationalAngle{p \rationalPeriodTotal + q} I\right)\right)\\
+ =& 
+  \exp(\numbToAngleNoJ{1}\rationalAngleJ{p \rationalPeriodTotal + q}{1} + \numbToAngleNoJ{2}\rationalAngleJ{p \rationalPeriodTotal + q}{2} + ... + \numbToAngleNoJ{d}\rationalAngleJ{p \rationalPeriodTotal + q}{d}) 
+  \pm \exp(\numbToAngleNoJ{1}\rationalAngleJ{p \rationalPeriodTotal + q}{1} - \numbToAngleNoJ{2}\rationalAngleJ{p \rationalPeriodTotal + q}{2} + ... + \numbToAngleNoJ{d}\rationalAngleJ{p \rationalPeriodTotal + q}{d}) + ... \\
+  &\pm \exp(-\numbToAngleNoJ{1}\rationalAngleJ{p \rationalPeriodTotal + q}{1} - \numbToAngleNoJ{2}\rationalAngleJ{p \rationalPeriodTotal + q}{2} - ... - \numbToAngleNoJ{d}\rationalAngleJ{p \rationalPeriodTotal + q}{d})
+\end{align*}
+which then equals
+\begin{equation}
+ \sum_{\beta \in \set{0,1}^{|A_d|}} 
+		\pm
+    \exp\left(
+      	\commonToAngle I
+        \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
+          \numbToCommon \rationalAngle{p \rationalPeriodTotal + q}
+      \right)
+\end{equation}
+where $\beta$ can be though of as a bit string deciding whether the angle from seed
+$j \in A_d$ is added to or subtracted from the exponent.
+
+Then, we have that
+% TODO: update with common base stuff...
+\begin{align*}
+ \changeTotalOneDim =&
+  \pm 2^{-|A|} \sum_{p= 0}^{\frac{\totalPeriod}{\rationalPeriodTotal} - 1} \sum_{q = 0}^{\rationalPeriodTotal - 1}
+ \sum_{\beta \in \set{0,1}^{|A_d|}} 
+ 	 \pm
+    \exp\left(
+      	\commonToAngle I
+        \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
+        \numbToCommon \rationalAngle{p \rationalPeriodTotal + q}
+      \right)\\
+ =&
+  \pm 2^{-|A|} 
+ \sum_{\beta \in \set{0,1}^{|A_d|}} 
+		\pm
+     \sum_{p= 0}^{\frac{\totalPeriod}{\rationalPeriodTotal} - 1} \sum_{q = 0}^{\rationalPeriodTotal - 1}
+    \exp\left(
+      	\commonToAngle I
+        \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
+        \numbToCommon \rationalAngle{p \rationalPeriodTotal + q}
+      \right).
+\end{align*}
+
+\newcommand{\eqWTSInnerProd}{
+  \sum_{p= 0}^{\frac{\totalPeriod}{\rationalPeriodTotal} - 1} \sum_{q = 0}^{\rationalPeriodTotal - 1}
+    \exp\left(
+      	\commonToAngle I 
+        \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
+        \numbToCommon 
+        \rationalAngle{p \rationalPeriodTotal + q}I
+      \right)}
+
+Then, lets fix some $\beta \in \set{0, 1}^{|A_d|}$, define $Q$ such that
+\begin{equation}
+\label{eq:wts01}  
+  Q = \eqWTSInnerProd.
+\end{equation}
+We will proceed $Q$ to show 2 distinct cases where $Q = 0$ for any choice of $\beta$.
+
+Observe that 
+\begin{align}
+  \exp(\rationalAngle{p \rationalPeriodTotal + q}I)
+  &= \exp\left(
+      p \cdot \digSumPeriodic +
+      \sum_{\ell = p \rationalPeriodTotal}^{p \rationalPeriodTotal + q}\mathrm{digit}(n^j, b^j, d^j, \ell)\right)\tag{by lemma \ref{lemma:angleBreakdown}} \\
+      \label{eq:expBreakdown}
+      &= \exp\left(p \cdot \digSumPeriodic\right) \exp\left(\sum_{\ell = 0}^{q}\mathrm{digit}(n, b, d, \ell)\right).
+\end{align}
+
+So then, by equation \eqref{eq:expBreakdown}, we get that
+\begin{align}
+&\exp\left(
+    \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
+    \cdot
+    \numbToCommon \cdot
+    \rationalAngle{p \rationalPeriodTotal + q}I
+\right)\notag \\ 
+\label{eq:decomposeExp}
+=&
+\exp\left(
+    I \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
+    \cdot p \cdot
+    \digSumPeriodic
+\right)
+\exp\left(
+    I \sum_{j \in A_d} -1 ^ {\beta_{(j)}} \numbToCommon
+      \sum_{\ell = 0}^{q}\mathrm{digit}(n^j, b^j, d^j, \ell)
+\right).
+\end{align}
+
+% TODO: careful read through and w/ I.
+% TODO: clean up and fix the lack of $2pi$ correction factor
+
+We then use \eqref{eq:decomposeExp} to show that $Q$ equals
+\begin{equation}
+\label{eq:inner-outer-split}
+  \sum_{p= 0}^{\frac{\totalPeriod}{\rationalPeriodTotal} - 1} \left[
+    I \exp\left(
+      pI \commonToAngle \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
+      \digSumPeriodic
+    \right)
+  \left(
+  I \sum_{q = 0}^{\rationalPeriodTotal - 1}
+    \exp\left(
+        \commonToAngle
+        \sum_{j \in A_d} -1 ^ {\beta_{(j)}} \numbToCommon
+          \sum_{\ell = 0}^{q}\mathrm{digit}(n^j, b^j, d^j, \ell)
+    \right)\right)\right].
+\end{equation}
+
+\subsubsection*{Case 1: $\sum_{j \in A_d} (-1) ^ {\beta_{(j)}} \digSumPeriodic \not\equiv 0 \mod \commonBase$}
+Define
+$$
+  C_\beta = \sum_{q = 0}^{\rationalPeriodTotal - 1}
+  \exp\left(
+      \commonToAngle
+      \sum_{j \in A_d} -1 ^ {\beta_{(j)}} \numbToCommon
+        \sum_{\ell = 0}^{q}\mathrm{digit}(n, b, d, \ell)
+  \right).
+$$
+Moreover, note that 
+\begin{align*}
+  &\exp\left(
+      pI \commonToAngle \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
+      \digSumPeriodic
+    \right)
+  = \prod_{j \in A_d} \exp\left(
+      -1^{\beta_{(j)}}
+     \cdot
+    	\commonToAngle
+     \cdot
+      pI \cdot \digSumPeriodic 
+    \right)
+\end{align*}
+and then  because $-1^{\beta_{(j)}} \cdot \commonToAngle pI \cdot \digSumPeriodic \equiv 0 \mod \commonBase$,
+\begin{equation*}
+   -1^{\beta_{(j)}} \cdot \commonToAngle pI \cdot \digSumPeriodic = \alpha \cdot 2\pi
+\end{equation*}
+for some $\alpha \in \N$. So,
+\begin{equation*}
+  \exp\left(-1^{\beta_{(j)}} \cdot\commonToAngle \cdot pI \cdot \digSumPeriodic \right) = \exp\left(0\right) = 1
+\end{equation*}
+when $p = \frac{\totalPeriod}{\rationalPeriodTotal}$. 
+
+
+We can conclude that
+\begin{equation*}
+ \exp\left(
+      I \commonToAngle \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
+      \digSumPeriodic
+    \right) 
+\end{equation*}
+is a $\totalOverRationalFrac^{th}$ root of unity iff
+$$\sum_{j \in A_d} -1 ^ {\beta_{(j)}}
+      \digSumPeriodic \not\equiv 0 \mod \commonBase
+$$
+
+So, for $\sum_{j \in A_d} -1 ^ {\beta_{(j)}} \digSumPeriodic \not\equiv 0$, we have that
+\begin{align*}
+  \eqWTSInnerProd &= C_\beta \sum_{p= 0}^{\frac{\totalPeriod}{\rationalPeriodTotal} - 1}
+    \exp\left(
+      pI \commonToAngle \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
+      \digSumPeriodic
+    \right) \\
+    &= C_\beta \sum_{p = 0}^{\totalOverRationalFrac - 1}\exp\left(W_{\totalOverRationalFrac}^p\right) \\
+    &= 0.
+\end{align*}
+where $W_{\totalOverRationalFrac}^p$ is the $\totalOverRationalFrac^{th}$ root of unity.
+
+\subsubsection*{Case 2: $\sum_{j \in A_d} -1 ^ {\beta_{(j)}} \digSumPeriodic \equiv 0 \mod \commonBase$}
+Now,
+\begin{align*}
+  \eqWTSInnerProd &= C_\beta \sum_{p= 0}^{\frac{\totalPeriod}{\rationalPeriodTotal} - 1} \exp(0) \\
+  &= C_\beta.
+\end{align*}
+So $$\eqWTSInnerProd = 0$$ if $C_\beta = 0$.
+
+\subsubsection*{To conclude}
+If, $\forall \beta \in \set{0, 1}^{|A_d|}$, $\sum_{j \in A_d} -1 ^ {\beta_{(j)}} \digSumPeriodic \not\equiv 0$
+or $C_\beta = 0$, then
+\begin{align*}
+  \changeTotalOneDim &= \sum_{i = 1}^T \combSingleTerm{d} \\&=  2^{-|A|}
+  \sum_{\beta \in \set{0,1}^{|A_d|}} 
+      \sum_{p= 0}^{\frac{\totalPeriod}{\rationalPeriodTotal} - 1} \sum_{q = 0}^{\rationalPeriodTotal - 1}
+     \exp\left(
+       \commonToAngle
+         \sum_{j \in A_d} -1 ^ {\beta_{(j)}}
+         \numbToCommon
+         \rationalAngle{p \rationalPeriodTotal + q}I
+       \right) \\
+        &= 0.
+\end{align*}
+If the above is true for all $d \in D$, then 
+$\Delta P_{0, T} = 0$.

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021) (preloaded format=pdflatex 2022.1.19)  10 MAY 2022 08:26
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021) (preloaded format=pdflatex 2022.1.19)  15 MAY 2022 08:34
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -440,47 +440,54 @@ Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
 \ALG@tmplength=\skip63
 )
 Document Style - pseudocode environments for use with the `algorithmicx' style
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/wrapfig/wrapfig.sty
+\wrapoverhang=\dimen185
+\WF@size=\dimen186
+\c@WF@wrappedlines=\count312
+\WF@box=\box59
+\WF@everypar=\toks37
+Package: wrapfig 2003/01/31  v 3.6
 )
-\c@theorem=\count312
+\c@theorem=\count313
 ) (/usr/local/texlive/2021/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2022-01-12 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count313
-\l__pdf_internal_box=\box59
-) (./Paper.aux)
+\l__color_backend_stack_int=\count314
+\l__pdf_internal_box=\box60
+) (./Paper.aux (./PaperAppendix.aux))
 \openout1 = `Paper.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 64.
-LaTeX Font Info:    ... okay on input line 64.
-\c@lstlisting=\count314
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+\c@lstlisting=\count315
  (/usr/local/texlive/2021/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count315
-\scratchdimen=\dimen185
-\scratchbox=\box60
-\nofMPsegments=\count316
-\nofMParguments=\count317
-\everyMPshowfont=\toks37
-\MPscratchCnt=\count318
-\MPscratchDim=\dimen186
-\MPnumerator=\count319
-\makeMPintoPDFobject=\count320
-\everyMPtoPDFconversion=\toks38
+\scratchcounter=\count316
+\scratchdimen=\dimen187
+\scratchbox=\box61
+\nofMPsegments=\count317
+\nofMParguments=\count318
+\everyMPshowfont=\toks38
+\MPscratchCnt=\count319
+\MPscratchDim=\dimen188
+\MPnumerator=\count320
+\makeMPintoPDFobject=\count321
+\everyMPtoPDFconversion=\toks39
 ) (/usr/local/texlive/2021/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
@@ -489,9 +496,10 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
+Package caption Info: wrapfig package is loaded.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Info: Redefining \dots on input line 64.
-Package hyperref Info: Link coloring ON on input line 64.
+LaTeX Info: Redefining \dots on input line 67.
+Package hyperref Info: Link coloring ON on input line 67.
  (/usr/local/texlive/2021/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
  (/usr/local/texlive/2021/texmf-dist/tex/latex/refcount/refcount.sty
@@ -499,11 +507,11 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 ) (/usr/local/texlive/2021/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count321
+\c@section@level=\count322
 )
-LaTeX Info: Redefining \ref on input line 64.
-LaTeX Info: Redefining \pageref on input line 64.
-LaTeX Info: Redefining \nameref on input line 64.
+LaTeX Info: Redefining \ref on input line 67.
+LaTeX Info: Redefining \pageref on input line 67.
+LaTeX Info: Redefining \nameref on input line 67.
  (./Paper.out) (./Paper.out)
 \@outlinefile=\write3
 \openout3 = `Paper.out'.
@@ -544,235 +552,144 @@ LaTeX Info: Redefining \nameref on input line 64.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 <<ot1.cmap>><<oml.cmap>><<oms.cmap>><<omx.cmap>>
-LaTeX Font Info:    Trying to load font information for U+msa on input line 73.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 76.
  (/usr/local/texlive/2021/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 73.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 76.
  (/usr/local/texlive/2021/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Trying to load font information for U+lasy on input line 73.
+LaTeX Font Info:    Trying to load font information for U+lasy on input line 76.
  (/usr/local/texlive/2021/texmf-dist/tex/latex/base/ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 ) [1
 
 {/usr/local/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Trying to load font information for U+bbm on input line 89.
- (/usr/local/texlive/2021/texmf-dist/tex/latex/bbm-macros/ubbm.fd
-File: ubbm.fd 1999/03/15 V 1.2 Font definition for bbm font - TH
-)pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
+<fig/turtle2dtimestep.png, id=96, 260.172pt x 260.172pt>
+File: fig/turtle2dtimestep.png Graphic file (type png)
+<use fig/turtle2dtimestep.png>
+Package pdftex.def Info: fig/turtle2dtimestep.png  used on input line 107.
+(pdftex.def)             Requested size: 227.62204pt x 227.63403pt.
+<fig/Turtle1D13Div113.png, id=98, 706.64pt x 652.4375pt>
+File: fig/Turtle1D13Div113.png Graphic file (type png)
+<use fig/Turtle1D13Div113.png>
+Package pdftex.def Info: fig/Turtle1D13Div113.png  used on input line 117.
+(pdftex.def)             Requested size: 227.62204pt x 210.1581pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<fig/Turtle1DNotClosed.png, id=99, 502.87875pt x 329.23pt>
+File: fig/Turtle1DNotClosed.png Graphic file (type png)
+<use fig/Turtle1DNotClosed.png>
+Package pdftex.def Info: fig/Turtle1DNotClosed.png  used on input line 122.
+(pdftex.def)             Requested size: 227.62204pt x 149.02121pt.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<fig/turtle.png, id=100, 1861.95625pt x 1226.5825pt>
+File: fig/turtle.png Graphic file (type png)
+<use fig/turtle.png>
+Package pdftex.def Info: fig/turtle.png  used on input line 133.
+(pdftex.def)             Requested size: 227.62204pt x 149.93481pt.
+<fig/failclose3d.png, id=101, 1009.7725pt x 594.22pt>
+File: fig/failclose3d.png Graphic file (type png)
+<use fig/failclose3d.png>
+Package pdftex.def Info: fig/failclose3d.png  used on input line 142.
+(pdftex.def)             Requested size: 227.62204pt x 133.9476pt.
+pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.143   \item C
-               hecking whether $\Delta P_{i, i + T} = 0$. [1]
+l.145 
+       [1 <./fig/turtle2dtimestep.png>]
 
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 190.
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 190.
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
+<fig/tempclose.jpeg, id=116, 929.4725pt x 907.39pt>
+File: fig/tempclose.jpeg Graphic file (type jpg)
+<use fig/tempclose.jpeg>
+Package pdftex.def Info: fig/tempclose.jpeg  used on input line 148.
+(pdftex.def)             Requested size: 227.62204pt x 222.20865pt.
 
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 191.
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
+[2 <./fig/Turtle1D13Div113.png> <./fig/Turtle1DNotClosed.png>]
 
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\begingroup' on input line 191.
+LaTeX Warning: Text page 3 contains only floats.
 
+[3 <./fig/turtle.png> <./fig/failclose3d.png> <./fig/tempclose.jpeg>]
+LaTeX Font Info:    Trying to load font information for U+bbm on input line 168.
+ (/usr/local/texlive/2021/texmf-dist/tex/latex/bbm-macros/ubbm.fd
+File: ubbm.fd 1999/03/15 V 1.2 Font definition for bbm font - TH
+) [4]
+Overfull \hbox (33.0417pt too wide) detected at line 240
+\OML/cmm/m/it/10.95 Comb\OT1/cmr/m/n/10.95 ((\OML/cmm/m/it/10.95 n[]; d[]; b[]; ^^R[]\OT1/cmr/m/n/10.95 )\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 n[]; b[]; b[]; ^^R[]\OT1/cmr/m/n/10.95 )\OML/cmm/m/it/10.95 ; :::; \OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 n[]; d[]; b[]; ^^R[]\OT1/cmr/m/n/10.95 )) = []
+ []
 
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\endgroup' on input line 191.
+[5]
+Package hyperref Info: bookmark level for unknown remark defaults to 0 on input line 306.
+ [6] [7] [8] [9]
+<fig/evenspacing.png, id=203, 438.63875pt x 377.41pt>
+File: fig/evenspacing.png Graphic file (type png)
+<use fig/evenspacing.png>
+Package pdftex.def Info: fig/evenspacing.png  used on input line 571.
+(pdftex.def)             Requested size: 227.62204pt x 195.85121pt.
+<fig/3DTurtleCenterOfMass.png, id=204, 557.08125pt x 373.395pt>
+File: fig/3DTurtleCenterOfMass.png Graphic file (type png)
+<use fig/3DTurtleCenterOfMass.png>
+Package pdftex.def Info: fig/3DTurtleCenterOfMass.png  used on input line 579.
+(pdftex.def)             Requested size: 227.62204pt x 152.56306pt.
 
 
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\@@over' on input line 191.
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
+[10 <./fig/evenspacing.png>] [11 <./fig/3DTurtleCenterOfMass.png>] [12]
+\openout2 = `PaperAppendix.aux'.
 
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 191.
+ (./PaperAppendix.tex
+Package hyperref Info: bookmark level for unknown lemma defaults to 0 on input line 9.
+ [13
 
-Package hyperref Info: bookmark level for unknown remark defaults to 0 on input line 208.
-[2]
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 238.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\theta' on input line 238.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 238.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 238.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 261.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\setbox' on input line 261.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 261.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\hbox' on input line 261.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\dimen@' on input line 261.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\wd' on input line 261.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 261.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                \kern -0.52956pt
-(hyperref)                removed on input line 261.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\copy' on input line 261.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 261.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                \kern 24.88pt
-(hyperref)                replaced by space on input line 261.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                \kern 0.26477pt
-(hyperref)                removed on input line 261.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\raise' on input line 261.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\ex@' on input line 261.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\copy' on input line 261.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 261.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                \kern 24.88pt
-(hyperref)                replaced by space on input line 261.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                \kern 0.26477pt
-(hyperref)                removed on input line 261.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\box' on input line 261.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 261.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 261.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 279.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\Delta' on input line 279.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 279.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 279.
-
-[3]
-Package hyperref Info: bookmark level for unknown lemma defaults to 0 on input line 304.
- [4] [5] [6] [7]
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 573.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\begingroup' on input line 573.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\endgroup' on input line 573.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\@@over' on input line 573.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 573.
-
-(./Paper.bbl (./Paper.brf)
+] [14] [15]) [16] (./Paper.bbl (./Paper.brf)
 \tf@brf=\write4
 \openout4 = `Paper.brf'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 8--8
+Underfull \hbox (badness 5924) in paragraph at lines 17--17
 []\OT1/cmr/m/n/10.95 Glen O (https://math.stackexchange.com/users/67842/glen o).  Length of pe-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 8--8
+Underfull \hbox (badness 10000) in paragraph at lines 17--17
 \OT1/cmr/m/n/10.95 riod of dec-i-mal ex-pan-sion of a frac-tion.  Math-e-mat-ics Stack Ex-change.
  []
 
-) [8] (./Paper.aux)
+<<ot1tt.cmap>>) [17
+
+
+] (./Paper.aux (./PaperAppendix.aux))
 Package rerunfilecheck Info: File `Paper.out' has not changed.
-(rerunfilecheck)             Checksum: B496E5A70AC581C4A08CD5B1444B0A33;3035.
+(rerunfilecheck)             Checksum: 1485A442DC1D4E20696E10BA4937698E;4074.
 Package rerunfilecheck Info: File `Paper.brf' has not changed.
-(rerunfilecheck)             Checksum: B6CC6EC7581F1ABD77A86E1EDF9B2C12;68.
+(rerunfilecheck)             Checksum: 8C88B51AB321FF43A257C2E3C49DB3D3;482.
  ) 
 Here is how much of TeX's memory you used:
- 18174 strings out of 478286
- 307306 string characters out of 5846741
- 602461 words of memory out of 5000000
- 36013 multiletter control sequences out of 15000+600000
- 481282 words of font info for 82 fonts, out of 8000000 for 9000
+ 18397 strings out of 478286
+ 311738 string characters out of 5846741
+ 606176 words of memory out of 5000000
+ 36185 multiletter control sequences out of 15000+600000
+ 478926 words of font info for 68 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 102i,13n,105p,341b,472s stack positions out of 5000i,500n,10000p,200000b,80000s
- </home/lev/.texlive2021/texmf-var/fonts/pk/ljfour/public/bbm/bbm10.657pk></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on Paper.pdf (9 pages, 212133 bytes).
+ 102i,14n,105p,433b,481s stack positions out of 5000i,500n,10000p,200000b,80000s
+ </home/lev/.texlive2021/texmf-var/fonts/pk/ljfour/public/bbm/bbm10.657pk></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on Paper.pdf (18 pages, 3455780 bytes).
 PDF statistics:
- 245 PDF objects out of 1000 (max. 8388607)
- 206 compressed objects within 3 object streams
- 52 named destinations out of 1000 (max. 500000)
- 169 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 362 PDF objects out of 1000 (max. 8388607)
+ 298 compressed objects within 3 object streams
+ 88 named destinations out of 1000 (max. 500000)
+ 221 words of extra memory for PDF output out of 10000 (max. 10000000)
 
