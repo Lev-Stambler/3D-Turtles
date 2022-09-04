@@ -6,7 +6,7 @@
 
   import { generateParams, parameters, controlParams } from "../store";
   import RationalButtonGroup from "./RationalButtonGroup.svelte";
-  import { mint, signIn, signOut, walletConnection } from "../near";
+  import { mint, signIn, signOut, getWalletConnection, near } from "../near";
   import InfoBlock from "./InfoBlock.svelte";
 
   let yaw: Rational, pitch: Rational, distance: Rational;
@@ -42,8 +42,8 @@
     }
   };
 
-  let isSignedIn = walletConnection.isSignedIn();
-  walletConnection
+  let isSignedIn = getWalletConnection($near).isSignedIn();
+  getWalletConnection($near)
     .isSignedInAsync()
     .then((signedIn) => (isSignedIn = signedIn));
 
@@ -109,7 +109,7 @@
     {#if $controlParams.allowControls}
       <section class="near">
         {#if !isSignedIn}
-          <button on:click={() => signIn()}>
+          <button on:click={() => signIn($near)}>
             <img src="/near-protocol-near-logo.svg" alt="Near Logo" />
             NEAR Sign In
           </button>
@@ -118,6 +118,7 @@
           <button
             on:click={() =>
               mint(
+                $near,
                 $parameters.initParams[0],
                 $parameters.initParams[1],
                 $controlParams.pathWidth,
@@ -127,7 +128,7 @@
           >
             MINT
           </button>
-          <button on:click={signOut}>
+          <button on:click={() => signOut($near)}>
             <img src="/near-protocol-near-logo.svg" alt="Near Logo" />
             NEAR Log out
           </button>

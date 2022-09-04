@@ -2,6 +2,7 @@
   import Modal from "svelte-simple-modal";
 
   import { parameters, controlParams, setParams } from "./store";
+  import { near } from "./near";
   import {
     defaultPath,
     MAX_STEPS,
@@ -36,7 +37,7 @@
   import Controls from "./components/Controls.svelte";
   import TurtlePathMesh from "./components/TurtlePathMesh.svelte";
   import { onMount } from "svelte";
-  import { signIn, walletConnection, mint, signOut } from "./near";
+  import { setNear } from "./near";
 
   const sphereGeometry = new SphereGeometry(1);
 
@@ -115,6 +116,9 @@
   let loading = true;
   onMount(() => {
     setParams();
+  });
+
+  setNear().then(() => {
     loading = false;
   });
 </script>
@@ -123,7 +127,7 @@
 
 <Modal>
   <div class="wrapper">
-    {#if loading}
+    {#if loading || !$near}
       <div class="loading--wrapper"><div>Loading...</div></div>
     {:else}
       <!-- else content here -->
