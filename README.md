@@ -1,5 +1,4 @@
-3D Turtles
-===================
+# 3D Turtles
 
 3D Turtles is an exploration into combining art, mathematics, and blockchain!
 So, what is a 3D turtle? First imagine orienting a turtle in 3 dimensional space.
@@ -12,10 +11,12 @@ For each time step that the turtle moves, determine the direction to move the tu
 digit of 13/99 and 21/99. So, for the first time step, we look at the first digits of 0.131313... and 0.212121... to get "1" and "2".
 Then, for the second time step, we use "3" and "1" to generate the movement direction.
 
-Why is this interesting? First, there are many visually stunning patterns which can be generated. Second, there is complexity observed in the shapes drawn
-reveals some deep fundamental truths about our universe: incredible complexity can evolve from the simplest rules. Finally, the math behind whether a drawn patter
-"closes" (i.e. does not go on forever) or not is surprising and quite nice.
+Why is this interesting?
+
+1. There are many visually stunning patterns which can be generated. See our [curated list](https://github.com/Lev-Stambler/3D-Turtles/tree/master/frontend) of shapes
+2. There is complexity observed in the shapes drawn reveals some deep fundamental truths about our universe: incredible complexity can evolve from the simplest rules.
+3. The math behind whether a drawn patter "closes" (i.e. does not go on forever) or not is surprising and quite nice.
 
 For details, interesting math, and fun open problems, see the [paper](https://github.com/Lev-Stambler/3D-Turtles/raw/master/paper/Paper.pdf).
 If you are interested in playing around and generating patterns, see the [demo site](https://3d-turtle.netlify.app/#).
-If you want to see 
+If you want to see
