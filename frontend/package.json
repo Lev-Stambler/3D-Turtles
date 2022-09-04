@@ -27,6 +27,7 @@
     "buffer": "^6.0.3",
     "near-api-js": "^1.0.0",
     "rollup-plugin-node-resolve": "^5.2.0",
+    "svelte-markdown": "^0.2.3",
     "svelte-simple-modal": "^1.4.1",
     "three": "^0.142.0"
   }
