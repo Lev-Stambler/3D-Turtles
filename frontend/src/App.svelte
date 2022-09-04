@@ -1,4 +1,6 @@
 <script lang="ts">
+  import Modal from "svelte-simple-modal";
+
   import { parameters, controlParams, setParams } from "./store";
   import {
     defaultPath,
@@ -34,6 +36,7 @@
   import Controls from "./components/Controls.svelte";
   import TurtlePathMesh from "./components/TurtlePathMesh.svelte";
   import { onMount } from "svelte";
+  import { signIn, walletConnection, mint, signOut } from "./near";
 
   const sphereGeometry = new SphereGeometry(1);
 
@@ -118,50 +121,56 @@
 
 <!-- <svelte:body on:load={() => setParams()} /> -->
 
-<div class="wrapper">
-  {#if loading}
-    <div class="loading--wrapper"><div>Loading...</div></div>
-  {:else}
-    <!-- else content here -->
-    <div class="container">
-      <Controls on:paramchange={reset} />
-      <Canvas rendererParameters={{ logarithmicDepthBuffer: true }}>
-        <PerspectiveCamera
-          fov={45}
-          frustumCulled
-          far={1000000000000000000000}
-          position={{ x: 100, y: 100, z: 100 }}
-        >
-          <OrbitControls
-            autoRotate
-            autoRotateSpeed={0.05}
-            enableDamping
-            enablePan={false}
-            zoomSpeed={1.5}
-            target={getCentroid(path.bounds)}
+<Modal>
+  <div class="wrapper">
+    {#if loading}
+      <div class="loading--wrapper"><div>Loading...</div></div>
+    {:else}
+      <!-- else content here -->
+      <div class="container">
+        <Controls on:paramchange={reset} />
+        <Canvas rendererParameters={{ logarithmicDepthBuffer: true }}>
+          <PerspectiveCamera
+            fov={45}
+            frustumCulled
+            far={1000000000000000000000}
+            position={{ x: 100, y: 100, z: 100 }}
+          >
+            <OrbitControls
+              autoRotate
+              autoRotateSpeed={0.05}
+              enableDamping
+              enablePan={false}
+              zoomSpeed={1.5}
+              target={getCentroid(path.bounds)}
+            />
+          </PerspectiveCamera>
+
+          <AmbientLight intensity={0.7} />
+          <DirectionalLight position={{ x: -15, y: 45, z: 20 }} />
+
+          <TurtlePathMesh turtle={path} />
+          {#if displayPreview}
+            <TurtlePathMesh turtle={preview} />
+          {/if}
+
+          <!-- origin -->
+          <Mesh
+            geometry={sphereGeometry}
+            material={new MeshStandardMaterial({ color: "black" })}
           />
-        </PerspectiveCamera>
 
-        <AmbientLight intensity={0.7} />
-        <DirectionalLight position={{ x: -15, y: 45, z: 20 }} />
-
-        <TurtlePathMesh turtle={path} />
-        {#if displayPreview}
-          <TurtlePathMesh turtle={preview} />
-        {/if}
-
-        <!-- origin -->
-        <Mesh
-          geometry={sphereGeometry}
-          material={new MeshStandardMaterial({ color: "black" })}
-        />
-
-        <!-- turtle head -->
-        <GLTF url={"/3d-turtle.glb"} position={new Vector3(...pos)} scale={5} />
-      </Canvas>
-    </div>
-  {/if}
-</div>
+          <!-- turtle head -->
+          <GLTF
+            url={"/3d-turtle.glb"}
+            position={new Vector3(...pos)}
+            scale={5}
+          />
+        </Canvas>
+      </div>
+    {/if}
+  </div>
+</Modal>
 
 <style>
   :global(body) {
@@ -185,5 +194,12 @@
     left: 0;
     width: 100%;
     height: 100%;
+  }
+
+  .near-controls--wrapper {
+    position: fixed;
+    top: 0;
+    right: 0;
+    padding: 1rem;
   }
 </style>

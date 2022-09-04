@@ -21,8 +21,13 @@
     "vite": "^3.0.0"
   },
   "dependencies": {
+    "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
     "@threlte/core": "^4.1.2",
     "@threlte/extras": "^4.0.0",
+    "buffer": "^6.0.3",
+    "near-api-js": "^1.0.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "svelte-simple-modal": "^1.4.1",
     "three": "^0.142.0"
   }
 }
