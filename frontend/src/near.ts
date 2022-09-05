@@ -1,29 +1,34 @@
-import * as nearAPI from "near-api-js";
-import { Contract, Near, utils } from "near-api-js";
+import "near-api-js/dist/near-api-js";
+import type { Contract, Near, utils } from "near-api-js";
 import { writable, type Writable } from "svelte/store";
 import { CONTRACT_NAME, getConfig } from "./config";
 import type { Rational } from "./interfaces";
 
+//@ts-ignore
+const nearAPI = window.nearApi
+
 // create a keyStore for signing transactions using the user's key
 // which is located in the browser local storage after user logs in
-const keyStore = new nearAPI.keyStores.BrowserLocalStorageKeyStore();
+let keyStore;
 const env = "testnet";
 
-const nearConfig = {
-  keyStore,
-  ...getConfig(env),
-};
+let nearConfig;
 
 export const near: Writable<Near | null> = writable(null);
 
 export const setNear = async () => {
+  console.log(nearAPI, nearAPI.keyStores)
+  keyStore = new nearAPI.keyStores.BrowserLocalStorageKeyStore();
+  nearConfig = {
+    keyStore,
+    ...getConfig(env),
+  };
   const _near = await nearAPI.connect(nearConfig);
-  console.log("AA", _near)
   near.set(_near);
 };
 
 export const getWalletConnection = (near: Near) => {
-  return new nearAPI.WalletConnection(near, null);
+  return new nearAPI.WalletConnection(near, "3D Turtle");
 };
 // Initializing connection to the NEAR testnet
 // const near =

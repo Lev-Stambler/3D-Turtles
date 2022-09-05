@@ -115,11 +115,10 @@
 
   let loading = true;
   onMount(() => {
+    setNear().then(() => {
+      loading = false;
+    });
     setParams();
-  });
-
-  setNear().then(() => {
-    loading = false;
   });
 </script>
 
@@ -198,12 +197,5 @@
     left: 0;
     width: 100%;
     height: 100%;
-  }
-
-  .near-controls--wrapper {
-    position: fixed;
-    top: 0;
-    right: 0;
-    padding: 1rem;
   }
 </style>

@@ -42,10 +42,6 @@
 
 <style>
 	h4,
-	p {
-		margin-bottom: 0;
-	}
-
 	label {
 		display: grid;
 		grid-template-columns: 50px 100px;
