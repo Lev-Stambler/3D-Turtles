@@ -116,9 +116,9 @@
   let loading = true;
   onMount(() => {
     setNear().then(() => {
+      setParams();
       loading = false;
     });
-    setParams();
   });
 </script>
 

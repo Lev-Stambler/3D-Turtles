@@ -117,7 +117,7 @@ export const setParams = () => {
 		parameters.set(generateParams(yaw, pitch, distance));
 	} catch (e) {
 		controlParams.update((p) => {
-			return { ...p, numStepsPerLoop: p.numStepsPerLoop ?? 1, pathWidth: p.pathWidth ?? 0.5, allowControls: true, displayPreview: true };
+			return { ...p, allowControls: true, displayPreview: true };
 		});
 		console.log('Could not parse URL params using defaults', e);
 	}
