@@ -33,9 +33,9 @@ export const getWalletConnection = (near: Near) => {
 // Initializing connection to the NEAR testnet
 // const near =
 
-const getContract = (near: Near): nearAPI.Contract => {
+const getContract = (near: Near): Contract => {
   const account = getWalletConnection(near).account();
-  const contract = new Contract(account, CONTRACT_NAME, {
+  const contract = new nearAPI.Contract(account, CONTRACT_NAME, {
     // name of contract you're connecting to
     viewMethods: ["nft_minted"], // view methods do not change state but usually return a value
     changeMethods: ["nft_mint"], // change methods modify state
@@ -63,7 +63,7 @@ export const mint = async (
     },
     "300000000000000", // attached GAS (optional)
     (
-      BigInt(MINT_AMOUNT) + BigInt(utils.format.parseNearAmount("0.1"))
+      BigInt(MINT_AMOUNT) + BigInt(nearAPI.utils.format.parseNearAmount("0.1"))
     ).toString()
   );
 };
