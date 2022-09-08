@@ -10,6 +10,7 @@
   import InfoBlock from "./InfoBlock.svelte";
 
   let yaw: Rational, pitch: Rational, distance: Rational;
+  $controlParams.numStepsPerLoop = 1;
 
   const dispatch = createEventDispatcher();
 
