@@ -1,8 +1,8 @@
 <script>
-  import SvelteMarkdown from 'svelte-markdown'
-	//  Taken from the readme
+  import SvelteMarkdown from "svelte-markdown";
+  //  Taken from the readme
   const source = `
-# What is 3D Turtles?
+  # 3D Turtles
 
 3D Turtles is an exploration into combining art, mathematics, and blockchain!
 So, what is a 3D turtle? First imagine orienting a turtle in 3 dimensional space.
@@ -24,7 +24,10 @@ Why is this interesting?
 For details, interesting math, and fun open problems, see the [paper](https://github.com/Lev-Stambler/3D-Turtles/raw/master/paper/Paper.pdf).
 If you are interested in playing around and generating patterns, see the [demo site](https://3d-turtle.netlify.app/#).
 For the codebase see the [Github Repository](https://github.com/Lev-Stambler/3D-Turtles).
-`
+
+## Inspiration
+3D Turtles was inspired by ["Plotting Pi and Searching for Mona Lisa"](https://www.youtube.com/watch?v=tkC1HHuuk7c), a video released by the fantastic YouTube channel, Numberphile. Essentially, the video explores using [Turtle graphic](https://en.wikipedia.org/wiki/Turtle_graphics) to explore visualizations of rational numbers (e.g. 1/13) and irrational numbers (e.g. Pi).
+`;
 </script>
 
 <SvelteMarkdown {source} />
