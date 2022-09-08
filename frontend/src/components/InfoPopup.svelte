@@ -2,7 +2,7 @@
   import SvelteMarkdown from "svelte-markdown";
   //  Taken from the readme
   const source = `
-  # 3D Turtles
+# 3D Turtles
 
 3D Turtles is an exploration into combining art, mathematics, and blockchain!
 So, what is a 3D turtle? First imagine orienting a turtle in 3 dimensional space.
@@ -17,7 +17,7 @@ Then, for the second time step, we use "3" and "1" to generate the movement dire
 
 Why is this interesting?
 
-1. There are many visually stunning patterns which can be generated. See our [curated list](https://github.com/Lev-Stambler/3D-Turtles/tree/master/curated-list) of shapes.
+1. There are many visually stunning patterns which can be generated. See our [curated list](https://github.com/Lev-Stambler/3D-Turtles/tree/master/curated-list/list.md) of shapes.
 2. There is complexity observed in the shapes drawn reveals some deep fundamental truths about our universe: incredible complexity can evolve from the simplest rules.
 3. The math behind whether a drawn patter "closes" (i.e. does not go on forever) or not is surprising and quite nice.
 
