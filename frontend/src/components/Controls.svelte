@@ -11,6 +11,7 @@
 
   let yaw: Rational, pitch: Rational, distance: Rational;
   $controlParams.numStepsPerLoop = 1;
+  $controlParams.pathWidth = 0.5;
 
   const dispatch = createEventDispatcher();
 
