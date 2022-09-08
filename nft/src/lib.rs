@@ -20,6 +20,7 @@ use std::convert::TryFrom;
 use near_contract_standards::non_fungible_token::metadata::{
     NFTContractMetadata, NonFungibleTokenMetadataProvider, TokenMetadata, NFT_METADATA_SPEC,
 };
+// use near_sdk::json_types::U128;
 use near_contract_standards::non_fungible_token::NonFungibleToken;
 use near_contract_standards::non_fungible_token::{Token, TokenId};
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
@@ -33,15 +34,17 @@ use near_sdk::{
 
 near_sdk::setup_alloc!();
 
+pub const DEFAULT_MINT_PRICE: u128 = 10_u128;
+
 #[derive(Serialize, Deserialize, BorshDeserialize, BorshSerialize, PanicOnDefault, Clone)]
 #[serde(crate = "near_sdk::serde")]
 pub struct Rational {
     /// numerator
-    n: u32,
+    pub n: u32,
     /// denominator
-    d: u32,
+    pub d: u32,
     /// base
-    b: u32,
+    pub b: u32,
 }
 
 #[near_bindgen]
@@ -61,15 +64,6 @@ pub struct Contract {
 
 const DATA_IMAGE_SVG_NEAR_ICON: &str = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 288 288'%3E%3Cg id='l' data-name='l'%3E%3Cpath d='M187.58,79.81l-30.1,44.69a3.2,3.2,0,0,0,4.75,4.2L191.86,103a1.2,1.2,0,0,1,2,.91v80.46a1.2,1.2,0,0,1-2.12.77L102.18,77.93A15.35,15.35,0,0,0,90.47,72.5H87.34A15.34,15.34,0,0,0,72,87.84V201.16A15.34,15.34,0,0,0,87.34,216.5h0a15.35,15.35,0,0,0,13.08-7.31l30.1-44.69a3.2,3.2,0,0,0-4.75-4.2L96.14,186a1.2,1.2,0,0,1-2-.91V104.61a1.2,1.2,0,0,1,2.12-.77l89.55,107.23a15.35,15.35,0,0,0,11.71,5.43h3.13A15.34,15.34,0,0,0,216,201.16V87.84A15.34,15.34,0,0,0,200.66,72.5h0A15.35,15.35,0,0,0,187.58,79.81Z'/%3E%3C/g%3E%3C/svg%3E";
 
-#[derive(BorshSerialize, BorshStorageKey)]
-enum StorageKey {
-    NonFungibleToken,
-    Metadata,
-    TokenMetadata,
-    Enumeration,
-    Approval,
-}
-
 #[near_bindgen]
 impl Contract {
     #[init]
@@ -85,7 +79,7 @@ impl Contract {
                 reference: None, // TODO: the github page
                 reference_hash: None,
             },
-            U128(10_u128),
+            U128(DEFAULT_MINT_PRICE),
             1_000,
             "https://3d-turtle.netlify.app".to_string(), // TODO: fix me
         )
@@ -103,13 +97,13 @@ impl Contract {
         metadata.assert_valid();
         Self {
             tokens: NonFungibleToken::new(
-                StorageKey::NonFungibleToken,
+                "owner-by-id".as_bytes(),
                 owner_id,
-                Some(StorageKey::TokenMetadata),
-                Some(StorageKey::Enumeration),
-                Some(StorageKey::Approval),
+                Some("token-meta".as_bytes()),
+                Some("token-enum".as_bytes()),
+                Some("token-approve".as_bytes()),
             ),
-            metadata: LazyOption::new(StorageKey::Metadata, Some(&metadata)),
+            metadata: LazyOption::new("metadata".as_bytes(), Some(&metadata)),
             mint_price: mint_price.into(),
             max_supply,
             minted_rational_pairs: LookupSet::new(b"s"),
@@ -226,7 +220,7 @@ impl Contract {
             .insert(&(r1_simplified.clone(), r2_simplified.clone()));
 
         let title = Self::make_title(&r1_simplified, &r2_simplified);
-        let token_id = Self::make_id(&r1_simplified, &r2_simplified);
+        let token_id = self.make_id();
         let token = self.internal_mint(
             token_id.clone(),
             receiver_id,
@@ -269,11 +263,14 @@ impl Contract {
 
 impl Contract {
     fn make_title(r1: &Rational, r2: &Rational) -> String {
-        format!("{} / {} base {}, {} / {} base {}", r1.n, r1.d, r1.b, r2.n, r2.d, r2.b)
+        format!(
+            "{} / {} base {}, {} / {} base {}",
+            r1.n, r1.d, r1.b, r2.n, r2.d, r2.b
+        )
     }
 
-    fn make_id(r1: &Rational, r2: &Rational) -> String {
-        format!("n{},d{},b{}--n{},d{},b{}", r1.n, r1.d, r1.b, r2.n, r2.d, r2.b)
+    fn make_id(&self) -> String {
+        self.tokens.owner_by_id.len().to_string()
     }
 
     // TODO:

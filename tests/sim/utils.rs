@@ -1,9 +1,8 @@
 use approval_receiver::ApprovalReceiverContract;
-use near_contract_standards::non_fungible_token::metadata::TokenMetadata;
 use non_fungible_token::ContractContract as NftContract;
+use non_fungible_token::Rational;
 use token_receiver::TokenReceiverContract;
 
-use near_contract_standards::non_fungible_token::TokenId;
 use near_sdk_sim::{call, deploy, init_simulator, to_yocto, ContractAccount, UserAccount};
 
 // Load in contract bytes at runtime
@@ -44,32 +43,27 @@ pub fn init() -> (
         // User deploying the contract,
         signer_account: root,
         // init method
-        init_method: new_default_meta(
-            root.valid_account_id()
-        )
+        init_method: new_default_meta()
     );
 
     call!(
         root,
         nft.nft_mint(
-            TOKEN_ID.into(),
-            root.valid_account_id(),
-            TokenMetadata {
-                title: Some("Olympus Mons".into()),
-                description: Some("The tallest mountain in the charted solar system".into()),
-                media: None,
-                media_hash: None,
-                copies: Some(1u64),
-                issued_at: None,
-                expires_at: None,
-                starts_at: None,
-                updated_at: None,
-                extra: None,
-                reference: None,
-                reference_hash: None,
-            }
+            Rational {
+                n: 10,
+                d: 11,
+                b: 14,
+            },
+            Rational {
+                n: 10,
+                d: 11,
+                b: 13,
+            },
+            0.5f32,
+            10,
+            root.valid_account_id()
         ),
-        deposit = 7000000000000000000000
+        deposit = 70000000000000000000000
     );
 
     let alice = root.create_user("alice".to_string(), to_yocto("100"));
@@ -98,32 +92,16 @@ pub fn init() -> (
 }
 
 pub fn helper_mint(
-    token_id: TokenId,
-    root: &UserAccount,
+    r1: Rational,
+    r2: Rational,
+    caller: &UserAccount,
     nft: &ContractAccount<NftContract>,
-    title: String,
-    desc: String,
+    thickness: f32,
+    speed: u16,
 ) {
     call!(
-        root,
-        nft.nft_mint(
-            token_id,
-            root.valid_account_id(),
-            TokenMetadata {
-                title: Some(title),
-                description: Some(desc),
-                media: None,
-                media_hash: None,
-                copies: Some(1u64),
-                issued_at: None,
-                expires_at: None,
-                starts_at: None,
-                updated_at: None,
-                extra: None,
-                reference: None,
-                reference_hash: None,
-            }
-        ),
+        caller,
+        nft.nft_mint(r1, r2, thickness, speed, caller.valid_account_id()),
         deposit = 7000000000000000000000
     );
 }

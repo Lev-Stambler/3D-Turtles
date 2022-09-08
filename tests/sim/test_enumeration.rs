@@ -2,29 +2,32 @@ use crate::utils::{helper_mint, init};
 use near_contract_standards::non_fungible_token::Token;
 use near_sdk::json_types::U128;
 use near_sdk_sim::{view, ContractAccount, UserAccount};
-use non_fungible_token::ContractContract as NftContract;
+use non_fungible_token::{ContractContract as NftContract, Rational};
 
 fn mint_more(root: &UserAccount, nft: &ContractAccount<NftContract>) {
     helper_mint(
-        "1".to_string(),
-        &root,
-        &nft,
-        "Black as the Night".to_string(),
-        "In charcoal".to_string(),
+        Rational { n: 1, d: 2, b: 3 },
+        Rational { n: 2, d: 3, b: 4 },
+        root,
+        nft,
+        0.5f32,
+        1,
     );
     helper_mint(
-        "2".to_string(),
-        &root,
-        &nft,
-        "Hamakua".to_string(),
-        "Vintage recording".to_string(),
+        Rational { n: 1, d: 2, b: 3 },
+        Rational { n: 2, d: 7, b: 4 },
+        root,
+        nft,
+        0.5f32,
+        1,
     );
     helper_mint(
-        "3".to_string(),
-        &root,
-        &nft,
-        "Aloha ke akua".to_string(),
-        "Original with piano".to_string(),
+        Rational { n: 1, d: 2, b: 3 },
+        Rational { n: 2, d: 9, b: 4 },
+        root,
+        nft,
+        0.5f32,
+        1,
     );
 }
 
