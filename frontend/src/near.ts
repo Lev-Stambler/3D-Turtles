@@ -1,4 +1,4 @@
-import "near-api-js/dist/near-api-js";
+// import "near-api-js/dist/near-api-js";
 import type { Contract, Near, utils } from "near-api-js";
 import { writable, type Writable } from "svelte/store";
 import { CONTRACT_NAME, getConfig } from "./config";
