@@ -229,6 +229,10 @@ impl Contract {
         self.nft_mint(r1, r2, thickness, speed, receiver_id)
     }
 
+    pub fn get_circulating_supply(&self) -> u32 {
+        self.numb_circulating
+    }
+
     /// Mint a new token with ID=`token_id` belonging to `receiver_id`.
     ///
     /// Since this example implements metadata, it also requires per-token metadata to be provided
@@ -305,7 +309,7 @@ impl Contract {
             log!(
                 "Attached {} and transfering back {}",
                 env::attached_deposit(),
-                env::attached_deposit() - (u128::from(self.mint_price - storage_costs))
+                env::attached_deposit() - (u128::from(self.mint_price + storage_costs))
             );
             Promise::new(env::predecessor_account_id())
                 .transfer(env::attached_deposit() - (self.mint_price + storage_costs))
