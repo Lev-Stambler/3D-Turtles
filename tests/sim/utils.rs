@@ -64,7 +64,7 @@ pub fn init() -> (
             root.valid_account_id()
         ),
         deposit = 70000000000000000000000
-    );
+    ).assert_success();
 
     let alice = root.create_user("alice".to_string(), to_yocto("100"));
 
@@ -103,5 +103,5 @@ pub fn helper_mint(
         caller,
         nft.nft_mint(r1, r2, thickness, speed, caller.valid_account_id()),
         deposit = 7000000000000000000000
-    );
+    ).assert_success();
 }

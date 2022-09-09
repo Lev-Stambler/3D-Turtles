@@ -1,0 +1,112 @@
+use crate::utils::{helper_mint, init};
+use near_contract_standards::non_fungible_token::Token;
+use near_sdk::{env, json_types::U128};
+use near_sdk_sim::{
+    call,
+    transaction::{ExecutionOutcome, ExecutionStatus},
+    view, ContractAccount, UserAccount,
+};
+use non_fungible_token::{
+    ContractContract as NftContract, Rational, DEFAULT_MAX_SUPPLY, DEFAULT_MINT_PRICE,
+};
+
+#[test]
+fn simulate_test_final_balance() {
+    let (root, nft, alice, _, _) = init();
+
+    let r1 = Rational { n: 1, d: 2, b: 3 };
+    let r2 = Rational { n: 2, d: 3, b: 4 };
+    let init_storage_usage: u64 = view!(nft.get_storage_usage()).unwrap_json();
+    let bal_init = alice.account().unwrap().amount;
+    let root_bal_init = root.account().unwrap().amount;
+
+    call!(
+        alice,
+        nft.nft_mint(r1.clone(), r2.clone(), 0.5f32, 2, alice.valid_account_id()),
+        deposit = 70000000000000000000000
+    )
+    .assert_success();
+    let final_storage_usage: u64 = view!(nft.get_storage_usage()).unwrap_json();
+    let storage_cost =
+        (final_storage_usage - init_storage_usage) as u128 * env::storage_byte_cost();
+    let bal_final = alice.account().unwrap().amount;
+
+    assert_eq!(bal_init - bal_final, storage_cost + DEFAULT_MINT_PRICE);
+    let root_bal_final = root.account().unwrap().amount;
+    assert_eq!(root_bal_final - root_bal_init, DEFAULT_MINT_PRICE);
+}
+
+#[test]
+#[should_panic(expected = "These fractions have already been minted!")]
+fn simulate_test_double_no_mint() {
+    let (root, nft, _, _, _) = init();
+
+    let r1 = Rational { n: 1, d: 2, b: 3 };
+    let r2 = Rational { n: 2, d: 3, b: 4 };
+
+    let r1_clone = r1.clone();
+    let r2_clone = r2.clone();
+    call!(
+        &root,
+        nft.nft_mint(r1_clone, r2_clone, 0.5f32, 2, root.valid_account_id()),
+        deposit = 70000000000000000000000
+    )
+    .assert_success();
+    let r1_clone = r1.clone();
+    let r2_clone = r2.clone();
+    let outcome = call!(
+        &root,
+        nft.nft_mint(r1_clone, r2_clone, 0.5f32, 2, root.valid_account_id()),
+        deposit = 70000000000000000000000
+    )
+    .outcome().status.clone();
+    if let ExecutionStatus::Failure(_) = outcome {
+    } else {
+        assert!(false, "Expected failure");
+    }
+}
+
+#[test]
+#[should_panic(expected = "Cannot mint more than 10 tokens")]
+fn simulate_test_max_supply() {
+    let (root, nft, _, _, _) = init();
+
+    for i in 1..(DEFAULT_MAX_SUPPLY + 1) {
+        let r1 = Rational { n: 1, d: 2, b: 3 };
+        let r2 = Rational {
+            n: i + 10,
+            d: 3,
+            b: 4,
+        };
+
+        call!(
+            root,
+            nft.nft_mint(r1.clone(), r2.clone(), 0.5f32, 2, root.valid_account_id()),
+            deposit = 70000000000000000000000
+        );
+    }
+}
+
+#[test]
+#[should_panic(expected = "These fractions have already been minted!")]
+fn simulate_test_underpay() {
+    let (root, nft, _, _, _) = init();
+
+    let r1 = Rational { n: 1, d: 2, b: 3 };
+    let r2 = Rational { n: 2, d: 3, b: 4 };
+
+   
+    let r1_clone = r1.clone();
+    let r2_clone = r2.clone();
+    let outcome = call!(
+        &root,
+        nft.nft_mint(r1_clone, r2_clone, 0.5f32, 2, root.valid_account_id()),
+        deposit = 100
+    )
+    .outcome().status.clone();
+    if let ExecutionStatus::Failure(_) = outcome {
+    } else {
+        assert!(false, "Expected failure");
+    }
+}
+
