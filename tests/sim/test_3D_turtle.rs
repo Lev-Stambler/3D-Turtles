@@ -20,18 +20,31 @@ fn simulate_test_final_balance() {
     let bal_init = alice.account().unwrap().amount;
     let root_bal_init = root.account().unwrap().amount;
 
-    call!(
+    let call_ret = call!(
         alice,
         nft.nft_mint(r1.clone(), r2.clone(), 0.5f32, 2, alice.valid_account_id()),
-        deposit = 70000000000000000000000
-    )
-    .assert_success();
+        70000000000000000000000, // deposit
+        300000000000000          // gas
+    );
+    let _: Vec<()> = call_ret
+        .promise_results()
+        .iter()
+        .map(|p| {
+            let p_r = p.as_ref().unwrap();
+            p_r.assert_success();
+            ()
+        })
+        .collect();
+
     let final_storage_usage: u64 = view!(nft.get_storage_usage()).unwrap_json();
     let storage_cost =
         (final_storage_usage - init_storage_usage) as u128 * env::storage_byte_cost();
     let bal_final = alice.account().unwrap().amount;
 
-    assert_eq!(bal_init - bal_final, storage_cost + DEFAULT_MINT_PRICE);
+    assert!(
+        bal_init - bal_final - 300000000000000 <= storage_cost + DEFAULT_MINT_PRICE
+            && bal_init - bal_final >= storage_cost + DEFAULT_MINT_PRICE
+    );
     let root_bal_final = root.account().unwrap().amount;
     assert_eq!(root_bal_final - root_bal_init, DEFAULT_MINT_PRICE);
 }
@@ -59,7 +72,9 @@ fn simulate_test_double_no_mint() {
         nft.nft_mint(r1_clone, r2_clone, 0.5f32, 2, root.valid_account_id()),
         deposit = 70000000000000000000000
     )
-    .outcome().status.clone();
+    .outcome()
+    .status
+    .clone();
     if let ExecutionStatus::Failure(_) = outcome {
     } else {
         assert!(false, "Expected failure");
@@ -95,7 +110,6 @@ fn simulate_test_underpay() {
     let r1 = Rational { n: 1, d: 2, b: 3 };
     let r2 = Rational { n: 2, d: 3, b: 4 };
 
-   
     let r1_clone = r1.clone();
     let r2_clone = r2.clone();
     let outcome = call!(
@@ -103,10 +117,11 @@ fn simulate_test_underpay() {
         nft.nft_mint(r1_clone, r2_clone, 0.5f32, 2, root.valid_account_id()),
         deposit = 100
     )
-    .outcome().status.clone();
+    .outcome()
+    .status
+    .clone();
     if let ExecutionStatus::Failure(_) = outcome {
     } else {
         assert!(false, "Expected failure");
     }
 }
-

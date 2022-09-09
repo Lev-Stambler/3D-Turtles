@@ -30,7 +30,8 @@ use near_sdk::env::promise_batch_action_add_key_with_full_access;
 use near_sdk::json_types::ValidAccountId;
 use near_sdk::serde::{Deserialize, Serialize};
 use near_sdk::{
-    env, near_bindgen, AccountId, Balance, BorshStorageKey, PanicOnDefault, Promise, PromiseOrValue,
+    env, log, near_bindgen, AccountId, Balance, BorshStorageKey, PanicOnDefault, Promise,
+    PromiseOrValue,
 };
 
 near_sdk::setup_alloc!();
@@ -286,6 +287,7 @@ impl Contract {
                 reference_hash: None,
             }),
         );
+        self.numb_circulating += 1;
         let final_storage_usage = env::storage_usage();
         let storage_costs: Balance = (u128::from(final_storage_usage)
             - u128::from(init_storage_usage))
@@ -293,17 +295,27 @@ impl Contract {
 
         assert!(
             env::attached_deposit() >= self.mint_price + storage_costs,
-            "Expected the attached amount to equal the mint price of"
+            "Expected the attached amount to equal or exceed the mint price and storage price of {}",
+            self.mint_price + storage_costs
         );
-        // Transfer tokens to the treasury
-        Promise::new(self.treasury_id.to_string()).transfer(self.mint_price);
-        let transfer_back = env::attached_deposit() - (self.mint_price + storage_costs);
+        // 7520000000000000000010
 
         // Transfer remaining tokens back to the sender
-        if transfer_back > 0 {
-            Promise::new(env::predecessor_account_id()).transfer(transfer_back);
+        if env::attached_deposit() > (self.mint_price + storage_costs) {
+            log!(
+                "Attached {} and transfering back {}",
+                env::attached_deposit(),
+                env::attached_deposit() - (u128::from(self.mint_price - storage_costs))
+            );
+            Promise::new(env::predecessor_account_id())
+                .transfer(env::attached_deposit() - (self.mint_price + storage_costs))
+                .as_return();
         }
-        self.numb_circulating += 1;
+        log!("Transfering treas to {}", self.treasury_id);
+        // Transfer tokens to the treasury
+        Promise::new(self.treasury_id.to_string())
+            .transfer(self.mint_price)
+            .as_return();
 
         token
     }
