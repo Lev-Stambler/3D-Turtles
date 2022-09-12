@@ -81,7 +81,7 @@ impl Contract {
             ValidAccountId::try_from(env::current_account_id()).unwrap(),
             NFTContractMetadata {
                 spec: NFT_METADATA_SPEC.to_string(),
-                name: "3D Turles".to_string(),
+                name: "3D Turtles".to_string(),
                 symbol: "3DTURT".to_string(),
                 icon: Some(DATA_IMAGE_SVG_NEAR_ICON.to_string()), // TODO:
                 base_uri: None,
@@ -354,10 +354,14 @@ impl Contract {
 impl Rational {
     /// Returns a new Fraction that is equal to this one, but simplified
     pub fn reduce(&self) -> Self {
+        if self.d == 0 || self.b == 0 {
+            panic!("Cannot have 0 denominator or base");
+        }
+        let moded_n = self.n % self.d;
         // Use absolute value because negatives
-        let gcd = gcd(self.n, self.d);
+        let gcd = gcd(moded_n, self.d);
         Self {
-            n: (self.n / gcd),
+            n: (moded_n / gcd),
             d: (self.d / gcd),
             b: self.b,
         }
