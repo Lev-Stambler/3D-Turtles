@@ -41,7 +41,16 @@ pub const DEFAULT_MAX_SUPPLY: u32 = 10;
 /// This is the name of the NFT standard we're using
 pub const NFT_STANDARD_NAME: &str = "nep171";
 
-#[derive(Serialize, Deserialize, BorshDeserialize, BorshSerialize, PanicOnDefault, Clone)]
+#[derive(
+    Debug,
+    PartialEq,
+    Serialize,
+    Deserialize,
+    BorshDeserialize,
+    BorshSerialize,
+    PanicOnDefault,
+    Clone,
+)]
 #[serde(crate = "near_sdk::serde")]
 pub struct Rational {
     /// numerator
@@ -140,8 +149,8 @@ impl Contract {
         let r1_simplified = r1.reduce();
         let r2_simplified = r2.reduce();
 
-        let r1_compliment = r1_simplified.complement();
-        let r2_compliment = r2_simplified.complement();
+        let r1_compliment = r1_simplified.compliment();
+        let r2_compliment = r2_simplified.compliment();
 
         if self
             .minted_rational_pairs
@@ -149,27 +158,49 @@ impl Contract {
             || self
                 .minted_rational_pairs
                 .contains(&(r2_simplified.clone(), r1_simplified.clone()))
-            || self
-                .minted_rational_pairs
-                .contains(&(r1_compliment.clone(), r2_compliment.clone()))
-            || self
-                .minted_rational_pairs
-                .contains(&(r2_compliment.clone(), r1_compliment.clone()))
-            || self
-                .minted_rational_pairs
-                .contains(&(r1_compliment.clone(), r2_simplified.clone()))
-            || self
-                .minted_rational_pairs
-                .contains(&(r1_simplified.clone(), r2_compliment.clone()))
-            || self
-                .minted_rational_pairs
-                .contains(&(r2_simplified.clone(), r1_compliment.clone()))
-            || self
-                .minted_rational_pairs
-                .contains(&(r2_simplified.clone(), r1_compliment.clone()))
         {
             return true;
         }
+        if let Some(r1_compliment) = r1_compliment.clone() {
+            if self
+                .minted_rational_pairs
+                .contains(&(r1_compliment.clone(), r2_simplified.clone()))
+                || self
+                    .minted_rational_pairs
+                    .contains(&(r2_simplified.clone(), r1_compliment.clone()))
+            {
+                return true;
+            }
+        }
+        if let Some(r2_compliment) = r2_compliment.clone() {
+            if self
+                .minted_rational_pairs
+                .contains(&(r1_simplified.clone(), r2_compliment.clone()))
+                || self
+                    .minted_rational_pairs
+                    .contains(&(r2_compliment.clone(), r1_simplified.clone()))
+            {
+                return true;
+            }
+        }
+        if let (Some(r2_compliment), Some(r1_compliment)) = (r2_compliment, r1_compliment) {
+            if self
+                .minted_rational_pairs
+                .contains(&(r1_compliment.clone(), r2_compliment.clone()))
+                || self
+                    .minted_rational_pairs
+                    .contains(&(r2_compliment.clone(), r1_compliment.clone()))
+            {
+                return true;
+            }
+        }
+
+        // self.   .minted_rational_pairs
+        //                 .contains(&(r1_compliment.clone(), r2_compliment.clone()))
+        //             || self
+        //                 .minted_rational_pairs
+        //                 .contains(&(r2_compliment.clone(), r1_compliment.clone()))
+
         return false;
     }
 
@@ -282,13 +313,7 @@ impl Contract {
         let r1_simplified = r1.reduce();
         let r2_simplified = r2.reduce();
 
-        if self
-            .minted_rational_pairs
-            .contains(&(r1_simplified.clone(), r2_simplified.clone()))
-            || self
-                .minted_rational_pairs
-                .contains(&(r2_simplified.clone(), r1_simplified.clone()))
-        {
+        if self.nft_minted(r1_simplified.clone(), r2_simplified.clone()) {
             panic!("These fractions have already been minted!");
         }
 
@@ -367,7 +392,7 @@ impl Rational {
     /// Get the complement angle
     ///
     /// Here we assume that the rational is reduced (i.e. below 1) and the gcd of numerator and denominator is 1
-    pub fn complement(&self) -> Self {
+    pub fn compliment(&self) -> Option<Self> {
         if self.n == 0 || self.d == 0 || self.b == 0 {
             panic!("Cannot have 0 numerator, denominator, or base");
         }
@@ -375,19 +400,26 @@ impl Rational {
             panic!("Cannot have a base of 1");
         }
 
+        // There is no compliment
+        if self.d < self.b - 1 {
+            return None;
+        }
+
         let rep_denom = self.b - 1;
         let denom_gcd = gcd(rep_denom, self.d);
 
         let denom = rep_denom * (self.d / denom_gcd);
 
-        let compliment_num = self.b * (self.d / denom_gcd) - self.n * (self.b / denom_gcd);
+        let compliment_num = self.b * (self.d / denom_gcd) - self.n * (rep_denom / denom_gcd);
 
-        (Rational {
-            n: compliment_num,
-            d: denom,
-            b: self.b,
-        })
-        .reduce()
+        Some(
+            (Rational {
+                n: compliment_num,
+                d: denom,
+                b: self.b,
+            })
+            .reduce(),
+        )
     }
 
     /// Returns a new Fraction that is equal to this one, but simplified
@@ -510,6 +542,33 @@ mod tests {
         let contract = Contract::new_default_meta();
         testing_env!(context.is_view(true).build());
         assert_eq!(contract.nft_token("1".to_string()), None);
+    }
+
+    #[test]
+    fn test_compliment() {
+        let r = Rational {
+            n: 19,
+            d: 99,
+            b: 10,
+        }
+        .reduce();
+        let r_comp = r.compliment();
+        assert_eq!(
+            r_comp.unwrap(),
+            Rational {
+                n: 91,
+                d: 99,
+                b: 10
+            }
+        );
+        let r = Rational {
+            n: 19,
+            b: 99,
+            d: 10,
+        }
+        .reduce();
+        let r_comp = r.compliment();
+        assert_eq!(r_comp, None,);
     }
 
     // #[test]
