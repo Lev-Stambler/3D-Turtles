@@ -15,7 +15,7 @@
 		on:change={() => dispatch('paramchange', {})}
 		type="number"
 		step="1"
-		min="0"
+		min="1"
 		max={rational.d}
 	/>
 </label>
@@ -26,7 +26,7 @@
 		on:change={() => dispatch('paramchange', {})}
 		type="number"
 		step="1"
-		min="1"
+		min="2"
 	/>
 </label>
 <label>

@@ -24,7 +24,7 @@ use near_contract_standards::non_fungible_token::metadata::{
 };
 use near_contract_standards::non_fungible_token::NonFungibleToken;
 use near_contract_standards::non_fungible_token::{Token, TokenId};
-use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
+use near_sdk::borsh::{self, de, BorshDeserialize, BorshSerialize};
 use near_sdk::collections::{LazyOption, LookupSet, UnorderedSet};
 use near_sdk::env::promise_batch_action_add_key_with_full_access;
 use near_sdk::json_types::U128;
@@ -34,7 +34,6 @@ use near_sdk::{
     assert_one_yocto, env, log, near_bindgen, AccountId, Balance, BorshStorageKey, PanicOnDefault,
     Promise, PromiseOrValue,
 };
-
 
 pub const DEFAULT_MINT_PRICE: u128 = 10_u128;
 pub const DEFAULT_MAX_SUPPLY: u32 = 10;
@@ -141,12 +140,33 @@ impl Contract {
         let r1_simplified = r1.reduce();
         let r2_simplified = r2.reduce();
 
+        let r1_compliment = r1_simplified.complement();
+        let r2_compliment = r2_simplified.complement();
+
         if self
             .minted_rational_pairs
             .contains(&(r1_simplified.clone(), r2_simplified.clone()))
             || self
                 .minted_rational_pairs
                 .contains(&(r2_simplified.clone(), r1_simplified.clone()))
+            || self
+                .minted_rational_pairs
+                .contains(&(r1_compliment.clone(), r2_compliment.clone()))
+            || self
+                .minted_rational_pairs
+                .contains(&(r2_compliment.clone(), r1_compliment.clone()))
+            || self
+                .minted_rational_pairs
+                .contains(&(r1_compliment.clone(), r2_simplified.clone()))
+            || self
+                .minted_rational_pairs
+                .contains(&(r1_simplified.clone(), r2_compliment.clone()))
+            || self
+                .minted_rational_pairs
+                .contains(&(r2_simplified.clone(), r1_compliment.clone()))
+            || self
+                .minted_rational_pairs
+                .contains(&(r2_simplified.clone(), r1_compliment.clone()))
         {
             return true;
         }
@@ -344,24 +364,62 @@ impl Contract {
 
 /// From Stack Overflow: https://codereview.stackexchange.com/questions/165283/fraction-type-in-rust
 impl Rational {
+    /// Get the complement angle
+    ///
+    /// Here we assume that the rational is reduced (i.e. below 1) and the gcd of numerator and denominator is 1
+    pub fn complement(&self) -> Self {
+        if self.n == 0 || self.d == 0 || self.b == 0 {
+            panic!("Cannot have 0 numerator, denominator, or base");
+        }
+        if self.b == 1 {
+            panic!("Cannot have a base of 1");
+        }
+
+        let rep_denom = self.b - 1;
+        let denom_gcd = gcd(rep_denom, self.d);
+
+        let denom = rep_denom * (self.d / denom_gcd);
+
+        let compliment_num = self.b * (self.d / denom_gcd) - self.n * (self.b / denom_gcd);
+
+        (Rational {
+            n: compliment_num,
+            d: denom,
+            b: self.b,
+        })
+        .reduce()
+    }
+
     /// Returns a new Fraction that is equal to this one, but simplified
     pub fn reduce(&self) -> Self {
-        if self.d == 0 || self.b == 0 {
-            panic!("Cannot have 0 denominator or base");
+        if self.n == 0 || self.d == 0 || self.b == 0 {
+            panic!("Cannot have 0 numerator, denominator, or base");
         }
         let moded_n = self.n % self.d;
-        // Use absolute value because negatives
-        let gcd = gcd(moded_n, self.d);
+        let gcd_num_denom = gcd(moded_n, self.d);
+        let moded_n = moded_n / gcd_num_denom;
+        let moded_d = self.d / gcd_num_denom;
+
+        let num_reduced_by_mul_base = if moded_n % self.b == 0 {
+            moded_n / self.b
+        } else {
+            moded_n
+        };
+        let denom_reduced_by_mul_base = if moded_d % self.b == 0 {
+            moded_d / self.b
+        } else {
+            moded_d
+        };
         Self {
-            n: (moded_n / gcd),
-            d: (self.d / gcd),
+            n: num_reduced_by_mul_base,
+            d: denom_reduced_by_mul_base,
             b: self.b,
         }
     }
 }
 
 /// From Stack Overflow: https://codereview.stackexchange.com/questions/165283/fraction-type-in-rust
-// Calculate the greatest common denominator for two numbers
+/// Calculate the greatest common denominator for two numbers
 pub fn gcd(a: u32, b: u32) -> u32 {
     // Terminal cases
     if a == b {
