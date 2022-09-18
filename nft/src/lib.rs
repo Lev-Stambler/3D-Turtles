@@ -15,29 +15,32 @@ NOTES:
   - To prevent the deployed contract from being modified or deleted, it should not have any access
     keys on its account.
 */
+use near_sdk::collections::LookupMap;
 use std::convert::TryFrom;
 use std::str::Bytes;
 
 use near_contract_standards::non_fungible_token::metadata::{
     NFTContractMetadata, NonFungibleTokenMetadataProvider, TokenMetadata, NFT_METADATA_SPEC,
 };
-// use near_sdk::json_types::U128;
 use near_contract_standards::non_fungible_token::NonFungibleToken;
 use near_contract_standards::non_fungible_token::{Token, TokenId};
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
 use near_sdk::collections::{LazyOption, LookupSet, UnorderedSet};
 use near_sdk::env::promise_batch_action_add_key_with_full_access;
-use near_sdk::json_types::ValidAccountId;
+use near_sdk::json_types::U128;
 use near_sdk::serde::{Deserialize, Serialize};
+use near_sdk::serde_json::json;
 use near_sdk::{
-    env, log, near_bindgen, AccountId, Balance, BorshStorageKey, PanicOnDefault, Promise,
-    PromiseOrValue,
+    assert_one_yocto, env, log, near_bindgen, AccountId, Balance, BorshStorageKey, PanicOnDefault,
+    Promise, PromiseOrValue,
 };
 
-near_sdk::setup_alloc!();
 
 pub const DEFAULT_MINT_PRICE: u128 = 10_u128;
 pub const DEFAULT_MAX_SUPPLY: u32 = 10;
+
+/// This is the name of the NFT standard we're using
+pub const NFT_STANDARD_NAME: &str = "nep171";
 
 #[derive(Serialize, Deserialize, BorshDeserialize, BorshSerialize, PanicOnDefault, Clone)]
 #[serde(crate = "near_sdk::serde")]
@@ -76,17 +79,21 @@ const DATA_IMAGE_SVG_NEAR_ICON: &str = "data:image/svg+xml,%3Csvg xmlns='http://
 impl Contract {
     #[init]
     pub fn new_default_meta() -> Self {
+        let zero_hash: Vec<u8> = vec![
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0,
+        ];
         Self::new(
-            ValidAccountId::try_from(env::current_account_id()).unwrap(),
-            ValidAccountId::try_from(env::current_account_id()).unwrap(),
+            AccountId::try_from(env::current_account_id()).unwrap(),
+            AccountId::try_from(env::predecessor_account_id()).unwrap(),
             NFTContractMetadata {
                 spec: NFT_METADATA_SPEC.to_string(),
                 name: "3D Turtles".to_string(),
                 symbol: "3DTURT".to_string(),
                 icon: Some(DATA_IMAGE_SVG_NEAR_ICON.to_string()), // TODO:
                 base_uri: None,
-                reference: None, // TODO: the github page
-                reference_hash: None,
+                reference: Some("https://github.com/Lev-Stambler/3D-Turtles".to_string()),
+                reference_hash: Some(zero_hash.into()),
             },
             U128(DEFAULT_MINT_PRICE),
             DEFAULT_MAX_SUPPLY,
@@ -96,8 +103,8 @@ impl Contract {
 
     #[init]
     pub fn new(
-        owner_id: ValidAccountId,
-        treasury_id: ValidAccountId,
+        owner_id: AccountId,
+        treasury_id: AccountId,
         metadata: NFTContractMetadata,
         mint_price: U128,
         max_supply: u32,
@@ -107,7 +114,7 @@ impl Contract {
         metadata.assert_valid();
         let res = Self {
             numb_circulating: 0,
-            treasury_id: treasury_id.to_string(),
+            treasury_id: treasury_id,
             tokens: NonFungibleToken::new::<&[u8], &[u8], &[u8], &[u8]>(
                 "owner-by-id".as_bytes(),
                 owner_id,
@@ -146,59 +153,6 @@ impl Contract {
         return false;
     }
 
-    fn internal_mint(
-        &mut self,
-        token_id: TokenId,
-        token_owner_id: ValidAccountId,
-        token_metadata: Option<TokenMetadata>,
-    ) -> Token {
-        if self.tokens.token_metadata_by_id.is_some() && token_metadata.is_none() {
-            env::panic(b"Must provide metadata");
-        }
-        if self.tokens.owner_by_id.get(&token_id).is_some() {
-            env::panic(b"token_id must be unique");
-        }
-
-        let owner_id: AccountId = token_owner_id.into();
-
-        // Core behavior: every token must have an owner
-        self.tokens.owner_by_id.insert(&token_id, &owner_id);
-
-        // Metadata extension: Save metadata, keep variable around to return later.
-        // Note that check above already panicked if metadata extension in use but no metadata
-        // provided to call.
-        self.tokens
-            .token_metadata_by_id
-            .as_mut()
-            .and_then(|by_id| by_id.insert(&token_id, &token_metadata.as_ref().unwrap()));
-
-        // Enumeration extension: Record tokens_per_owner for use with enumeration view methods.
-        if let Some(tokens_per_owner) = &mut self.tokens.tokens_per_owner {
-            let mut token_ids = tokens_per_owner.get(&owner_id).unwrap_or_else(|| {
-                UnorderedSet::new(
-                    near_contract_standards::non_fungible_token::core::StorageKey::TokensPerOwner {
-                        account_hash: env::sha256(owner_id.as_bytes()),
-                    },
-                )
-            });
-            token_ids.insert(&token_id);
-            tokens_per_owner.insert(&owner_id, &token_ids);
-        }
-
-        // Approval Management extension: return empty HashMap as part of Token
-        let approved_account_ids = if self.tokens.approvals_by_id.is_some() {
-            Some(HashMap::new())
-        } else {
-            None
-        };
-        Token {
-            token_id,
-            owner_id,
-            metadata: token_metadata,
-            approved_account_ids,
-        }
-    }
-
     #[payable]
     pub fn burn_and_nft_mint(
         &mut self,
@@ -207,7 +161,7 @@ impl Contract {
         r2: Rational,
         thickness: f32,
         speed: u16,
-        receiver_id: ValidAccountId,
+        receiver_id: AccountId,
     ) -> Token {
         if self
             .tokens
@@ -220,17 +174,62 @@ impl Contract {
         }
         self.tokens.internal_transfer(
             &env::predecessor_account_id(),
-            &"system".to_string(),
+            &AccountId::try_from("system".to_string()).unwrap(),
             &burn_id,
             None,
             Some("BURN".to_string()),
         );
         self.numb_circulating -= 1;
+
         self.nft_mint(r1, r2, thickness, speed, receiver_id)
     }
 
     pub fn get_circulating_supply(&self) -> u32 {
         self.numb_circulating
+    }
+
+    /// Function for allowing Paras Listing
+    ///
+    #[payable]
+    pub fn nft_transfer_payout(
+        &mut self,
+        receiver_id: AccountId,
+        token_id: String,
+        approval_id: u64,
+        balance: U128,
+        max_len_payout: u32,
+    ) -> std::collections::HashMap<AccountId, U128> {
+        assert_one_yocto();
+
+        let owner_id = self
+            .tokens
+            .owner_by_id
+            .get(&token_id)
+            .expect("Token id does not exist");
+        self.tokens.nft_transfer(
+            receiver_id.clone(),
+            token_id.clone(),
+            Some(approval_id),
+            None,
+        );
+
+        env::log(
+            json!({
+                "type": "nft_transfer",
+                "params": {
+                    "token_id": token_id,
+                    "sender_id": owner_id,
+                    "receiver_id": receiver_id,
+                }
+            })
+            .to_string()
+            .as_bytes(),
+        );
+
+        let mut result: std::collections::HashMap<AccountId, U128> =
+            std::collections::HashMap::new();
+        result.insert(owner_id, balance);
+        result
     }
 
     /// Mint a new token with ID=`token_id` belonging to `receiver_id`.
@@ -248,8 +247,13 @@ impl Contract {
         r2: Rational,
         thickness: f32,
         speed: u16,
-        receiver_id: ValidAccountId,
+        receiver_id: AccountId,
     ) -> Token {
+        let zero_hash: Vec<u8> = vec![
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0,
+        ];
+
         let init_storage_usage = env::storage_usage();
         if self.numb_circulating >= self.max_supply {
             panic!("Cannot mint more than {} tokens", self.max_supply);
@@ -273,26 +277,28 @@ impl Contract {
 
         let title = Self::make_title(&r1_simplified, &r2_simplified);
         let token_id = self.make_id();
-        let token = self.internal_mint(
+        let token = self.tokens.internal_mint(
             token_id.clone(),
             receiver_id,
             Some(TokenMetadata {
                 title: Some(title),
                 description: None,
                 media: Some(self.make_media_url(&r1_simplified, &r2_simplified, thickness, speed)),
-                media_hash: None,
+                media_hash: Some(zero_hash.clone().into()),
                 copies: Some(1u64),
                 issued_at: Some(env::block_timestamp().to_string()),
                 expires_at: None,
                 starts_at: None,
                 updated_at: None,
                 extra: None,
-                reference: Some("TODO: me".to_string()),
-                reference_hash: None,
+                reference: Some("https://github.com/Lev-Stambler/3D-Turtles".to_string()),
+                reference_hash: Some(zero_hash.into()),
             }),
         );
         self.numb_circulating += 1;
         let final_storage_usage = env::storage_usage();
+
+        // Ensure that the amount attached includes mint costs, not just storage costs
         let storage_costs: Balance = (u128::from(final_storage_usage)
             - u128::from(init_storage_usage))
             * env::storage_byte_cost();
@@ -302,25 +308,11 @@ impl Contract {
             "Expected the attached amount to equal or exceed the mint price and storage price of {}",
             self.mint_price + storage_costs
         );
-        // 7520000000000000000010
 
-        // Transfer remaining tokens back to the sender
-        if env::attached_deposit() > (self.mint_price + storage_costs) {
-            log!(
-                "Attached {} and transfering back {}",
-                env::attached_deposit(),
-                env::attached_deposit() - (u128::from(self.mint_price + storage_costs))
-            );
-            Promise::new(env::predecessor_account_id())
-                .transfer(env::attached_deposit() - (self.mint_price + storage_costs))
-                .as_return();
-        }
-        log!("Transfering treas to {}", self.treasury_id);
         // Transfer tokens to the treasury
-        Promise::new(self.treasury_id.to_string())
+        Promise::new(self.treasury_id.clone())
             .transfer(self.mint_price)
             .as_return();
-
         token
     }
 }
@@ -427,7 +419,7 @@ mod tests {
 
     const MINT_STORAGE_COST: u128 = 5870000000000000000000;
 
-    fn get_context(predecessor_account_id: ValidAccountId) -> VMContextBuilder {
+    fn get_context(predecessor_account_id: AccountId) -> VMContextBuilder {
         let mut builder = VMContextBuilder::new();
         builder
             .current_account_id(accounts(0))
