@@ -110,6 +110,37 @@ impl Contract {
     }
 
     #[init]
+    #[payable]
+    pub fn new_default_only_meta(
+        owner_id: AccountId,
+        treasury_id: AccountId,
+        mint_price: U128,
+        max_supply: u32,
+        base_url: String,
+    ) -> Self {
+        let zero_hash: Vec<u8> = vec![
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0,
+        ];
+        Self::new(
+            owner_id,
+            treasury_id,
+            NFTContractMetadata {
+                spec: NFT_METADATA_SPEC.to_string(),
+                name: "3D Turtles".to_string(),
+                symbol: "3DTURT".to_string(),
+                icon: Some(DATA_IMAGE_SVG_NEAR_ICON.to_string()), // TODO:
+                base_uri: None,
+                reference: Some("https://github.com/Lev-Stambler/3D-Turtles".to_string()),
+                reference_hash: Some(zero_hash.into()),
+            },
+            mint_price,
+            max_supply,
+            base_url,
+        )
+    }
+
+    #[init]
     pub fn new(
         owner_id: AccountId,
         treasury_id: AccountId,
@@ -589,7 +620,14 @@ mod tests {
                 b: 3
             }
         );
-        assert_eq!(r.compliment().unwrap(), Rational { n: 655, d: 3998, b: 3 });
+        assert_eq!(
+            r.compliment().unwrap(),
+            Rational {
+                n: 655,
+                d: 3998,
+                b: 3
+            }
+        );
     }
 
     #[test]

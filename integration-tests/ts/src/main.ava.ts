@@ -110,7 +110,6 @@ test("Mint maximum number of tokens and then burn to mint one more. Then exceed 
   const { root, alice, nft, tokenReceiver } = test.context.accounts;
   //   Subtract 1 to account for the mint in initialization
   for (let i = 1; i < DEFAULT_MAX_SUPPLY; i++) {
-    console.log("GOING TO ", i);
     await alice.call(
       nft,
       "nft_mint",
@@ -311,7 +310,6 @@ test("Underpaying attached deposit", async (test) => {
     test.assert(true, "Under depositing tokens failed as expected");
   }
 });
-
 
 /*
 
