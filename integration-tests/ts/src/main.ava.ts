@@ -24,6 +24,7 @@ test.beforeEach(async (t) => {
     method: "new_default_meta",
     args: {},
   });
+
   await root.call(
     nft,
     "nft_mint",
@@ -108,7 +109,7 @@ test("Final treasury balance after buy", async (test) => {
 test("Mint maximum number of tokens and then burn to mint one more. Then exceed max supply", async (test) => {
   const { root, alice, nft, tokenReceiver } = test.context.accounts;
   //   Subtract 1 to account for the mint in initialization
-  for (let i = 0; i < DEFAULT_MAX_SUPPLY - 1; i++) {
+  for (let i = 1; i < DEFAULT_MAX_SUPPLY - 1; i++) {
     await alice.call(
       nft,
       "nft_mint",

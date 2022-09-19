@@ -145,7 +145,7 @@ impl Contract {
     }
 
     // TODO: factor out dup code
-    pub fn nft_minted(&self, r1: Rational, r2: Rational) -> bool {
+    pub fn nft_minted(&self, r1: &Rational, r2: &Rational) -> bool {
         let r1_simplified = r1.reduce();
         let r2_simplified = r2.reduce();
 
@@ -310,12 +310,11 @@ impl Contract {
             panic!("Cannot mint more than {} tokens", self.max_supply);
         }
 
-        let r1_simplified = r1.reduce();
-        let r2_simplified = r2.reduce();
-
-        if self.nft_minted(r1_simplified.clone(), r2_simplified.clone()) {
+        if self.nft_minted(&r1, &r2) {
             panic!("These fractions have already been minted!");
         }
+        let r1_simplified = r1.reduce();
+        let r2_simplified = r2.reduce();
 
         self.minted_rational_pairs
             .insert(&(r1_simplified.clone(), r2_simplified.clone()));
@@ -394,7 +393,10 @@ impl Rational {
     /// Here we assume that the rational is reduced (i.e. below 1) and the gcd of numerator and denominator is 1
     pub fn compliment(&self) -> Option<Self> {
         if self.n == 0 || self.d == 0 || self.b == 0 {
-            panic!("Cannot have 0 numerator, denominator, or base");
+            panic!(
+                "Cannot have 0 numerator, denominator, or base. Current is n: {}, d: {}, b: {}",
+                self.n, self.d, self.b
+            );
         }
         if self.b == 1 {
             panic!("Cannot have a base of 1");
@@ -429,18 +431,18 @@ impl Rational {
         }
         let moded_n = self.n % self.d;
         let gcd_num_denom = gcd(moded_n, self.d);
-        let moded_n = moded_n / gcd_num_denom;
-        let moded_d = self.d / gcd_num_denom;
+        let moded_n_red = moded_n / gcd_num_denom;
+        let moded_d_red = self.d / gcd_num_denom;
 
-        let num_reduced_by_mul_base = if moded_n % self.b == 0 {
-            moded_n / self.b
+        let num_reduced_by_mul_base = if moded_n_red % self.b == 0 {
+            moded_n_red / self.b
         } else {
-            moded_n
+            moded_n_red
         };
-        let denom_reduced_by_mul_base = if moded_d % self.b == 0 {
-            moded_d / self.b
+        let denom_reduced_by_mul_base = if moded_d_red % self.b == 0 {
+            moded_d_red / self.b
         } else {
-            moded_d
+            moded_d_red
         };
         Self {
             n: num_reduced_by_mul_base,
@@ -569,6 +571,27 @@ mod tests {
         .reduce();
         let r_comp = r.compliment();
         assert_eq!(r_comp, None,);
+
+        let r = Rational { n: 1, d: 1, b: 3 };
+        assert_eq!(r.compliment(), None);
+    }
+
+    #[test]
+    fn test_gcd() {
+        assert_eq!(gcd(6, 18), 6);
+        assert_eq!(gcd(18, 6), 6);
+    }
+
+    #[test]
+    fn test_reduce() {
+        assert_eq!(
+            Rational { n: 6, d: 18, b: 3 }.reduce(),
+            Rational { n: 1, d: 1, b: 3 }
+        );
+        assert_eq!(
+            Rational { n: 9, d: 19, b: 31 }.reduce(),
+            Rational { n: 9, d: 19, b: 31 }
+        )
     }
 
     // #[test]
