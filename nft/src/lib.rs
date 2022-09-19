@@ -574,6 +574,22 @@ mod tests {
 
         let r = Rational { n: 1, d: 1, b: 3 };
         assert_eq!(r.compliment(), None);
+
+        let r = Rational {
+            n: 3 * 17,
+            d: 1999,
+            b: 3,
+        }
+        .reduce();
+        assert_eq!(
+            r,
+            Rational {
+                n: 17,
+                d: 1999,
+                b: 3
+            }
+        );
+        assert_eq!(r.compliment().unwrap(), Rational { n: 655, d: 3998, b: 3 });
     }
 
     #[test]
@@ -591,7 +607,7 @@ mod tests {
         assert_eq!(
             Rational { n: 9, d: 19, b: 31 }.reduce(),
             Rational { n: 9, d: 19, b: 31 }
-        )
+        );
     }
 
     // #[test]

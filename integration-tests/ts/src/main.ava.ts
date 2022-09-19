@@ -109,7 +109,8 @@ test("Final treasury balance after buy", async (test) => {
 test("Mint maximum number of tokens and then burn to mint one more. Then exceed max supply", async (test) => {
   const { root, alice, nft, tokenReceiver } = test.context.accounts;
   //   Subtract 1 to account for the mint in initialization
-  for (let i = 1; i < DEFAULT_MAX_SUPPLY - 1; i++) {
+  for (let i = 1; i < DEFAULT_MAX_SUPPLY; i++) {
+    console.log("GOING TO ", i);
     await alice.call(
       nft,
       "nft_mint",
@@ -117,7 +118,7 @@ test("Mint maximum number of tokens and then burn to mint one more. Then exceed 
         r1: {
           n: i * 17,
           d: 1999,
-          b: 3,
+          b: 87,
         },
         r2: {
           n: 6,
@@ -167,7 +168,7 @@ test("Mint maximum number of tokens and then burn to mint one more. Then exceed 
         r1: {
           n: 19 * 17,
           d: 1999,
-          b: 3,
+          b: 87,
         },
         r2: {
           n: 6,
