@@ -43,7 +43,7 @@ const getContract = (near: Near): Contract => {
   return contract;
 };
 
-const MINT_AMOUNT = 10;
+const MINT_AMOUNT = 6000000000000000000000000;
 
 export const mint = async (
   near: Near,
