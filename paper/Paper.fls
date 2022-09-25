@@ -1059,11 +1059,11 @@ INPUT ./fig/Turtle1DNotClosed.png
 INPUT fig/Turtle1DNotClosed.png
 INPUT ./fig/Turtle1DNotClosed.png
 INPUT ./fig/Turtle1DNotClosed.png
-INPUT ./fig/turtle.png
-INPUT ./fig/turtle.png
-INPUT fig/turtle.png
-INPUT ./fig/turtle.png
-INPUT ./fig/turtle.png
+INPUT ./fig/turtle3dtimestep.png
+INPUT ./fig/turtle3dtimestep.png
+INPUT fig/turtle3dtimestep.png
+INPUT ./fig/turtle3dtimestep.png
+INPUT ./fig/turtle3dtimestep.png
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmti10.tfm
 INPUT ./fig/failclose3d.png
 INPUT ./fig/failclose3d.png

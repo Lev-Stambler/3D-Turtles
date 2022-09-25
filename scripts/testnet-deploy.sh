@@ -4,7 +4,7 @@ DEP_ACCOUNT='groked.testnet'
 TREASURY_ID='groked.testnet'
 # 6 Near
 MINT_PRICE=6000000000000000000000000
-BASE_URL='https://3d-turtle.netlify.app/#'
+BASE_URL='https://3d-turtle.netlify.app'
 # 150 TGas
 INIT_GAS=150000000000000
 # 0.5 Near

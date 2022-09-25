@@ -10,7 +10,7 @@ const nearAPI = window.nearApi
 // create a keyStore for signing transactions using the user's key
 // which is located in the browser local storage after user logs in
 let keyStore;
-const env = "testnet";
+const env = "mainnet";
 
 let nearConfig;
 

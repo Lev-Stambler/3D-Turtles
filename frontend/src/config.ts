@@ -1,5 +1,5 @@
 export const CONTRACT_NAME =
-  process.env.CONTRACT_NAME || "three_d_turtle.groked.testnet";
+  process.env.CONTRACT_NAME || "three_d_turtle.neontetra.near";
 
 export function getConfig(env) {
   switch (env) {

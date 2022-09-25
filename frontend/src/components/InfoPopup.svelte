@@ -2,7 +2,7 @@
   import SvelteMarkdown from "svelte-markdown";
   //  Taken from the readme
   const source = `
-# 3D Turtles
+  # 3D Turtles
 
 3D Turtles is an exploration into combining art, mathematics, and blockchain!
 So, what is a 3D turtle? First imagine orienting a turtle in 3 dimensional space.
@@ -27,7 +27,13 @@ For the codebase see the [Github Repository](https://github.com/Lev-Stambler/3D-
 
 ## Inspiration
 3D Turtles was inspired by ["Plotting Pi and Searching for Mona Lisa"](https://www.youtube.com/watch?v=tkC1HHuuk7c), a video released by the fantastic YouTube channel, Numberphile. Essentially, the video explores using [Turtle graphic](https://en.wikipedia.org/wiki/Turtle_graphics) to explore visualizations of rational numbers (e.g. 1/13) and irrational numbers (e.g. Pi).
+
+## Important notes
+Not all minted shapes are necessarily unique.
+Minting simple duplicate shapes (ones found very easily, see page 11 of [the paper](https://github.com/Lev-Stambler/3D-Turtles/blob/master/paper/Paper.pdf)) is not allowed by the smart contract. Still, duplicate shapes can be minted by finding fractions
+which lead to the turtle drawing the same shape (again, see page 11 of [the paper](https://github.com/Lev-Stambler/3D-Turtles/blob/master/paper/Paper.pdf)).
 `;
 </script>
 
 <SvelteMarkdown {source} />
+© Neon Tetra LLC 2022

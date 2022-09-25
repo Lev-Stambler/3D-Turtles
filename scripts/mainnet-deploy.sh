@@ -1,9 +1,23 @@
 #!/bin/bash
-# Run from root of folder
-./scripts/build.sh
+CONTRACT_ACCOUNT_ID='three_d_turtle.neontetra.near'
+DEP_ACCOUNT='neontetra.near'
+TREASURY_ID='neontetra.near'
+# 6 Near
+MINT_PRICE=6000000000000000000000000
+BASE_URL='https://3dturtles.groked.co'
+# 150 TGas
+INIT_GAS=150000000000000
+# 0.5 Near
+INIT_DEP=0.5
 
+# 8,888 for mainnet
+MAX_SUPPLY=8888
+
+INIT_ARGS="{\"owner_id\": \"$CONTRACT_ACCOUNT_ID\", \"treasury_id\": \"$TREASURY_ID\", \"mint_price\": \"$MINT_PRICE\", \"max_supply\": $MAX_SUPPLY, \"base_url\": \"$BASE_URL\"}"
+
+echo "Init args of $INIT_ARGS"
+
+# Run from root of folder
 ./scripts/build.sh && \
-	near dev-deploy ./res/non_fungible_token.wasm --accountId 'levtester.testnet' && \
-	source neardev/dev-account.env && \
-	echo "Deployed to $CONTRACT_NAME" && \
-	near call $CONTRACT_NAME new_default_meta "" --accountId 'levtester.testnet'
+NEAR_ENV=mainnet near deploy $CONTRACT_ACCOUNT_ID ./res/non_fungible_token.wasm new_default_only_meta "$INIT_ARGS" "$INIT_GAS" "$INIT_DEP" --networkId "mainnet"
+
