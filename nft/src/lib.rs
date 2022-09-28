@@ -15,14 +15,17 @@ NOTES:
   - To prevent the deployed contract from being modified or deleted, it should not have any access
     keys on its account.
 */
+use near_contract_standards::non_fungible_token::core::StorageKey;
+use near_contract_standards::non_fungible_token::events::NftMint;
 use near_sdk::collections::LookupMap;
+use std::collections::HashMap;
 use std::convert::TryFrom;
 use std::str::Bytes;
 
 use near_contract_standards::non_fungible_token::metadata::{
     NFTContractMetadata, NonFungibleTokenMetadataProvider, TokenMetadata, NFT_METADATA_SPEC,
 };
-use near_contract_standards::non_fungible_token::NonFungibleToken;
+use near_contract_standards::non_fungible_token::{refund_deposit_to_account, NonFungibleToken};
 use near_contract_standards::non_fungible_token::{Token, TokenId};
 use near_sdk::borsh::{self, de, BorshDeserialize, BorshSerialize};
 use near_sdk::collections::{LazyOption, LookupSet, UnorderedSet};
@@ -226,12 +229,6 @@ impl Contract {
             }
         }
 
-        // self.   .minted_rational_pairs
-        //                 .contains(&(r1_compliment.clone(), r2_compliment.clone()))
-        //             || self
-        //                 .minted_rational_pairs
-        //                 .contains(&(r2_compliment.clone(), r1_compliment.clone()))
-
         return false;
     }
 
@@ -314,6 +311,91 @@ impl Contract {
         result
     }
 
+    // Copy and pasted from Near's library except modified storage refund to not refund mint cost
+    /// Mint a new token without checking:
+    /// * Whether the caller id is equal to the `owner_id`
+    /// * `refund_id` will transfer the left over balance after storage costs are calculated to the provided account.
+    ///   Typically the account will be the owner. If `None`, will not refund. This is useful for delaying refunding
+    ///   until multiple tokens have been minted.
+    ///
+    /// Returns the newly minted token and does not emit the mint event. This allows minting multiple before emitting.
+    fn internal_mint_no_with_refund(
+        &mut self,
+        token_id: TokenId,
+        token_owner_id: AccountId,
+        token_metadata: Option<TokenMetadata>,
+        refund_id: Option<AccountId>,
+        cost: u128,
+    ) -> Token {
+        // Remember current storage usage if refund_id is Some
+        let initial_storage_usage = refund_id.map(|account_id| (account_id, env::storage_usage()));
+
+        if self.tokens.token_metadata_by_id.is_some() && token_metadata.is_none() {
+            env::panic_str("Must provide metadata");
+        }
+        if self.tokens.owner_by_id.get(&token_id).is_some() {
+            env::panic_str("token_id must be unique");
+        }
+
+        let owner_id: AccountId = token_owner_id;
+
+        // Core behavior: every token must have an owner
+        self.tokens.owner_by_id.insert(&token_id, &owner_id);
+
+        // Metadata extension: Save metadata, keep variable around to return later.
+        // Note that check above already panicked if metadata extension in use but no metadata
+        // provided to call.
+        self.tokens
+            .token_metadata_by_id
+            .as_mut()
+            .and_then(|by_id| by_id.insert(&token_id, token_metadata.as_ref().unwrap()));
+
+        // Enumeration extension: Record tokens_per_owner for use with enumeration view methods.
+        if let Some(tokens_per_owner) = &mut self.tokens.tokens_per_owner {
+            let mut token_ids = tokens_per_owner.get(&owner_id).unwrap_or_else(|| {
+                UnorderedSet::new(StorageKey::TokensPerOwner {
+                    account_hash: env::sha256(owner_id.as_bytes()),
+                })
+            });
+            token_ids.insert(&token_id);
+            tokens_per_owner.insert(&owner_id, &token_ids);
+        }
+
+        // Approval Management extension: return empty HashMap as part of Token
+        let approved_account_ids = if self.tokens.approvals_by_id.is_some() {
+            Some(HashMap::new())
+        } else {
+            None
+        };
+
+        if let Some((id, storage_usage)) = initial_storage_usage {
+            let required_cost = env::storage_byte_cost()
+                * Balance::from(env::storage_usage() - storage_usage)
+                + cost;
+            let attached_deposit = env::attached_deposit();
+
+            assert!(
+                required_cost <= attached_deposit,
+                "Must attach {} yoctoNEAR to cover storage",
+                required_cost
+            );
+
+            let refund = attached_deposit - required_cost;
+            if refund > 1 {
+                Promise::new(id).transfer(refund);
+            }
+        }
+
+        // Return any extra attached deposit not used for storage
+
+        Token {
+            token_id,
+            owner_id,
+            metadata: token_metadata,
+            approved_account_ids,
+        }
+    }
+
     /// Mint a new token with ID=`token_id` belonging to `receiver_id`.
     ///
     /// Since this example implements metadata, it also requires per-token metadata to be provided
@@ -352,7 +434,7 @@ impl Contract {
 
         let title = Self::make_title(&r1_simplified, &r2_simplified);
         let token_id = self.make_id();
-        let token = self.tokens.internal_mint(
+        let token = self.internal_mint_no_with_refund(
             token_id.clone(),
             receiver_id,
             Some(TokenMetadata {
@@ -369,7 +451,15 @@ impl Contract {
                 reference: Some("https://github.com/Lev-Stambler/3D-Turtles".to_string()),
                 reference_hash: Some(zero_hash.into()),
             }),
+            Some(env::predecessor_account_id()),
+            self.mint_price,
         );
+        NftMint {
+            owner_id: &token.owner_id,
+            token_ids: &[&token.token_id],
+            memo: None,
+        }
+        .emit();
         self.numb_circulating += 1;
         let final_storage_usage = env::storage_usage();
 
@@ -470,14 +560,10 @@ impl Rational {
         } else {
             moded_n_red
         };
-        let denom_reduced_by_mul_base = if moded_d_red % self.b == 0 {
-            moded_d_red / self.b
-        } else {
-            moded_d_red
-        };
+
         Self {
             n: num_reduced_by_mul_base,
-            d: denom_reduced_by_mul_base,
+            d: moded_d_red,
             b: self.b,
         }
     }

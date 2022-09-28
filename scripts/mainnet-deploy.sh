@@ -19,5 +19,5 @@ echo "Init args of $INIT_ARGS"
 
 # Run from root of folder
 ./scripts/build.sh && \
-NEAR_ENV=mainnet near deploy $CONTRACT_ACCOUNT_ID ./res/non_fungible_token.wasm new_default_only_meta "$INIT_ARGS" "$INIT_GAS" "$INIT_DEP" --networkId "mainnet"
+NEAR_ENV=mainnet near deploy $CONTRACT_ACCOUNT_ID ./res/non_fungible_token.wasm new_default_only_meta "$INIT_ARGS" "$INIT_GAS" "$INIT_DEP" --networkId "mainnet" 
 

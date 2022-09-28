@@ -1,15 +1,15 @@
 # Fdb version 3
-["bibtex Paper"] 1663624207 "Paper.aux" "Paper.bbl" "Paper" 1663624215
+["bibtex Paper"] 1664375627 "Paper.aux" "Paper.bbl" "Paper" 1664375662
   "/usr/local/texlive/2021/texmf-dist/bibtex/bst/base/alpha.bst" 1292289607 23907 a5f93555796fb564b924339521f10a7c ""
-  "Paper.aux" 1663624215 8068 6a9f7ab55a465571ec2ea975435cd10d "pdflatex"
-  "PaperAppendix.aux" 1663624215 2295 689ff6d71274097b27b101aeedb0854d "pdflatex"
+  "Paper.aux" 1664375662 7952 5b4531d3957d8b98ad6782c03215a514 "pdflatex"
+  "PaperAppendix.aux" 1664375662 2295 b36ab1aea0be7f1ab0c607fa1312ecb4 "pdflatex"
   "bib/ref.bib" 1662304119 5931 49449f348ab82c98a2f97559ab853116 ""
   (generated)
   "Paper.bbl"
   "Paper.blg"
-["pdflatex"] 1663624207 "/home/lev/code/near/NFT-MathDraw/paper/Paper.tex" "Paper.pdf" "Paper" 1663624215
+["pdflatex"] 1664375657 "/home/lev/code/blockchain/near/NFT-MathDraw/paper/Paper.tex" "Paper.pdf" "Paper" 1664375662
   "/home/lev/.texlive2021/texmf-var/fonts/pk/ljfour/public/bbm/bbm10.657pk" 1643197891 7808 68f02e3e18e746d1b31bca1043bbf1e2 ""
-  "/home/lev/code/near/NFT-MathDraw/paper/Paper.tex" 1663624194 29389 ba8100b4d25ce33e30c02152223cab44 ""
+  "/home/lev/code/blockchain/near/NFT-MathDraw/paper/Paper.tex" 1664375656 29255 932de13422070e5dcc14803f1fd97c59 ""
   "/usr/local/texlive/2021/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2021/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
   "/usr/local/texlive/2021/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1246382020 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -162,12 +162,12 @@
   "/usr/local/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1642605541 4379201 880d78f4a2bde4f491e7d718ab91f390 ""
   "/usr/local/texlive/2021/texmf-var/web2c/pdftex/pdflatex.fmt" 1642605583 2796620 8a1a95f7408ee5fc56f565bc9a0ba6f6 ""
   "/usr/local/texlive/2021/texmf.cnf" 1642605535 455 5b996dcaa0eb4ef14a83b026bc0a008c ""
-  "Paper.aux" 1663624215 8068 6a9f7ab55a465571ec2ea975435cd10d "pdflatex"
-  "Paper.bbl" 1663624207 1661 f61596fd26ef642c15363edd06b572bf "bibtex Paper"
-  "Paper.brf" 1663624215 482 8c88b51ab321ff43a257c2e3c49db3d3 "pdflatex"
-  "Paper.out" 1663624215 4211 ec1aea003a67901419b1149d2093b2a3 "pdflatex"
-  "Paper.tex" 1663624194 29389 ba8100b4d25ce33e30c02152223cab44 ""
-  "PaperAppendix.aux" 1663624215 2295 689ff6d71274097b27b101aeedb0854d "pdflatex"
+  "Paper.aux" 1664375662 7952 5b4531d3957d8b98ad6782c03215a514 "pdflatex"
+  "Paper.bbl" 1664375627 1661 f61596fd26ef642c15363edd06b572bf "bibtex Paper"
+  "Paper.brf" 1664375662 482 8c88b51ab321ff43a257c2e3c49db3d3 "pdflatex"
+  "Paper.out" 1664375662 4074 1485a442dc1d4e20696e10ba4937698e "pdflatex"
+  "Paper.tex" 1664375656 29255 932de13422070e5dcc14803f1fd97c59 ""
+  "PaperAppendix.aux" 1664375662 2295 b36ab1aea0be7f1ab0c607fa1312ecb4 "pdflatex"
   "PaperAppendix.tex" 1662304119 9804 6f085c7de9f7000c72852364110cdca3 ""
   "TCSToolkit.sty" 1662304119 8161 1dd397e09614164a0a908bcceda97b81 ""
   "fig/3DTurtleCenterOfMass.png" 1662304119 16881 c0228ec5d4ab3dc50def73d3f9ffd020 ""
