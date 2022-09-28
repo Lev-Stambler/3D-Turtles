@@ -3,6 +3,7 @@ import type { Contract, Near, utils } from "near-api-js";
 import { writable, type Writable } from "svelte/store";
 import { CONTRACT_NAME, getConfig } from "./config";
 import type { Rational } from "./interfaces";
+import { setCurrentRationals } from "./turtle_utils";
 
 //@ts-ignore
 const nearAPI = window.nearApi;
@@ -12,7 +13,7 @@ export interface Token {
   owner_id: string;
   metadata: {
     media: string;
-    title: string
+    title: string;
   };
 }
 
@@ -61,6 +62,7 @@ export const mint = async (
   thickness: number,
   speed: number
 ): Promise<void> => {
+  setCurrentRationals(r1, r2, { n: 8, d: 9, b: 10 });
   //@ts-ignore
   await getContract(near).nft_mint(
     {
@@ -77,7 +79,10 @@ export const mint = async (
   );
 };
 
-export const tokensByAccount = async (near, account: string): Promise<Token[]> => {
+export const tokensByAccount = async (
+  near,
+  account: string
+): Promise<Token[]> => {
   //@ts-ignore
   const contract = getContract(near);
   //@ts-ignore
@@ -91,8 +96,7 @@ export const getAllTokens = async (near): Promise<Token[]> => {
   //@ts-ignore
   const contract = getContract(near);
   //@ts-ignore
-  const tokens: Token[] = await contract.nft_tokens({
-  });
+  const tokens: Token[] = await contract.nft_tokens({});
   return tokens;
 };
 
