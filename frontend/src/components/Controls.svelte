@@ -8,10 +8,13 @@
   import RationalButtonGroup from "./RationalButtonGroup.svelte";
   import { mint, signIn, signOut, getWalletConnection, near } from "../near";
   import InfoBlock from "./InfoBlock.svelte";
+  import Gallery from "./Gallery.svelte";
 
   let yaw: Rational, pitch: Rational, distance: Rational;
-  $controlParams.numStepsPerLoop = $controlParams.numStepsPerLoop > 0 ? $controlParams.numStepsPerLoop : 1;
-  $controlParams.pathWidth = $controlParams.pathWidth > 0 ? $controlParams.pathWidth : 0.5;
+  $controlParams.numStepsPerLoop =
+    $controlParams.numStepsPerLoop > 0 ? $controlParams.numStepsPerLoop : 1;
+  $controlParams.pathWidth =
+    $controlParams.pathWidth > 0 ? $controlParams.pathWidth : 0.5;
 
   const dispatch = createEventDispatcher();
 
@@ -71,6 +74,7 @@
     {#if !$controlParams.allowControls}
       <section class="info">
         <InfoBlock />
+        <Gallery />
       </section>
     {/if}
 
@@ -138,6 +142,7 @@
       </section>
       <section class="info">
         <InfoBlock />
+        <Gallery />
       </section>
     {/if}
   </div>

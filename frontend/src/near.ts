@@ -5,7 +5,16 @@ import { CONTRACT_NAME, getConfig } from "./config";
 import type { Rational } from "./interfaces";
 
 //@ts-ignore
-const nearAPI = window.nearApi
+const nearAPI = window.nearApi;
+
+export interface Token {
+  token_id: string;
+  owner_id: string;
+  metadata: {
+    media: string;
+    title: string
+  };
+}
 
 // create a keyStore for signing transactions using the user's key
 // which is located in the browser local storage after user logs in
@@ -17,7 +26,7 @@ let nearConfig;
 export const near: Writable<Near | null> = writable(null);
 
 export const setNear = async () => {
-  console.log(nearAPI, nearAPI.keyStores)
+  console.log(nearAPI, nearAPI.keyStores);
   keyStore = new nearAPI.keyStores.BrowserLocalStorageKeyStore();
   nearConfig = {
     keyStore,
@@ -37,7 +46,7 @@ const getContract = (near: Near): Contract => {
   const account = getWalletConnection(near).account();
   const contract = new nearAPI.Contract(account, CONTRACT_NAME, {
     // name of contract you're connecting to
-    viewMethods: ["nft_minted"], // view methods do not change state but usually return a value
+    viewMethods: ["nft_minted", "nft_tokens_for_owner", "nft_tokens"], // view methods do not change state but usually return a value
     changeMethods: ["nft_mint"], // change methods modify state
   });
   return contract;
@@ -66,6 +75,25 @@ export const mint = async (
       BigInt(MINT_AMOUNT) + BigInt(nearAPI.utils.format.parseNearAmount("0.1"))
     ).toString()
   );
+};
+
+export const tokensByAccount = async (near, account: string): Promise<Token[]> => {
+  //@ts-ignore
+  const contract = getContract(near);
+  //@ts-ignore
+  const tokens: Token[] = await contract.nft_tokens_for_owner({
+    account_id: account,
+  });
+  return tokens;
+};
+
+export const getAllTokens = async (near): Promise<Token[]> => {
+  //@ts-ignore
+  const contract = getContract(near);
+  //@ts-ignore
+  const tokens: Token[] = await contract.nft_tokens({
+  });
+  return tokens;
 };
 
 export const checkMinted = async (

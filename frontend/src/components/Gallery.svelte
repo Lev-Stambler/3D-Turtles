@@ -1,12 +1,12 @@
 <script lang="ts">
   import { getContext } from "svelte";
-  import InfoPopup from "./InfoPopup.svelte";
+  import GalleryPopup from "./GalleryPopup.svelte";
   //@ts-ignore
   const { open } = getContext("simple-modal");
-  const showPopup = () => open(InfoPopup, {});
+  const showPopup = () => open(GalleryPopup, {});
 </script>
 
-<button on:click={showPopup}> What is this? </button>
+<button on:click={showPopup}>Minted Gallery</button>
 
 <style>
   button {
