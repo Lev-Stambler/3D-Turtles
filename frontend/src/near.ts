@@ -101,6 +101,7 @@ export const getAllTokens = async (near): Promise<Token[]> => {
 };
 
 export const checkMinted = async (
+  near,
   r1: Rational,
   r2: Rational
 ): Promise<boolean> => {

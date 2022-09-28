@@ -7,6 +7,7 @@ import {
   precomputeRationalDistances,
   rationalFromStr,
 } from "./math/rationals";
+import { checkMinted } from "./near";
 import { getCurrentRationals } from "./turtle_utils";
 
 export type StoredParameters = {
@@ -108,7 +109,7 @@ export let controlParams: Writable<ControlParameters> = writable({
 });
 
 // Parse URL parameters to set a default for the parameters
-export const setParams = () => {
+export const setParams = async (near) => {
   try {
     const urlData = location.href.split("#")[1];
     const strs = urlData.split(";");
@@ -124,6 +125,9 @@ export const setParams = () => {
       };
     });
     parameters.set(generateParams(yaw, pitch, distance));
+    if (!(await checkMinted(near, yaw, pitch))) {
+      alert("No one has minted this shape! Feel free to mint it yourself");
+    }
   } catch (e) {
     if (getCurrentRationals()) {
       let { r1, r2, distance } = getCurrentRationals();

@@ -38,6 +38,7 @@
   import TurtlePathMesh from "./components/TurtlePathMesh.svelte";
   import { onMount } from "svelte";
   import { setNear } from "./near";
+  import { init } from "svelte/internal";
 
   const sphereGeometry = new SphereGeometry(1);
 
@@ -115,9 +116,10 @@
 
   let loading = true;
   onMount(() => {
+    const initUrl = window.location.href.split("?")[0];
+    window.history.replaceState(null, null, initUrl);
     setNear().then(() => {
-      setParams();
-      loading = false;
+      setParams($near).then(() => (loading = false));
     });
   });
 </script>
