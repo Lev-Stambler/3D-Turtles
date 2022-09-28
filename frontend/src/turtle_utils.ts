@@ -57,11 +57,16 @@ export const getCentroid = (b: Bounds): Vector3 => {
   return v;
 };
 
-export const setCurrentRationals = (r1: Rational, r2: Rational, distance: Rational) => {
-  localStorage.setItem("rationals", JSON.stringify({ r1, r2 }));
+export const setCurrentRationals = (
+  r1: Rational,
+  r2: Rational,
+  distance: Rational
+) => {
+  localStorage.setItem("rationals", JSON.stringify({ r1, r2, distance }));
 };
 
 export const getCurrentRationals = () => {
-  if (!localStorage.getItem("rationals")) return undefined;
-  JSON.parse(localStorage.getItem("rationals"));
+  const rationals = window.localStorage.getItem("rationals");
+  if (!rationals) return undefined;
+  return JSON.parse(rationals);
 };

@@ -112,7 +112,8 @@ export const checkMinted = async (
   return response;
 };
 
-export const signIn = (near: Near) => {
+export const signIn = (near: Near, r1: Rational, r2: Rational) => {
+  setCurrentRationals(r1, r2, { n: 8, d: 9, b: 10 });
   getWalletConnection(near).requestSignIn({
     contractId: nearConfig.contractName,
   });

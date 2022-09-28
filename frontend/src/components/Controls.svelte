@@ -115,7 +115,14 @@
     {#if $controlParams.allowControls}
       <section class="near">
         {#if !isSignedIn}
-          <button on:click={() => signIn($near)}>
+          <button
+            on:click={() =>
+              signIn(
+                $near,
+                $parameters.initParams[0],
+                $parameters.initParams[1]
+              )}
+          >
             <img src="/near-protocol-near-logo.svg" alt="Near Logo" />
             NEAR Sign In
           </button>
